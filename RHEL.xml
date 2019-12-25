@@ -1,0 +1,110 @@
+<Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="RHEL.lua" />
+	<Frame name="RHEL-MainFrame" parent="UIParent" movable="true" enableMouse="true">
+		<Size>
+			<AbsDimension x="1024" y="740" />
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER" x="34" y="34" />
+		</Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32" />
+			</EdgeSize>
+		</Backdrop>
+		<Frames>
+			<Button name="UIPanelCloseButton" inherits="UIPanelButtonTemplate" text="Close">
+				<Size x="134" y="40" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="847" y="-662" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						self:GetParent():Hide();
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="HEALS" inherits="UIPanelButtonTemplate" text="Heals assignments">
+				<Size x="134" y="40" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="253" y="-611" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						RHEL_HealAnounce();
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="Buffs" inherits="UIPanelButtonTemplate" text="Buff assignments">
+				<Size x="134" y="40" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="476" y="-611" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						RHEL_HealAnounce();
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="Dispell" inherits="UIPanelButtonTemplate" text="Dispell assignments">
+				<Size x="134" y="40" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="679" y="-611" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						RHEL_HealAnounce();
+					</OnClick>
+				</Scripts>
+			</Button>
+			<CheckButton name="CheckButton11_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="231" y="-126" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="1">
+							<Size x="30" y="30" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnHealCheckBox(1);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<EditBox name="HealerName1" inherits="InputBoxTemplate" id="15" autoFocus="false">
+				<Size x="100" y="32" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="47" y="-150" />
+				</Anchors>
+				<Scripts>
+					<OnTextChanged>
+						RHEL_HealAnounce();
+					</OnTextChanged>
+				</Scripts>
+			</EditBox>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				RHEL_OnLoad()
+			</OnLoad>
+			<OnMouseDown>
+				RHEL_OnMouseDown()
+			</OnMouseDown>
+			<OnMouseUp>
+				RHEL_OnMouseUp()
+			</OnMouseUp>
+		</Scripts>
+	</Frame>
+</Ui>

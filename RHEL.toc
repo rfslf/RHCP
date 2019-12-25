@@ -1,0 +1,8 @@
+## Title: RaidHealerEasyLife
+## Version: 0.1.0
+## Author: Stanislav
+## Interface: 80205
+## SavedVariables: RHEL_Heals
+
+RHEL.xml
+RHEL.lua
