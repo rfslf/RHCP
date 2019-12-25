@@ -1,6 +1,6 @@
 <Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file="RHEL.lua" />
-	<Frame name="RHEL-MainFrame" parent="UIParent" movable="true" enableMouse="true">
+	<Frame name="RHEL_MainFrame" parent="UIParent" movable="true" enableMouse="true">
 		<Size>
 			<AbsDimension x="1024" y="740" />
 		</Size>
@@ -30,7 +30,7 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Button name="HEALS" inherits="UIPanelButtonTemplate" text="Heals assignments">
+			<Button name="Heals" inherits="UIPanelButtonTemplate" text="Heals assign">
 				<Size x="134" y="40" />
 				<Anchors>
 					<Anchor point="TOPLEFT" x="253" y="-611" />
@@ -41,7 +41,7 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Button name="Buffs" inherits="UIPanelButtonTemplate" text="Buff assignments">
+			<Button name="Buffs" inherits="UIPanelButtonTemplate" text="Buffs assign">
 				<Size x="134" y="40" />
 				<Anchors>
 					<Anchor point="TOPLEFT" x="476" y="-611" />
@@ -52,7 +52,7 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Button name="Dispell" inherits="UIPanelButtonTemplate" text="Dispell assignments">
+			<Button name="Dispells" inherits="UIPanelButtonTemplate" text="Dispells assign">
 				<Size x="134" y="40" />
 				<Anchors>
 					<Anchor point="TOPLEFT" x="679" y="-611" />
@@ -65,21 +65,481 @@
 			</Button>
 			<CheckButton name="CheckButton11_1" inherits="UICheckButtonTemplate" text="CheckButton1">
 				<Anchors>
-					<Anchor point="TOPLEFT" x="231" y="-126" />
+					<Anchor point="TOPLEFT" x="200" y="-100" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="1">
 							<Size x="30" y="30" />
 							<Anchors>
-								<Anchor point="TOPLEFT" x="-20" y="0" />
+								<Anchor point="TOPLEFT" x="-15" y="0" />
 							</Anchors>
 						</FontString>
 					</Layer>
 				</Layers>
 				<Scripts>
 					<OnClick>
-						ClickOnHealCheckBox(1);
+						ClickOnHealCheckBox(1,1);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton11_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="250" y="-100" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="2">
+							<Size x="30" y="30" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-15" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnHealCheckBox(1,2);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton11_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="300" y="-100" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="3">
+							<Size x="30" y="30" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-15" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnHealCheckBox(1,3);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton11_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="350" y="-100" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="4">
+							<Size x="30" y="30" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-15" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnHealCheckBox(1,4);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton11_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="250" y="-150" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="5">
+							<Size x="30" y="30" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-15" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnHealCheckBox(1,5);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton11_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="300" y="-150" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="6">
+							<Size x="30" y="30" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-15" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnHealCheckBox(1,6);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton11_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="350" y="-150" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="7">
+							<Size x="30" y="30" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-15" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnHealCheckBox(1,7);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton11_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="400" y="-150" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="8">
+							<Size x="30" y="30" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-15" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnHealCheckBox(1,8);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton11_9" inherits="UICheckButtonTemplate" text="CheckButton9">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="250" y="-150" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="MT">
+							<Size x="30" y="30" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-15" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnHealCheckBox(1,9);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton11_10" inherits="UICheckButtonTemplate" text="CheckButton10">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="250" y="-200" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="T2">
+							<Size x="30" y="30" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-15" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnHealCheckBox(1,10);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton11_11" inherits="UICheckButtonTemplate" text="CheckButton11">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="300" y="-200" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="T3">
+							<Size x="30" y="30" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-15" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnHealCheckBox(1,11);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton11_12" inherits="UICheckButtonTemplate" text="CheckButton12">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="350" y="-200" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="T4">
+							<Size x="30" y="30" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-15" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnHealCheckBox(1,12);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+						<CheckButton name="CheckButton12_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="200" y="-250" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="1">
+							<Size x="30" y="30" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-15" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnHealCheckBox(2,1);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton12_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="250" y="-250" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="2">
+							<Size x="30" y="30" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-15" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnHealCheckBox(2,2);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton12_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="300" y="-250" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="3">
+							<Size x="30" y="30" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-15" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnHealCheckBox(2,3);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton12_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="350" y="-250" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="4">
+							<Size x="30" y="30" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-15" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnHealCheckBox(2,4);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton12_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="200" y="-300" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="5">
+							<Size x="30" y="30" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-15" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnHealCheckBox(2,5);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton12_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="250" y="-300" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="6">
+							<Size x="30" y="30" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-15" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnHealCheckBox(2,6);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton12_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="300" y="-300" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="7">
+							<Size x="30" y="30" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-15" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnHealCheckBox(2,7);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton12_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="350" y="-300" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="8">
+							<Size x="30" y="30" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-15" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnHealCheckBox(2,8);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton12_9" inherits="UICheckButtonTemplate" text="CheckButton9">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="200" y="-350" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="MT">
+							<Size x="30" y="30" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-15" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnHealCheckBox(2,9);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton12_10" inherits="UICheckButtonTemplate" text="CheckButton10">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="300" y="-350" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="T2">
+							<Size x="30" y="30" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-15" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnHealCheckBox(2,10);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton12_11" inherits="UICheckButtonTemplate" text="CheckButton11">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="350" y="-350" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="T3">
+							<Size x="30" y="30" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-15" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnHealCheckBox(2,11);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton12_1" inherits="UICheckButtonTemplate" text="CheckButton12">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="400" y="-350" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="T4">
+							<Size x="30" y="30" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-15" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnHealCheckBox(2,12);
 					</OnClick>
 				</Scripts>
 			</CheckButton>
@@ -89,15 +549,70 @@
 					<Anchor point="TOPLEFT" x="47" y="-150" />
 				</Anchors>
 				<Scripts>
-					<OnTextChanged>
-						RHEL_HealAnounce();
-					</OnTextChanged>
+					<OnTabPressed>HealerName2:SetFocus();</OnTabPressed>
+					<OnTextChanged>HealerNameChange(self);</OnTextChanged>
+					<OnEscapePressed>EditBox_OnEscapePressed();</OnEscapePressed>
 				</Scripts>
 			</EditBox>
+			<EditBox name="HealerName2" inherits="InputBoxTemplate" id="15" autoFocus="false">
+				<Size x="100" y="32" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="47" y="-250" />
+				</Anchors>
+				<Scripts>
+					<OnTabPressed>HealerName1:SetFocus();</OnTabPressed>
+					<OnTextChanged>HealerNameChange(self);</OnTextChanged>
+					<OnEscapePressed>EditBox_OnEscapePressed();</OnEscapePressed>
+				</Scripts>
+			</EditBox>
+			<Frame name="HealerClass1">
+				<Size>
+					<AbsDimension x="24" y="24"/>
+				</Size>
+				<Anchors>
+					<Anchor point="CENTER" relativeTo="HealerName1">
+						<Offset>
+							<AbsDimension x="-95" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture name="$parentTexture" file="Interface\AddOns\RHEL\Icons\Warrior">
+							<Anchors>
+								<Anchor point="CENTER" relativeTo="CENTER"/>
+							</Anchors>
+							<TexCoords left="0" right="1" top="0" bottom="1"/>
+						</Texture>
+					</Layer>
+				</Layers>
+			</Frame>
+			<Frame name="HealerClass2">
+				<Size>
+					<AbsDimension x="24" y="24"/>
+				</Size>
+				<Anchors>
+					<Anchor point="CENTER" relativeTo="HealerName2">
+						<Offset>
+							<AbsDimension x="-150" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture name="$parentTexture" file="Interface\AddOns\RHEL\Icons\Warrior">
+							<Anchors>
+								<Anchor point="CENTER" relativeTo="CENTER"/>
+							</Anchors>
+							<TexCoords left="0" right="1" top="0" bottom="1"/>
+						</Texture>
+					</Layer>
+				</Layers>
+			</Frame>
 		</Frames>
 		<Scripts>
 			<OnLoad>
-				RHEL_OnLoad()
+				RHEL_HealsOnLoad()
 			</OnLoad>
 			<OnMouseDown>
 				RHEL_OnMouseDown()
