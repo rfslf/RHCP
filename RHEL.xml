@@ -145,7 +145,7 @@
 			</CheckButton>
 			<CheckButton name="CheckButton11_5" inherits="UICheckButtonTemplate" text="CheckButton5">
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-150" />
+					<Anchor point="TOPLEFT" x="200" y="-150" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
@@ -165,7 +165,7 @@
 			</CheckButton>
 			<CheckButton name="CheckButton11_6" inherits="UICheckButtonTemplate" text="CheckButton6">
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-150" />
+					<Anchor point="TOPLEFT" x="250" y="-150" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
@@ -185,7 +185,7 @@
 			</CheckButton>
 			<CheckButton name="CheckButton11_7" inherits="UICheckButtonTemplate" text="CheckButton7">
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-150" />
+					<Anchor point="TOPLEFT" x="300" y="-150" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
@@ -205,7 +205,7 @@
 			</CheckButton>
 			<CheckButton name="CheckButton11_8" inherits="UICheckButtonTemplate" text="CheckButton8">
 				<Anchors>
-					<Anchor point="TOPLEFT" x="400" y="-150" />
+					<Anchor point="TOPLEFT" x="350" y="-150" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
@@ -225,7 +225,7 @@
 			</CheckButton>
 			<CheckButton name="CheckButton11_9" inherits="UICheckButtonTemplate" text="CheckButton9">
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-150" />
+					<Anchor point="TOPLEFT" x="200" y="-200" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
@@ -485,7 +485,7 @@
 			</CheckButton>
 			<CheckButton name="CheckButton12_10" inherits="UICheckButtonTemplate" text="CheckButton10">
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-350" />
+					<Anchor point="TOPLEFT" x="250" y="-350" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
@@ -505,7 +505,7 @@
 			</CheckButton>
 			<CheckButton name="CheckButton12_11" inherits="UICheckButtonTemplate" text="CheckButton11">
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-350" />
+					<Anchor point="TOPLEFT" x="300" y="-350" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
@@ -523,9 +523,9 @@
 					</OnClick>
 				</Scripts>
 			</CheckButton>
-			<CheckButton name="CheckButton12_1" inherits="UICheckButtonTemplate" text="CheckButton12">
+			<CheckButton name="CheckButton12_12" inherits="UICheckButtonTemplate" text="CheckButton12">
 				<Anchors>
-					<Anchor point="TOPLEFT" x="400" y="-350" />
+					<Anchor point="TOPLEFT" x="350" y="-350" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
@@ -544,9 +544,9 @@
 				</Scripts>
 			</CheckButton>
 			<EditBox name="HealerName1" inherits="InputBoxTemplate" id="15" autoFocus="false">
-				<Size x="100" y="32" />
+				<Size x="100" y="40" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="47" y="-150" />
+					<Anchor point="TOPLEFT" x="50" y="-150" />
 				</Anchors>
 				<Scripts>
 					<OnTabPressed>HealerName2:SetFocus();</OnTabPressed>
@@ -555,9 +555,9 @@
 				</Scripts>
 			</EditBox>
 			<EditBox name="HealerName2" inherits="InputBoxTemplate" id="15" autoFocus="false">
-				<Size x="100" y="32" />
+				<Size x="100" y="40" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="47" y="-250" />
+					<Anchor point="TOPLEFT" x="50" y="-300" />
 				</Anchors>
 				<Scripts>
 					<OnTabPressed>HealerName1:SetFocus();</OnTabPressed>
