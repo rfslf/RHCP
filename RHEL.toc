@@ -2,7 +2,7 @@
 ## Version: 0.1.0
 ## Author: Stanislav
 ## Interface: 80205
-## SavedVariables: RHEL_Heals, RHEL_Healer
+## SavedVariables: RHEL_Heals, RHEL_Healers
 
 RHEL.xml
 RHEL.lua
