@@ -1,11 +1,12 @@
+﻿
 <Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.blizzard.com/wow/ui/">
 	<Script file="RHEL.lua" />
-	<Frame name="RHEL_MainFrame" hidden="true" parent="UIParent" movable="true" enableMouse="true">
+	<Frame name="RHEL_MainFrame" parent="UIParent" movable="true" enableMouse="true">
 		<Size>
-			<AbsDimension x="1024" y="900" />
+			<AbsDimension x="1025" y="760" />
 		</Size>
 		<Anchors>
-			<Anchor point="CENTER" x="34" y="34" />
+			<Anchor point="CENTER" x="0" y="0" />
 		</Anchors>
 		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
 			<BackgroundInsets>
@@ -23,7 +24,7 @@
 				<Anchors>
 					<Anchor point="TOP">
 						<Offset>
-							<AbsDimension x="-100" y="-50" />
+							<AbsDimension x="-150" y="-30" />
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -31,9 +32,9 @@
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormalSmall" text="Raid Name">
 							<Anchors>
-								<Anchor point="CENTER">
+								<Anchor point="TOPRIGHT">
 									<Offset>
-										<AbsDimension x="0" y="25"/>
+										<AbsDimension x="35" y="15" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -41,14 +42,16 @@
 					</Layer>
 				</Layers>
 				<Scripts>
-					<OnLoad>UIDropDownMenu_Initialize(RaidNameDropdown, RaidNameDropdown_OnLoad)</OnLoad>
+					<OnLoad>
+						UIDropDownMenu_Initialize(RaidNameDropdown, RaidNameDropdown_OnLoad);
+					</OnLoad>
 				</Scripts>
 			</Frame>
 			<Frame name="BossNameDropdown" inherits="UIDropDownMenuTemplate" id="1">
 				<Anchors>
 					<Anchor point="TOP">
 						<Offset>
-							<AbsDimension x="100" y="-50" />
+							<AbsDimension x="50" y="-30" />
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -56,9 +59,9 @@
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormalSmall" text="Boss Name">
 							<Anchors>
-								<Anchor point="CENTER">
+								<Anchor point="TOPRIGHT">
 									<Offset>
-										<AbsDimension x="0" y="25"/>
+										<AbsDimension x="35" y="15" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -66,61 +69,23 @@
 					</Layer>
 				</Layers>
 				<Scripts>
-					<OnLoad>UIDropDownMenu_Initialize(BossNameDropdown, BossNameDropdown_OnLoad)</OnLoad>
+					<OnLoad>
+						UIDropDownMenu_Initialize(BossNameDropdown, BossNameDropdown_OnLoad);
+					</OnLoad>
 				</Scripts>
 			</Frame>
-			<Button name="UIPanelCloseButton" inherits="UIPanelButtonTemplate" text="Close">
-				<Size x="125" y="50" />
-				<Anchors>
-					<Anchor point="TOPLEFT" x="850" y="-850" />
-				</Anchors>
-				<Scripts>
-					<OnClick>
-						self:GetParent():Hide();
-					</OnClick>
-				</Scripts>
-			</Button>
-			<Button name="Heals" inherits="UIPanelButtonTemplate" text="Heals anounce">
-				<Size x="125" y="50" />
-				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-850" />
-				</Anchors>
-				<Scripts>
-					<OnClick>
-						RHEL_HealAnounce();
-					</OnClick>
-				</Scripts>
-			</Button>
-			<Button name="Buffs" inherits="UIPanelButtonTemplate" text="Buffs anounce">
-				<Size x="125" y="50" />
-				<Anchors>
-					<Anchor point="TOPLEFT" x="476" y="-850" />
-				</Anchors>
-				<Scripts>
-					<OnClick>
-						RHEL_HealAnounce();
-					</OnClick>
-				</Scripts>
-			</Button>
-			<Button name="Dispells" inherits="UIPanelButtonTemplate" text="Dispells anounce">
-				<Size x="125" y="50" />
-				<Anchors>
-					<Anchor point="TOPLEFT" x="679" y="-850" />
-				</Anchors>
-				<Scripts>
-					<OnClick>
-						RHEL_HealAnounce();
-					</OnClick>
-				</Scripts>
-			</Button>
+			
 			<CheckButton name="CheckButton11_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="200" y="-50" />
+					<Anchor point="TOPLEFT" x="200" y="-135" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="1">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -134,13 +99,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton11_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-50" />
+					<Anchor point="TOPLEFT" x="250" y="-135" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="2">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -154,13 +122,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton11_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-50" />
+					<Anchor point="TOPLEFT" x="300" y="-135" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="3">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -174,13 +145,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton11_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-50" />
+					<Anchor point="TOPLEFT" x="350" y="-135" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="4">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -194,13 +168,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton11_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="200" y="-75" />
+					<Anchor point="TOPLEFT" x="200" y="-155" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="5">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -214,13 +191,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton11_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-75" />
+					<Anchor point="TOPLEFT" x="250" y="-155" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="6">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -234,13 +214,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton11_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-75" />
+					<Anchor point="TOPLEFT" x="300" y="-155" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="7">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -254,13 +237,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton11_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-75" />
+					<Anchor point="TOPLEFT" x="350" y="-155" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="8">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -274,13 +260,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton11_9" inherits="UICheckButtonTemplate" text="CheckButton9">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="200" y="-100" />
+					<Anchor point="TOPLEFT" x="200" y="-175" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="MT">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -294,13 +283,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton11_10" inherits="UICheckButtonTemplate" text="CheckButton10">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-100" />
+					<Anchor point="TOPLEFT" x="250" y="-175" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="T2">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -314,13 +306,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton11_11" inherits="UICheckButtonTemplate" text="CheckButton11">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-100" />
+					<Anchor point="TOPLEFT" x="300" y="-175" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="T3">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -334,13 +329,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton11_12" inherits="UICheckButtonTemplate" text="CheckButton12">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-100" />
+					<Anchor point="TOPLEFT" x="350" y="-175" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="T4">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -354,13 +352,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton12_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="200" y="-150" />
+					<Anchor point="TOPLEFT" x="200" y="-205" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="1">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -374,13 +375,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton12_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-150" />
+					<Anchor point="TOPLEFT" x="250" y="-205" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="2">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -394,13 +398,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton12_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-150" />
+					<Anchor point="TOPLEFT" x="300" y="-205" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="3">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -414,13 +421,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton12_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-150" />
+					<Anchor point="TOPLEFT" x="350" y="-205" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="4">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -434,13 +444,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton12_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="200" y="-175" />
+					<Anchor point="TOPLEFT" x="200" y="-225" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="5">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -454,13 +467,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton12_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-175" />
+					<Anchor point="TOPLEFT" x="250" y="-225" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="6">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -474,13 +490,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton12_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-175" />
+					<Anchor point="TOPLEFT" x="300" y="-225" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="7">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -494,13 +513,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton12_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-175" />
+					<Anchor point="TOPLEFT" x="350" y="-225" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="8">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -514,13 +536,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton12_9" inherits="UICheckButtonTemplate" text="CheckButton9">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="200" y="-200" />
+					<Anchor point="TOPLEFT" x="200" y="-245" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="MT">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -534,13 +559,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton12_10" inherits="UICheckButtonTemplate" text="CheckButton10">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-200" />
+					<Anchor point="TOPLEFT" x="250" y="-245" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="T2">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -554,13 +582,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton12_11" inherits="UICheckButtonTemplate" text="CheckButton11">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-200" />
+					<Anchor point="TOPLEFT" x="300" y="-245" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="T3">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -574,13 +605,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton12_12" inherits="UICheckButtonTemplate" text="CheckButton12">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-200" />
+					<Anchor point="TOPLEFT" x="350" y="-245" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="T4">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -594,13 +628,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton13_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="200" y="-250" />
+					<Anchor point="TOPLEFT" x="200" y="-275" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="1">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -614,13 +651,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton13_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-250" />
+					<Anchor point="TOPLEFT" x="250" y="-275" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="2">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -634,13 +674,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton13_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-250" />
+					<Anchor point="TOPLEFT" x="300" y="-275" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="3">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -654,13 +697,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton13_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-250" />
+					<Anchor point="TOPLEFT" x="350" y="-275" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="4">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -674,13 +720,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton13_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="200" y="-275" />
+					<Anchor point="TOPLEFT" x="200" y="-295" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="5">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -694,13 +743,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton13_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-275" />
+					<Anchor point="TOPLEFT" x="250" y="-295" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="6">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -714,13 +766,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton13_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-275" />
+					<Anchor point="TOPLEFT" x="300" y="-295" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="7">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -734,13 +789,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton13_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-275" />
+					<Anchor point="TOPLEFT" x="350" y="-295" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="8">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -754,13 +812,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton13_9" inherits="UICheckButtonTemplate" text="CheckButton9">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="200" y="-300" />
+					<Anchor point="TOPLEFT" x="200" y="-315" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="MT">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -774,13 +835,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton13_10" inherits="UICheckButtonTemplate" text="CheckButton10">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-300" />
+					<Anchor point="TOPLEFT" x="250" y="-315" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="T2">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -794,13 +858,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton13_11" inherits="UICheckButtonTemplate" text="CheckButton11">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-300" />
+					<Anchor point="TOPLEFT" x="300" y="-315" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="T3">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -814,13 +881,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton13_12" inherits="UICheckButtonTemplate" text="CheckButton12">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-300" />
+					<Anchor point="TOPLEFT" x="350" y="-315" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="T4">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -834,13 +904,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton14_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="200" y="-350" />
+					<Anchor point="TOPLEFT" x="200" y="-345" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="1">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -854,13 +927,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton14_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-350" />
+					<Anchor point="TOPLEFT" x="250" y="-345" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="2">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -874,13 +950,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton14_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-350" />
+					<Anchor point="TOPLEFT" x="300" y="-345" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="3">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -894,13 +973,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton14_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-350" />
+					<Anchor point="TOPLEFT" x="350" y="-345" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="4">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -914,13 +996,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton14_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="200" y="-375" />
+					<Anchor point="TOPLEFT" x="200" y="-365" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="5">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -934,13 +1019,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton14_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-375" />
+					<Anchor point="TOPLEFT" x="250" y="-365" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="6">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -954,13 +1042,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton14_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-375" />
+					<Anchor point="TOPLEFT" x="300" y="-365" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="7">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -974,13 +1065,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton14_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-375" />
+					<Anchor point="TOPLEFT" x="350" y="-365" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="8">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -994,13 +1088,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton14_9" inherits="UICheckButtonTemplate" text="CheckButton9">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="200" y="-400" />
+					<Anchor point="TOPLEFT" x="200" y="-385" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="MT">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1014,13 +1111,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton14_10" inherits="UICheckButtonTemplate" text="CheckButton10">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-400" />
+					<Anchor point="TOPLEFT" x="250" y="-385" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="T2">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1034,13 +1134,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton14_11" inherits="UICheckButtonTemplate" text="CheckButton11">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-400" />
+					<Anchor point="TOPLEFT" x="300" y="-385" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="T3">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1054,13 +1157,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton14_12" inherits="UICheckButtonTemplate" text="CheckButton12">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-400" />
+					<Anchor point="TOPLEFT" x="350" y="-385" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="T4">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1074,13 +1180,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton15_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="200" y="-450" />
+					<Anchor point="TOPLEFT" x="200" y="-415" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="1">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1094,13 +1203,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton15_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-450" />
+					<Anchor point="TOPLEFT" x="250" y="-415" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="2">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1114,13 +1226,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton15_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-450" />
+					<Anchor point="TOPLEFT" x="300" y="-415" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="3">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1134,13 +1249,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton15_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-450" />
+					<Anchor point="TOPLEFT" x="350" y="-415" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="4">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1154,13 +1272,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton15_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="200" y="-475" />
+					<Anchor point="TOPLEFT" x="200" y="-435" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="5">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1174,13 +1295,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton15_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-475" />
+					<Anchor point="TOPLEFT" x="250" y="-435" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="6">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1194,13 +1318,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton15_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-475" />
+					<Anchor point="TOPLEFT" x="300" y="-435" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="7">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1214,13 +1341,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton15_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-475" />
+					<Anchor point="TOPLEFT" x="350" y="-435" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="8">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1234,13 +1364,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton15_9" inherits="UICheckButtonTemplate" text="CheckButton9">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="200" y="-500" />
+					<Anchor point="TOPLEFT" x="200" y="-455" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="MT">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1254,13 +1387,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton15_10" inherits="UICheckButtonTemplate" text="CheckButton10">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-500" />
+					<Anchor point="TOPLEFT" x="250" y="-455" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="T2">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1274,13 +1410,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton15_11" inherits="UICheckButtonTemplate" text="CheckButton11">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-500" />
+					<Anchor point="TOPLEFT" x="300" y="-455" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="T3">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1294,13 +1433,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton15_12" inherits="UICheckButtonTemplate" text="CheckButton12">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-500" />
+					<Anchor point="TOPLEFT" x="350" y="-455" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="T4">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1314,13 +1456,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton16_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="200" y="-550" />
+					<Anchor point="TOPLEFT" x="200" y="-485" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="1">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1334,13 +1479,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton16_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-550" />
+					<Anchor point="TOPLEFT" x="250" y="-485" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="2">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1354,13 +1502,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton16_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-550" />
+					<Anchor point="TOPLEFT" x="300" y="-485" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="3">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1374,13 +1525,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton16_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-550" />
+					<Anchor point="TOPLEFT" x="350" y="-485" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="4">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1394,13 +1548,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton16_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="200" y="-575" />
+					<Anchor point="TOPLEFT" x="200" y="-505" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="5">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1414,13 +1571,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton16_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-575" />
+					<Anchor point="TOPLEFT" x="250" y="-505" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="6">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1434,13 +1594,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton16_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-575" />
+					<Anchor point="TOPLEFT" x="300" y="-505" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="7">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1454,13 +1617,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton16_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-575" />
+					<Anchor point="TOPLEFT" x="350" y="-505" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="8">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1474,13 +1640,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton16_9" inherits="UICheckButtonTemplate" text="CheckButton9">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="200" y="-600" />
+					<Anchor point="TOPLEFT" x="200" y="-525" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="MT">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1494,13 +1663,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton16_10" inherits="UICheckButtonTemplate" text="CheckButton10">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-600" />
+					<Anchor point="TOPLEFT" x="250" y="-525" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="T2">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1514,13 +1686,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton16_11" inherits="UICheckButtonTemplate" text="CheckButton11">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-600" />
+					<Anchor point="TOPLEFT" x="300" y="-525" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="T3">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1534,13 +1709,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton16_12" inherits="UICheckButtonTemplate" text="CheckButton12">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-600" />
+					<Anchor point="TOPLEFT" x="350" y="-525" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="T4">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1554,13 +1732,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton17_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="200" y="-650" />
+					<Anchor point="TOPLEFT" x="200" y="-555" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="1">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1574,13 +1755,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton17_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-650" />
+					<Anchor point="TOPLEFT" x="250" y="-555" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="2">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1594,13 +1778,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton17_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-650" />
+					<Anchor point="TOPLEFT" x="300" y="-555" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="3">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1614,13 +1801,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton17_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-650" />
+					<Anchor point="TOPLEFT" x="350" y="-555" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="4">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1634,13 +1824,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton17_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="200" y="-675" />
+					<Anchor point="TOPLEFT" x="200" y="-575" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="5">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1654,13 +1847,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton17_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-675" />
+					<Anchor point="TOPLEFT" x="250" y="-575" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="6">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1674,13 +1870,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton17_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-675" />
+					<Anchor point="TOPLEFT" x="300" y="-575" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="7">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1694,13 +1893,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton17_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-675" />
+					<Anchor point="TOPLEFT" x="350" y="-575" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="8">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1714,13 +1916,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton17_9" inherits="UICheckButtonTemplate" text="CheckButton9">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="200" y="-700" />
+					<Anchor point="TOPLEFT" x="200" y="-595" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="MT">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1734,13 +1939,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton17_10" inherits="UICheckButtonTemplate" text="CheckButton10">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-700" />
+					<Anchor point="TOPLEFT" x="250" y="-595" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="T2">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1754,13 +1962,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton17_11" inherits="UICheckButtonTemplate" text="CheckButton11">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-700" />
+					<Anchor point="TOPLEFT" x="300" y="-595" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="T3">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1774,13 +1985,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton17_12" inherits="UICheckButtonTemplate" text="CheckButton12">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-700" />
+					<Anchor point="TOPLEFT" x="350" y="-595" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="T4">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1794,13 +2008,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton18_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="200" y="-750" />
+					<Anchor point="TOPLEFT" x="200" y="-625" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="1">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1814,13 +2031,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton18_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-750" />
+					<Anchor point="TOPLEFT" x="250" y="-625" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="2">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1834,13 +2054,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton18_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-750" />
+					<Anchor point="TOPLEFT" x="300" y="-625" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="3">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1854,13 +2077,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton18_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-750" />
+					<Anchor point="TOPLEFT" x="350" y="-625" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="4">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1874,13 +2100,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton18_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="200" y="-775" />
+					<Anchor point="TOPLEFT" x="200" y="-645" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="5">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1894,13 +2123,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton18_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-775" />
+					<Anchor point="TOPLEFT" x="250" y="-645" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="6">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1914,13 +2146,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton18_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-775" />
+					<Anchor point="TOPLEFT" x="300" y="-645" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="7">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1934,13 +2169,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton18_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-775" />
+					<Anchor point="TOPLEFT" x="350" y="-645" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="8">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1954,13 +2192,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton18_9" inherits="UICheckButtonTemplate" text="CheckButton9">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="200" y="-800" />
+					<Anchor point="TOPLEFT" x="200" y="-665" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="MT">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1974,13 +2215,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton18_10" inherits="UICheckButtonTemplate" text="CheckButton10">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="250" y="-800" />
+					<Anchor point="TOPLEFT" x="250" y="-665" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="T2">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -1994,13 +2238,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton18_11" inherits="UICheckButtonTemplate" text="CheckButton11">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="300" y="-800" />
+					<Anchor point="TOPLEFT" x="300" y="-665" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="T3">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -2014,13 +2261,16 @@
 				</Scripts>
 			</CheckButton>
 			<CheckButton name="CheckButton18_12" inherits="UICheckButtonTemplate" text="CheckButton12">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="350" y="-800" />
+					<Anchor point="TOPLEFT" x="350" y="-665" />
 				</Anchors>
 				<Layers>
 					<Layer level="OVERLAY">
 						<FontString inherits="GameFontNormal" text="T4">
-							<Size x="30" y="30" />
+							<Size x="25" y="25" />
 							<Anchors>
 								<Anchor point="TOPLEFT" x="-20" y="0" />
 							</Anchors>
@@ -2033,10 +2283,2954 @@
 					</OnClick>
 				</Scripts>
 			</CheckButton>
+			<CheckButton name="CheckButton21_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="420" y="-135" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="1">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(1,1);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton21_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="470" y="-135" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="2">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(1,2);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton21_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="520" y="-135" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="3">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(1,3);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton21_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="570" y="-135" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="4">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(1,4);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton21_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="420" y="-155" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="5">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(1,5);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton21_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="470" y="-155" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="6">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(1,6);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton21_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="520" y="-155" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="7">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(1,7);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton21_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="570" y="-155" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="8">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(1,8);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton22_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="420" y="-205" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="1">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(2,1);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton22_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="470" y="-205" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="2">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(2,2);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton22_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="520" y="-205" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="3">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(2,3);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton22_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="570" y="-205" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="4">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(2,4);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton22_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="420" y="-225" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="5">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(2,5);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton22_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="470" y="-225" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="6">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(2,6);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton22_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="520" y="-225" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="7">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(2,7);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton22_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="570" y="-225" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="8">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(2,8);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton23_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="420" y="-275" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="1">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(3,1);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton23_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="470" y="-275" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="2">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(3,2);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton23_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="520" y="-275" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="3">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(3,3);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton23_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="570" y="-275" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="4">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(3,4);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton23_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="420" y="-295" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="5">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(3,5);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton23_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="470" y="-295" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="6">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(3,6);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton23_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="520" y="-295" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="7">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(3,7);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton23_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="570" y="-295" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="8">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(3,8);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton24_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="420" y="-345" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="1">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(4,1);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton24_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="470" y="-345" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="2">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(4,2);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton24_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="520" y="-345" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="3">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(4,3);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton24_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="570" y="-345" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="4">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(4,4);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton24_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="420" y="-365" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="5">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(4,5);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton24_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="470" y="-365" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="6">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(4,6);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton24_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="520" y="-365" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="7">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(4,7);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton24_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="570" y="-365" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="8">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(4,8);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton25_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="420" y="-415" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="1">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(5,1);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton25_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="470" y="-415" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="2">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(5,2);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton25_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="520" y="-415" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="3">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(5,3);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton25_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="570" y="-415" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="4">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(5,4);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton25_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="420" y="-435" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="5">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(5,5);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton25_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="470" y="-435" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="6">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(5,6);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton25_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="520" y="-435" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="7">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(5,7);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton25_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="570" y="-435" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="8">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(5,8);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton26_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="420" y="-485" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="1">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(6,1);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton26_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="470" y="-485" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="2">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(6,2);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton26_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="520" y="-485" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="3">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(6,3);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton26_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="570" y="-485" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="4">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(6,4);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton26_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="420" y="-505" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="5">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(6,5);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton26_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="470" y="-505" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="6">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(6,6);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton26_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="520" y="-505" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="7">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(6,7);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton26_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="570" y="-505" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="8">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(6,8);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton27_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="420" y="-555" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="1">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(7,1);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton27_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="470" y="-555" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="2">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(7,2);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton27_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="520" y="-555" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="3">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(7,3);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton27_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="570" y="-555" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="4">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(7,4);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton27_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="420" y="-575" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="5">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(7,5);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton27_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="470" y="-575" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="6">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(7,6);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton27_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="520" y="-575" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="7">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(7,7);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton27_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="570" y="-575" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="8">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(7,8);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton28_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="420" y="-625" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="1">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(8,1);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton28_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="470" y="-625" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="2">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(8,2);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton28_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="520" y="-625" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="3">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(8,3);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton28_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="570" y="-625" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="4">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(8,4);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton28_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="420" y="-645" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="5">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(8,5);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton28_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="470" y="-645" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="6">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(8,6);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton28_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="520" y="-645" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="7">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(8,7);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton28_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="570" y="-645" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="8">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnBuffCheckBox(8,8);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton31_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="640" y="-135" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="1">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(1,1);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton31_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="690" y="-135" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="2">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(1,2);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton31_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="740" y="-135" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="3">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(1,3);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton31_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="790" y="-135" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="4">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(1,4);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton31_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="640" y="-155" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="5">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(1,5);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton31_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="690" y="-155" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="6">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(1,6);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton31_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="740" y="-155" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="7">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(1,7);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton31_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="790" y="-155" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="8">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(1,8);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton32_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="640" y="-205" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="1">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(2,1);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton32_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="690" y="-205" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="2">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(2,2);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton32_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="740" y="-205" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="3">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(2,3);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton32_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="790" y="-205" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="4">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(2,4);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton32_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="640" y="-225" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="5">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(2,5);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton32_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="690" y="-225" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="6">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(2,6);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton32_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="740" y="-225" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="7">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(2,7);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton32_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="790" y="-225" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="8">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(2,8);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton33_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="640" y="-275" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="1">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(3,1);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton33_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="690" y="-275" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="2">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(3,2);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton33_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="740" y="-275" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="3">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(3,3);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton33_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="790" y="-275" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="4">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(3,4);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton33_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="640" y="-295" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="5">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(3,5);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton33_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="690" y="-295" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="6">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(3,6);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton33_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="740" y="-295" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="7">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(3,7);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton33_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="790" y="-295" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="8">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(3,8);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton34_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="640" y="-345" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="1">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(4,1);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton34_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="690" y="-345" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="2">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(4,2);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton34_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="740" y="-345" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="3">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(4,3);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton34_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="790" y="-345" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="4">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(4,4);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton34_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="640" y="-365" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="5">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(4,5);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton34_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="690" y="-365" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="6">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(4,6);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton34_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="740" y="-365" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="7">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(4,7);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton34_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="790" y="-365" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="8">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(4,8);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton35_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="640" y="-415" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="1">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(5,1);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton35_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="690" y="-415" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="2">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(5,2);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton35_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="740" y="-415" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="3">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(5,3);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton35_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="790" y="-415" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="4">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(5,4);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton35_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="640" y="-435" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="5">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(5,5);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton35_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="690" y="-435" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="6">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(5,6);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton35_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="740" y="-435" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="7">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(5,7);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton35_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="790" y="-435" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="8">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(5,8);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton36_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="640" y="-485" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="1">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(6,1);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton36_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="690" y="-485" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="2">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(6,2);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton36_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="740" y="-485" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="3">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(6,3);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton36_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="790" y="-485" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="4">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(6,4);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton36_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="640" y="-505" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="5">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(6,5);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton36_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="690" y="-505" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="6">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(6,6);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton36_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="740" y="-505" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="7">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(6,7);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton36_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="790" y="-505" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="8">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(6,8);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton37_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="640" y="-555" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="1">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(7,1);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton37_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="690" y="-555" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="2">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(7,2);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton37_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="740" y="-555" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="3">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(7,3);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton37_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="790" y="-555" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="4">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(7,4);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton37_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="640" y="-575" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="5">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(7,5);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton37_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="690" y="-575" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="6">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(7,6);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton37_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="740" y="-575" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="7">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(7,7);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton37_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="790" y="-575" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="8">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(7,8);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton38_1" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="640" y="-625" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="1">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(8,1);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton38_2" inherits="UICheckButtonTemplate" text="CheckButton2">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="690" y="-625" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="2">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(8,2);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton38_3" inherits="UICheckButtonTemplate" text="CheckButton3">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="740" y="-625" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="3">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(8,3);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton38_4" inherits="UICheckButtonTemplate" text="CheckButton4">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="790" y="-625" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="4">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(8,4);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton38_5" inherits="UICheckButtonTemplate" text="CheckButton5">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="640" y="-645" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="5">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(8,5);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton38_6" inherits="UICheckButtonTemplate" text="CheckButton6">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="690" y="-645" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="6">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(8,6);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton38_7" inherits="UICheckButtonTemplate" text="CheckButton7">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="740" y="-645" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="7">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(8,7);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="CheckButton38_8" inherits="UICheckButtonTemplate" text="CheckButton8">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="790" y="-645" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="8">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnDispellCheckBox(8,8);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
 			<EditBox name="HealerName1" inherits="InputBoxTemplate" id="15" autoFocus="false">
 				<Size x="100" y="40" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="50" y="-50" />
+					<Anchor point="TOPLEFT" x="50" y="-135" />
 				</Anchors>
 				<Scripts>
 					<OnTabPressed>
@@ -2053,7 +5247,7 @@
 			<EditBox name="HealerName2" inherits="InputBoxTemplate" id="15" autoFocus="false">
 				<Size x="100" y="40" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="50" y="-150" />
+					<Anchor point="TOPLEFT" x="50" y="-205" />
 				</Anchors>
 				<Scripts>
 					<OnTabPressed>
@@ -2070,7 +5264,7 @@
 			<EditBox name="HealerName3" inherits="InputBoxTemplate" id="15" autoFocus="false">
 				<Size x="100" y="40" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="50" y="-250" />
+					<Anchor point="TOPLEFT" x="50" y="-275" />
 				</Anchors>
 				<Scripts>
 					<OnTabPressed>
@@ -2087,7 +5281,7 @@
 			<EditBox name="HealerName4" inherits="InputBoxTemplate" id="15" autoFocus="false">
 				<Size x="100" y="40" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="50" y="-350" />
+					<Anchor point="TOPLEFT" x="50" y="-345" />
 				</Anchors>
 				<Scripts>
 					<OnTabPressed>
@@ -2104,7 +5298,7 @@
 			<EditBox name="HealerName5" inherits="InputBoxTemplate" id="15" autoFocus="false">
 				<Size x="100" y="40" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="50" y="-450" />
+					<Anchor point="TOPLEFT" x="50" y="-415" />
 				</Anchors>
 				<Scripts>
 					<OnTabPressed>
@@ -2121,7 +5315,7 @@
 			<EditBox name="HealerName6" inherits="InputBoxTemplate" id="15" autoFocus="false">
 				<Size x="100" y="40" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="50" y="-550" />
+					<Anchor point="TOPLEFT" x="50" y="-485" />
 				</Anchors>
 				<Scripts>
 					<OnTabPressed>
@@ -2138,7 +5332,7 @@
 			<EditBox name="HealerName7" inherits="InputBoxTemplate" id="15" autoFocus="false">
 				<Size x="100" y="40" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="50" y="-650" />
+					<Anchor point="TOPLEFT" x="50" y="-555" />
 				</Anchors>
 				<Scripts>
 					<OnTabPressed>
@@ -2155,7 +5349,7 @@
 			<EditBox name="HealerName8" inherits="InputBoxTemplate" id="15" autoFocus="false">
 				<Size x="100" y="40" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="50" y="-750" />
+					<Anchor point="TOPLEFT" x="50" y="-625" />
 				</Anchors>
 				<Scripts>
 					<OnTabPressed>
@@ -2175,7 +5369,7 @@
 				</Size>
 				<Anchors>
 					<Anchor point="CENTER" relativeTo="HealerName1">
-						<Offset x="-70" y="0" />
+						<Offset x="-70" />
 					</Anchor>
 				</Anchors>
 				<Layers>
@@ -2195,7 +5389,7 @@
 				</Size>
 				<Anchors>
 					<Anchor point="CENTER" relativeTo="HealerName2">
-						<Offset x="-70" y="0" />
+						<Offset x="-70" />
 					</Anchor>
 				</Anchors>
 				<Layers>
@@ -2215,7 +5409,7 @@
 				</Size>
 				<Anchors>
 					<Anchor point="CENTER" relativeTo="HealerName3">
-						<Offset x="-70" y="0" />
+						<Offset x="-70" />
 					</Anchor>
 				</Anchors>
 				<Layers>
@@ -2235,7 +5429,7 @@
 				</Size>
 				<Anchors>
 					<Anchor point="CENTER" relativeTo="HealerName4">
-						<Offset x="-70" y="0" />
+						<Offset x="-70" />
 					</Anchor>
 				</Anchors>
 				<Layers>
@@ -2255,7 +5449,7 @@
 				</Size>
 				<Anchors>
 					<Anchor point="CENTER" relativeTo="HealerName5">
-						<Offset x="-70" y="0" />
+						<Offset x="-70" />
 					</Anchor>
 				</Anchors>
 				<Layers>
@@ -2275,7 +5469,7 @@
 				</Size>
 				<Anchors>
 					<Anchor point="CENTER" relativeTo="HealerName6">
-						<Offset x="-70" y="0" />
+						<Offset x="-70" />
 					</Anchor>
 				</Anchors>
 				<Layers>
@@ -2295,7 +5489,7 @@
 				</Size>
 				<Anchors>
 					<Anchor point="CENTER" relativeTo="HealerName7">
-						<Offset x="-70" y="0" />
+						<Offset x="-70" />
 					</Anchor>
 				</Anchors>
 				<Layers>
@@ -2315,7 +5509,7 @@
 				</Size>
 				<Anchors>
 					<Anchor point="CENTER" relativeTo="HealerName8">
-						<Offset x="-70" y="0" />
+						<Offset x="-70" />
 					</Anchor>
 				</Anchors>
 				<Layers>
@@ -2329,19 +5523,227 @@
 					</Layer>
 				</Layers>
 			</Frame>
+			<Button name="Healer1" inherits="UIPanelButtonTemplate" text="First healer">
+				<Size x="120" y="50" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="880" y="-135" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						RHEL_HealerWisper(1);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="Healer2" inherits="UIPanelButtonTemplate" text="Second healer">
+				<Size x="120" y="50" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="880" y="-205" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						RHEL_HealerWisper(2);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="Healer3" inherits="UIPanelButtonTemplate" text="Third healer">
+				<Size x="120" y="50" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="880" y="-275" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						RHEL_HealerWisper(3);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="Healer4" inherits="UIPanelButtonTemplate" text="Fourth healer">
+				<Size x="120" y="50" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="880" y="-345" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						RHEL_HealerWisper(4);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="Healer5" inherits="UIPanelButtonTemplate" text="Fifth healer">
+				<Size x="120" y="50" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="880" y="-415" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						RHEL_HealerWisper(5);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="Healer6" inherits="UIPanelButtonTemplate" text="Sixth healer">
+				<Size x="120" y="50" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="880" y="-485" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						RHEL_HealerWisper(6);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="Healer7" inherits="UIPanelButtonTemplate" text="Seventh healer">
+				<Size x="120" y="50" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="880" y="-555" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						RHEL_HealerWisper(7);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="Healer8" inherits="UIPanelButtonTemplate" text="Eighth healer">
+				<Size x="120" y="50" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="880" y="-625" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						RHEL_HealerWisper(8);
+					</OnClick>
+				</Scripts>
+			</Button>
+			<EditBox name="ChannelNumber" inherits="InputBoxTemplate" id="100" letters="2" numeric="true" autoFocus="false">
+				<Size x="20" y="40" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="148" y="-685" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="/">
+							<Size x="20" y="20" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="-18" y="-10" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnTabPressed>
+						HealerName1:SetFocus();
+					</OnTabPressed>
+					<OnTextChanged>
+						ChannelChange();
+					</OnTextChanged>
+					<OnEscapePressed>
+						Channel_OnEscapePressed();
+					</OnEscapePressed>
+				</Scripts>
+			</EditBox>
+			<CheckButton name="toChannel" inherits="UIRadioButtonTemplate" text="RadioButton1">
+				<Size>
+					<AbsDimension x="20" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="40" y="-695" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="To Сhannel">
+							<Size x="80" y="20" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad>
+						self:SetChecked(true);
+					</OnLoad>
+					<OnClick>
+						SwapAnounceTo(toChannel);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<CheckButton name="toRaid" inherits="UIRadioButtonTemplate" text="RadioButton2">
+				<Size>
+					<AbsDimension x="20" y="20" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" x="40" y="-720" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="To Raid">
+							<Size x="80" y="20" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad>
+						self:SetChecked(false);
+					</OnLoad>
+					<OnClick>
+						SwapAnounceTo(toRaid);
+					</OnClick>
+				</Scripts>
+			</CheckButton>
+			<Button name="Heals" inherits="UIPanelButtonTemplate" text="Heals anounce">
+				<Size x="120" y="50" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="220" y="-695" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						RHEL_HealAnounce();
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="Buffs" inherits="UIPanelButtonTemplate" text="Buffs anounce">
+				<Size x="120" y="50" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="440" y="-695" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						RHEL_BuffAnounce();
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="Dispells" inherits="UIPanelButtonTemplate" text="Dispells anounce">
+				<Size x="120" y="50" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="660" y="-695" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						RHEL_DispellAnounce();
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="UIPanelCloseButton" inherits="UIPanelButtonTemplate" text="Close">
+				<Size x="120" y="50" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="880" y="-695" />
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						self:GetParent():Hide();
+					</OnClick>
+				</Scripts>
+			</Button>
 		</Frames>
 		<Scripts>
 			<OnLoad>
 				RHEL_Loaded()
 			</OnLoad>
-			<OnEvent>
-				RHEL_VariablesLoaded("VARIABLES_LOADED")
-			</OnEvent>
 			<OnMouseDown>
-				RHEL_OnMouseDown()
+				RHEL_OnMouseDown();
 			</OnMouseDown>
 			<OnMouseUp>
-				RHEL_OnMouseUp()
+				RHEL_OnMouseUp();
 			</OnMouseUp>
 		</Scripts>
 	</Frame>
