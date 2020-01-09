@@ -1,23 +1,32 @@
 -- Author      : Virgo
 -- Create Date : 12/19/2019 7:43:57 PM
+-- Update	   : 09/01/2020
 
-local version = 0.7
+local version = 0.7.1
 local totalHealers = 8
 
-local RaidNameList = {"Molten Core","Onyxia & Outdoors","Blackwing Lair","Naxxramas", "Custome"};
+local RaidNameList = {"Molten Core","Onyxia & Outdoors","Blackwing Lair","Ahn'Qiraj","Naxxramas", "Custome"};
+local dungeons = {["Molten Core"] = "MC", ["Onyxia & Outdoors"] = "Onyxia",
+    ["Blackwing Lair"] = "BWL", ["Ahn'Qiraj"] = "AQ", ["Naxxramas"] = "NAX", ["Custome"] = "Custome"}
 local BossNameList = {};
 BossNameList.MC = {"Trash","Lucifron","Magmadar","Gehennas","Garr","Baron Geddon",
 	"Shazzrah","Golemagg","Sulfuron","Majordomo","Ragnaros"};
 BossNameList.Onyxia = {"Onyxia","Azuregos","Kazzak"};
 BossNameList.BWL = {"Trash","Razorgore","Vaelastrasz","Broodlord","Firemaw",
-	"Ebonroc","Flamegor","Chromaggus","Nefarian"}   
+	"Ebonroc","Flamegor","Chromaggus","Nefarian"};
+BossNameList.AQ = {"Trash","The Prophet Skeram", "The Bug Trio", "Battleguard Sartura",
+    "Fankriss the Unyielding", "Princess Huhuran", "The Twin Emperors", "Viscidus",
+	"Ouro", "C'Thun"};
 BossNameList.NAX = {"Trash","Anub'Rekhan","Grand Widow Faerlina","Maexxna",
 	"Noth the Plaguebringer","Heigan the Unclean","Loatheb",
 	"Instructor Razuvious","Gothic the Harvester","The Four Horsemen",
 	"Patchwerk","Grobbulus","Gluth","Thaddius","Sapphiron","Kel'Thuzad"};
 BossNameList.Custome = {"Frame_1","Frame_2","Frame_3","Frame_4"};
-local dungeon = {"MC", "Onyxia", "BWL", "NAX", "Custome"}
+
 local revRaidNameList = {}
+for i,v in ipairs(RaidNameList) do
+	revRaidNameList[v] = i
+end
 local revBossNameList = {}
 
 --Frame starts moving. DONE
@@ -33,7 +42,7 @@ end
 --Add command line reaction. DONE
 SLASH_RHEL_SLASHCMD1 = '/RHEL'
 SLASH_RHEL_SLASHCMD2 = '/rhel'
-SLASH_RHEL_SLASHCMD3 = '/круд'
+SLASH_RHEL_SLASHCMD3 = '/????'
 SlashCmdList["RHEL_SLASHCMD"] = function(msg)
     RHEL_MainFrame:Show()
 end
@@ -48,17 +57,14 @@ local frame = CreateFrame("FRAME", "RHEL");
 frame:RegisterEvent("PLAYER_LOGIN");
 frame:SetScript("OnEvent", function(self, event, ...)
 	if (event == "PLAYER_LOGIN" and FirstTime) then
-		frame:UnregisterEvent("PLAYER_LOGIN");
-		FirstTime = false
+--		frame:UnregisterEvent("PLAYER_LOGIN");
+		FirstTime = false;
 		VariablesLoaded = true;
 		RHEL_VariablesDefaultSet();
 
 		if oneTimer then
-			oneTimer = false	
---		UIDropDownMenu_SetText(RaidNameDropdown, RHEL_Raid);
---		UIDropDownMenu_SetText(BossNameDropdown, RHEL_Boss);
---		UIDropDownMenu_SetText(RaidNameDropdown, RHEL_Raid);
-			RHEL_RaidBossSaved()
+			oneTimer = false;	
+			RHEL_RaidBossSaved();
 		end
 
 		RHEL_HealersLoad();
@@ -78,25 +84,25 @@ end
 --Set defaults values to variables. TO DO
 function RHEL_VariablesDefaultSet()
 -- For the first time RHEL_Raid RHEL_Boss is loaded; initialize to defaults.
-	if (RHEL_Raid == nil) or (RHEL_Boss == nil) then
-		RHEL_Raid = RaidNameList[5]
-		RHEL_Boss = BossNameList[RHEL_Raid][1]
+	if (RHEL_Raid == nil) or (RHEL_Boss == nil) or (dungeons[RHEL_Raid] == nil) then
+		RHEL_Raid = RaidNameList[6];
+		RHEL_Boss = BossNameList[RHEL_Raid][1];
 	else
-		RHEL_RaidBossReverse()
+		RHEL_RaidBossReverse();
 		if revBossNameList[RHEL_Boss] == nil then
-			RHEL_Boss = BossNameList[dungeon[revRaidNameList[RHEL_Raid]]][1]
+			RHEL_Boss = BossNameList[dungeons[RHEL_Raid]][1];
 		end
 	end
 
--- For the first time RHEL_Channel is loaded; initialize channel to 4.
+-- For the first time RHEL_Channel is loaded; initialize channel to 5. DONE
 	if RHEL_Channel == nil then
-		RHEL_Channel = 5
+		RHEL_Channel = 5;
 	end
 
--- For first time RHEL_Healers is loaded; initialize healers to NameNumber.
+-- For first time RHEL_Healers is loaded; initialize healers to NameNumber. DONE
 	if RHEL_Healers == nil then
-		RHEL_Healers = {}
-		for i=1, totalHealers do
+		RHEL_Healers = {};
+		for i = 1, totalHealers do
 			RHEL_Healers[i] = "Name"..i;
 		end 
 	end
@@ -106,7 +112,7 @@ function RHEL_VariablesDefaultSet()
 	RHEL_DispellsDefault();
 end
 
--- For the first time RHEL_Heals is loaded; initialize heals to defaults.
+-- For the first time RHEL_Heals is loaded; initialize heals to defaults. DONE
 function RHEL_HealsDefault()
 	if RHEL_Heals == nil then
 		RHEL_Heals={}
@@ -114,7 +120,7 @@ function RHEL_HealsDefault()
 	if RHEL_Heals[RHEL_Raid] == nil then
 		RHEL_Heals[RHEL_Raid]={}
 	end
-	if RHEL_Heals[RHEL_Raid][RHEL_Boss] == nil then
+	if (RHEL_Heals[RHEL_Raid][RHEL_Boss] == nil) or (RHEL_Heals[RHEL_Raid][RHEL_Boss] ~= totalHealers) then
 --		    	 1	   2     3     4     5     6     7     8    MT    T2	T3	  T4
 		RHEL_Heals[RHEL_Raid][RHEL_Boss] = {
 		    {false,false,false,false,false,false,false,false,true,false,false,false},
@@ -129,12 +135,12 @@ function RHEL_HealsDefault()
 	end
 end
 
--- For the first time RHEL_Buffs is loaded; initialize buffs to defaults. CHECK
+-- For the first time RHEL_Buffs is loaded; initialize buffs to defaults. DONE
 function RHEL_BuffsDefault()
 	if RHEL_Buffs == nil then
 		RHEL_Buffs={}
 	end
-	if RHEL_Buffs[RHEL_Raid] == nil then
+	if (RHEL_Buffs[RHEL_Raid] == nil) or (RHEL_Buffs[RHEL_Raid] ~= totalHealers) then
 --		      1	     2     3     4     5     6     7     8
 		RHEL_Buffs[RHEL_Raid] = {
 		    {true,false,true,false,false,false,false,false},
@@ -154,7 +160,7 @@ function RHEL_DispellsDefault()
 	if RHEL_Dispells == nil then
 		RHEL_Dispells={}
 	end
-	if RHEL_Dispells[RHEL_Raid] == nil then
+	if (RHEL_Dispells[RHEL_Raid] == nil) or (RHEL_Dispells[RHEL_Raid] ~= totalHealers) then
 --		      1	     2     3     4     5     6     7     8
 		RHEL_Dispells[RHEL_Raid] = {
 		    {true,false,true,false,true,false,true,false},
@@ -169,12 +175,10 @@ function RHEL_DispellsDefault()
 	end
 end
 
---Reverse saved Raid&Boss. CHECK
+--Reverse Raid-Boss table. DONE
 function RHEL_RaidBossReverse()
-	for i,v in ipairs(RaidNameList) do
-		revRaidNameList[v] = i
-    end
-	for i,v in ipairs(BossNameList[dungeon[revRaidNameList[RHEL_Raid]]]) do
+	revBossNameList = {}
+	for i,v in ipairs(BossNameList[dungeons[RHEL_Raid]]) do
 		revBossNameList[v] = i
     end
 end
@@ -184,11 +188,10 @@ function RHEL_RaidBossSaved()
 	RaidName_OnSelect(revRaidNameList[RHEL_Raid]);
 	UIDropDownMenu_SetText(RaidNameDropdown, RHEL_Raid);
 	if revBossNameList[RHEL_Boss] == nil then
-		RHEL_Boss = BossNameList[dungeon[revRaidNameList[RHEL_Raid]]][1]
+		RHEL_Boss = BossNameList[dungeons[RHEL_Raid]][1]
 	end
 --	print(revBossNameList[RHEL_Boss])
 	BossName_OnSelect(revBossNameList[RHEL_Boss]);
---	UIDropDownMenu_SetText(BossNameDropdown, RHEL_Boss);
 end	
  
 --Load healers on load. DONE
@@ -203,7 +206,12 @@ function RHEL_HealsLoad()
 --	print(RHEL_Raid,RHEL_Boss)
 	for i = 1, totalHealers do
 		for j = 1, 12 do
-			checker = RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j]
+			if type(RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j]) == boolean then
+				checker = RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j]
+			else
+				checker = false
+				RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j] = false
+			end
 			_G['CheckButton1' .. i .. "_"..j]:SetChecked(checker);
 		end
 	end
@@ -254,7 +262,7 @@ end
 function RHEL_HealAnounce()
 	local anounce = RHEL_Raid.." - "..RHEL_Boss..": HEALINGS!"
 	local message = ""
-	for i = 1,totalHealers do
+	for i = 1, totalHealers do
 		if _G['HealerName'..i]:GetText() ~= "" then
 			local message1 = "[" .. _G['HealerName'..i]:GetText() .. " - "
 			local message2 = ""
@@ -274,7 +282,7 @@ function RHEL_HealAnounce()
 						if j == 9 then
 							message2 = message2 .. " MT"
 						else
-							message2 = message2 .. " T" .. (j-8)
+							message2 = message2 .. " OT" .. (j-9)
 						end
 					end
 				end
@@ -351,7 +359,7 @@ function RHEL_HealerWisper(number)
 					elseif j == 9 then
 						HealsPart = HealsPart .. " MT"
 					elseif j > 9 then
-						HealsPart = HealsPart .. " T" .. (j-8)
+						HealsPart = HealsPart .. " OT" .. (j-9)
 					end
 				end
 			end	
@@ -491,7 +499,7 @@ function RaidName_OnSelect(value)
 
 	RHEL_Raid = RaidNameList[value]
 	if (RHEL_Raid == nil) then
-		RHEL_Raid = RaidNameList[5]
+		RHEL_Raid = RaidNameList[6]
 		RHEL_Boss = BossNameList[RHEL_Raid][1]
 	end
 	if (UIDropDownMenu_GetSelectedValue(_G["RaidNameDropdown"]) ~= value) then
@@ -505,7 +513,7 @@ function RaidName_OnSelect(value)
 	RHEL_DispellsDefault();
 	RHEL_DispellsLoad();
 	RHEL_RaidBossReverse()
-	RHEL_Boss = BossNameList[dungeon[revRaidNameList[RHEL_Raid]]][1]
+	RHEL_Boss = BossNameList[dungeons[RHEL_Raid]][1]
 --	print(RHEL_Boss, "BossNameDropdown")
 	RHEL_HealsDefault();
 	RHEL_HealsLoad();
@@ -520,10 +528,9 @@ function BossNameDropdown_OnLoad()
 	
 	local x;
 	local List = {};
---	print("Dropdown Raid value "..UIDropDownMenu_GetSelectedValue(_G["RaidNameDropdown"]))
 	
 	if UIDropDownMenu_GetSelectedValue(_G["RaidNameDropdown"]) ~= nil then
-		List = select(UIDropDownMenu_GetSelectedValue(_G["RaidNameDropdown"]),BossNameList.MC, BossNameList.Onyxia, BossNameList.BWL, BossNameList.NAX, BossNameList.Custome);
+		List = select(UIDropDownMenu_GetSelectedValue(_G["RaidNameDropdown"]),BossNameList.MC, BossNameList.Onyxia, BossNameList.BWL, BossNameList.AQ, BossNameList.NAX, BossNameList.Custome);
 	end
 
 	for x=1,getn(List) do
@@ -540,10 +547,6 @@ function BossNameDropdown_OnLoad()
 		UIDropDownMenu_SetSelectedValue(_G["BossNameDropdown"],1)
 		UIDropDownMenu_SetText(_G["BossNameDropdown"],List[1])
 
---		RHEL_VariablesDefaultSet()
---		if _G["RHEL_MainFrame"]:IsShown() then
---			print(UIDropDownMenu_GetText(_G["RaidNameDropdown"]).." - "..UIDropDownMenu_GetText(_G["BossNameDropdown"]));
---		end
 	end
 end
 
@@ -554,10 +557,10 @@ function BossName_OnSelect(value)
 	end;
 	RHEL_RaidBossReverse();
 	UIDropDownMenu_SetSelectedValue(_G["BossNameDropdown"], value);
-	UIDropDownMenu_SetText(_G["BossNameDropdown"],BossNameList[dungeon[revRaidNameList[RHEL_Raid]]][value])
+	UIDropDownMenu_SetText(_G["BossNameDropdown"],BossNameList[dungeons[RHEL_Raid]][value])
 --	print(UIDropDownMenu_GetText(_G["RaidNameDropdown"]).." - "..UIDropDownMenu_GetText(_G["BossNameDropdown"]));
 	RHEL_Boss = UIDropDownMenu_GetText(_G["BossNameDropdown"])
---	print(RHEL_Boss,BossNameList[dungeon[revRaidNameList[RHEL_Raid]]][value], value, "BossNameDropdown2")
+--	print(RHEL_Boss,BossNameList[dungeons[RHEL_Raid]][value], value, "BossNameDropdown2")
 	RHEL_HealsDefault();
 	RHEL_HealsLoad();
 --	RHEL_VariablesDefaultSet()
