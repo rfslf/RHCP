@@ -597,7 +597,7 @@ function DeathFrame:ADDON_LOADED(addon)
 		print("RHEL:Loaded")
 	end
 end
-Fatality:RegisterEvent("ADDON_LOADED")
+DeathFrame:RegisterEvent("ADDON_LOADED")
 	
 --for debug
 function dump(o)
