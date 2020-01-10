@@ -1,8 +1,8 @@
 -- Author      : Virgo
 -- Create Date : 12/19/2019 7:43:57 PM
--- Update	   : 09/01/2020
+-- Update	   : 10/01/2020
 
-local version = 0.7.1
+local version = "0.7.2"
 local totalHealers = 8
 
 local RaidNameList = {"Molten Core","Onyxia & Outdoors","Blackwing Lair","Ahn'Qiraj","Naxxramas", "Custome"};
@@ -47,38 +47,81 @@ SlashCmdList["RHEL_SLASHCMD"] = function(msg)
     RHEL_MainFrame:Show()
 end
 
---Variables loading detection. CHECK 
-local VariablesLoaded
-local FirstTime = true
-local oneTimer = true
-local frame = CreateFrame("FRAME", "RHEL");
---frame:RegisterEvent("VARIABLES_LOADED");
---frame:SetScript("OnEvent", function(self, event, ...)
-frame:RegisterEvent("PLAYER_LOGIN");
-frame:SetScript("OnEvent", function(self, event, ...)
-	if (event == "PLAYER_LOGIN" and FirstTime) then
---		frame:UnregisterEvent("PLAYER_LOGIN");
-		FirstTime = false;
-		VariablesLoaded = true;
-		RHEL_VariablesDefaultSet();
-
-		if oneTimer then
-			oneTimer = false;	
-			RHEL_RaidBossSaved();
-		end
-
-		RHEL_HealersLoad();
-		RHEL_ChannelLoad();
-		RHEL_HealsLoad();
-		RHEL_BuffsLoad();
-		RHEL_DispellsLoad();
-	end
-end);
-
 --Greetings. DONE
 function RHEL_Loaded()
 	print('RaidHealersEasyLife loaded. Type /rhel to open menu. Version '..version);
 	RHEL_MainFrame:Hide();
+end
+
+--Reverse Raid-Boss table. DONE
+function RHEL_RaidBossReverse()
+	revBossNameList = {}
+	for i,v in ipairs(BossNameList[dungeons[RHEL_Raid]]) do
+		revBossNameList[v] = i
+    end
+end
+
+-- For the first time RHEL_Heals is loaded; initialize heals to defaults. DONE
+function RHEL_HealsDefault()
+	if RHEL_Heals == nil then
+		RHEL_Heals={}
+	end
+	if RHEL_Heals[RHEL_Raid] == nil then
+		RHEL_Heals[RHEL_Raid]={}
+	end
+	if (RHEL_Heals[RHEL_Raid][RHEL_Boss] == nil) or (table.getn(RHEL_Heals[RHEL_Raid][RHEL_Boss]) ~= totalHealers) then
+--		    	 1	   2     3     4     5     6     7     8    MT    T2	T3	  T4
+		RHEL_Heals[RHEL_Raid][RHEL_Boss] = {
+		    {false,false,false,false,false,false,false,false,true,false,false,false},
+			{false,false,false,false,false,false,false,false,true,false,false,false},
+			{false,false,false,false,false,false,false,false,true,true,false,false},
+			{false,false,false,false,false,false,false,false,false,true,false,false},
+			{true,false,true,false,true,false,true,false,false,false,false,false},
+			{true,false,true,false,true,false,true,false,false,false,false,false},
+			{false,true,false,true,false,true,false,true,false,false,false,false},
+			{false,true,false,true,false,true,false,true,false,false,false,false}};
+--	      	 1	   2    3     4    5     6    7     8    MT    T2	T3	  T4					  
+	end
+end
+
+-- For the first time RHEL_Buffs is loaded; initialize buffs to defaults. DONE
+function RHEL_BuffsDefault()
+	if RHEL_Buffs == nil then
+		RHEL_Buffs={}
+	end
+	if (RHEL_Buffs[RHEL_Raid] == nil) or (table.getn(RHEL_Buffs[RHEL_Raid]) ~= totalHealers) then
+--		      1	     2     3     4     5     6     7     8
+		RHEL_Buffs[RHEL_Raid] = {
+		    {true,false,true,false,false,false,false,false},
+			{false,false,false,false,false,false,false,false},
+			{false,false,false,false,true,false,true,false},
+			{false,false,false,false,false,false,false,false},	
+			{false,false,false,false,false,false,false,false},
+			{false,true,false,true,false,false,false,false},
+			{false,false,false,false,false,false,false,false},
+			{false,false,false,false,false,true,false,true}};
+--	      		1	  2    3     4     5     6    7     8					  
+	end
+end
+
+-- For the first time RHEL_Dispells is loaded; initialize dispells to defaults. CHECK
+function RHEL_DispellsDefault()
+	if RHEL_Dispells == nil then
+		RHEL_Dispells={}
+	end
+	if (RHEL_Dispells[RHEL_Raid] == nil) or (table.getn(RHEL_Dispells[RHEL_Raid]) ~= totalHealers) then
+--		      1	     2     3     4     5     6     7     8
+		RHEL_Dispells[RHEL_Raid] = {
+		    {true,false,true,false,true,false,true,false},
+			{false,false,false,false,false,false,false,false},
+			{true,false,true,false,true,false,true,false},
+			{false,false,false,false,true,false,true,false},
+			{false,false,false,false,false,false,false,false},
+			{false,true,false,true,false,true,false,true},
+			{false,false,false,false,false,false,false,false},
+			{false,true,false,true,false,true,false,true}};
+--	      		1	  2    3     4     5     6    7   8					  
+	end
 end
 
 --Set defaults values to variables. TO DO
@@ -112,77 +155,6 @@ function RHEL_VariablesDefaultSet()
 	RHEL_DispellsDefault();
 end
 
--- For the first time RHEL_Heals is loaded; initialize heals to defaults. DONE
-function RHEL_HealsDefault()
-	if RHEL_Heals == nil then
-		RHEL_Heals={}
-	end
-	if RHEL_Heals[RHEL_Raid] == nil then
-		RHEL_Heals[RHEL_Raid]={}
-	end
-	if (RHEL_Heals[RHEL_Raid][RHEL_Boss] == nil) or (RHEL_Heals[RHEL_Raid][RHEL_Boss] ~= totalHealers) then
---		    	 1	   2     3     4     5     6     7     8    MT    T2	T3	  T4
-		RHEL_Heals[RHEL_Raid][RHEL_Boss] = {
-		    {false,false,false,false,false,false,false,false,true,false,false,false},
-			{false,false,false,false,false,false,false,false,true,false,false,false},
-			{false,false,false,false,false,false,false,false,true,true,false,false},
-			{false,false,false,false,false,false,false,false,false,true,false,false},
-			{true,false,true,false,true,false,true,false,false,false,false,false},
-			{true,false,true,false,true,false,true,false,false,false,false,false},
-			{false,true,false,true,false,true,false,true,false,false,false,false},
-			{false,true,false,true,false,true,false,true,false,false,false,false}};
---	      	 1	   2    3     4    5     6    7     8    MT    T2	T3	  T4					  
-	end
-end
-
--- For the first time RHEL_Buffs is loaded; initialize buffs to defaults. DONE
-function RHEL_BuffsDefault()
-	if RHEL_Buffs == nil then
-		RHEL_Buffs={}
-	end
-	if (RHEL_Buffs[RHEL_Raid] == nil) or (RHEL_Buffs[RHEL_Raid] ~= totalHealers) then
---		      1	     2     3     4     5     6     7     8
-		RHEL_Buffs[RHEL_Raid] = {
-		    {true,false,true,false,false,false,false,false},
-			{false,false,false,false,false,false,false,false},
-			{false,false,false,false,true,false,true,false},
-			{false,false,false,false,false,false,false,false},	
-			{false,false,false,false,false,false,false,false},
-			{false,true,false,true,false,false,false,false},
-			{false,false,false,false,false,false,false,false},
-			{false,false,false,false,false,true,false,true}};
---	      		1	  2    3     4     5     6    7     8					  
-	end
-end
-
--- For the first time RHEL_Dispells is loaded; initialize dispells to defaults. CHECK
-function RHEL_DispellsDefault()
-	if RHEL_Dispells == nil then
-		RHEL_Dispells={}
-	end
-	if (RHEL_Dispells[RHEL_Raid] == nil) or (RHEL_Dispells[RHEL_Raid] ~= totalHealers) then
---		      1	     2     3     4     5     6     7     8
-		RHEL_Dispells[RHEL_Raid] = {
-		    {true,false,true,false,true,false,true,false},
-			{false,false,false,false,false,false,false,false},
-			{true,false,true,false,true,false,true,false},
-			{false,false,false,false,true,false,true,false},
-			{false,false,false,false,false,false,false,false},
-			{false,true,false,true,false,true,false,true},
-			{false,false,false,false,false,false,false,false},
-			{false,true,false,true,false,true,false,true}};
---	      		1	  2    3     4     5     6    7     8					  
-	end
-end
-
---Reverse Raid-Boss table. DONE
-function RHEL_RaidBossReverse()
-	revBossNameList = {}
-	for i,v in ipairs(BossNameList[dungeons[RHEL_Raid]]) do
-		revBossNameList[v] = i
-    end
-end
-
 --Load saved Raid&Boss. CHECK
 function RHEL_RaidBossSaved()
 	RaidName_OnSelect(revRaidNameList[RHEL_Raid]);
@@ -192,21 +164,49 @@ function RHEL_RaidBossSaved()
 	end
 --	print(revBossNameList[RHEL_Boss])
 	BossName_OnSelect(revBossNameList[RHEL_Boss]);
-end	
+end
+
+--Variables loading detection. CHECK 
+local VariablesLoaded
+local FirstTime = true
+local oneTimer = true
+local frame = CreateFrame("FRAME", "RHEL");
+--frame:RegisterEvent("VARIABLES_LOADED");
+--frame:SetScript("OnEvent", function(self, event, ...)
+frame:RegisterEvent("PLAYER_LOGIN");
+frame:SetScript("OnEvent", function(self, event, ...)
+	if (event == "PLAYER_LOGIN" and FirstTime) then
+--		frame:UnregisterEvent("PLAYER_LOGIN");
+		FirstTime = false;
+		VariablesLoaded = true;
+		RHEL_VariablesDefaultSet();
+
+		if oneTimer then
+			oneTimer = false;	
+			RHEL_RaidBossSaved();
+		end
+
+		RHEL_HealersLoad();
+		RHEL_ChannelLoad();
+--		RHEL_HealsLoad();
+--		RHEL_BuffsLoad();
+--		RHEL_DispellsLoad();
+	end
+end);
  
---Load healers on load. DONE
+--Healers on load. DONE
 function RHEL_HealersLoad()
 	for i = 1, totalHealers do
 		_G['HealerName'..i]:SetText(RHEL_Healers[i]);
 	end
 end
 
---Load heals checkboxes on load. Optimaze
+--Heals checkboxes on load. Optimaze
 function RHEL_HealsLoad()
---	print(RHEL_Raid,RHEL_Boss)
+	print("RHEL: Healers load for ",RHEL_Raid,RHEL_Boss)
 	for i = 1, totalHealers do
 		for j = 1, 12 do
-			if type(RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j]) == boolean then
+			if type(RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j]) == "boolean" then
 				checker = RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j]
 			else
 				checker = false
@@ -217,7 +217,7 @@ function RHEL_HealsLoad()
 	end
 end
 
---Load buffs checkboxes on load. Optimaze
+--Buffs checkboxes on load. Optimaze
 function RHEL_BuffsLoad()
 	for i = 1, totalHealers do
 		for j = 1, 8 do
@@ -227,7 +227,7 @@ function RHEL_BuffsLoad()
 	end
 end
 
---Load dispells checkboxes on load. Optimaze
+--Dispells checkboxes on load. Optimaze
 function RHEL_DispellsLoad()
 	for i = 1, totalHealers do
 		for j = 1, 8 do
@@ -245,7 +245,7 @@ end
 function RHEL_SendMessage(msg)
 --	print(RHEL_Channel)
 	if string.len(msg) > 255 then
-		print("Long message."..string.len(msg))
+		print("RHEL:Long message."..string.len(msg))
 	else
 		if toRaid:GetChecked() and not toChannel:GetChecked() then
 			SendChatMessage(msg ,"RAID");
@@ -253,7 +253,7 @@ function RHEL_SendMessage(msg)
 		elseif not toRaid:GetChecked() and toChannel:GetChecked() then
 			SendChatMessage(msg ,"CHANNEL", nil, RHEL_Channel);
 		else
-			print('Error while sending message')
+			print('RHEL:Error while sending message')
 		end
 	end
 end
@@ -505,6 +505,7 @@ function RaidName_OnSelect(value)
 	if (UIDropDownMenu_GetSelectedValue(_G["RaidNameDropdown"]) ~= value) then
 		UIDropDownMenu_SetSelectedValue(_G["RaidNameDropdown"], value);
 		UIDropDownMenu_ClearAll(_G["BossNameDropdown"]);
+		print("508")
 		BossNameDropdown_OnLoad();
 	end
 --	print(RHEL_Raid, "RaidNameDropdown")
@@ -512,9 +513,10 @@ function RaidName_OnSelect(value)
 	RHEL_BuffsLoad();
 	RHEL_DispellsDefault();
 	RHEL_DispellsLoad();
-	RHEL_RaidBossReverse()
+--	RHEL_RaidBossReverse()
 	RHEL_Boss = BossNameList[dungeons[RHEL_Raid]][1]
 --	print(RHEL_Boss, "BossNameDropdown")
+	print("519")
 	RHEL_HealsDefault();
 	RHEL_HealsLoad();
 
@@ -546,7 +548,6 @@ function BossNameDropdown_OnLoad()
 	if(UIDropDownMenu_GetSelectedValue(_G["BossNameDropdown"]) == nil) then
 		UIDropDownMenu_SetSelectedValue(_G["BossNameDropdown"],1)
 		UIDropDownMenu_SetText(_G["BossNameDropdown"],List[1])
-
 	end
 end
 
@@ -555,17 +556,49 @@ function BossName_OnSelect(value)
 	if (VariablesLoaded == false) then
 		return;
 	end;
-	RHEL_RaidBossReverse();
+--	RHEL_RaidBossReverse();
 	UIDropDownMenu_SetSelectedValue(_G["BossNameDropdown"], value);
 	UIDropDownMenu_SetText(_G["BossNameDropdown"],BossNameList[dungeons[RHEL_Raid]][value])
 --	print(UIDropDownMenu_GetText(_G["RaidNameDropdown"]).." - "..UIDropDownMenu_GetText(_G["BossNameDropdown"]));
 	RHEL_Boss = UIDropDownMenu_GetText(_G["BossNameDropdown"])
 --	print(RHEL_Boss,BossNameList[dungeons[RHEL_Raid]][value], value, "BossNameDropdown2")
+	print("565")
 	RHEL_HealsDefault();
 	RHEL_HealsLoad();
 --	RHEL_VariablesDefaultSet()
 end
 
+--Prep fro death anonce. TO DO
+function RHEL_ReportDeath(guid, name, flags)
+	print('RHEL:death', guid, name, flags)
+end
+
+local DeathFrame = CreateFrame("FRAME", "RHEL");
+DeathFrame:SetScript("OnEvent", function(self, event, ...)
+	self[event](self, ...)
+end)
+
+--Prep fro death anonce. TO DO
+function DeathFrame:COMBAT_LOG_EVENT_UNFILTERED(timestamp, event, hideCaster, srcGUID, srcName, srcFlags, srcRaidFlags, destGUID, destName, destFlags, destRaidFlags, ...)
+	local instance = select(2, IsInInstance())
+	if not (UnitInRaid(destName) or UnitInParty(destName)) then return end
+
+	if (event == "UNIT_DIED" and instance == "raid") or (event == "UNIT_DIED" and instance == "party") then
+		RHEL_ReportDeath(destGUID, destName, destRaidFlags)
+	end
+end
+DeathFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
+
+--Check if works
+function DeathFrame:ADDON_LOADED(addon)
+	if addon ~= "RHEL" then 
+		return
+	else
+		print("RHEL:Loaded")
+	end
+end
+Fatality:RegisterEvent("ADDON_LOADED")
+	
 --for debug
 function dump(o)
    if type(o) == 'table' then
