@@ -585,7 +585,7 @@ end)
 
 --Prep fro death anonce. TO DO
 function DeathFrame:COMBAT_LOG_EVENT_UNFILTERED(timestamp, event, hideCaster, srcGUID, srcName, srcFlags, srcRaidFlags, destGUID, destName, destFlags, destRaidFlags, ...)
-	print(timestamp, event, hideCaster, srcGUID, srcName, srcFlags, srcRaidFlags, destGUID, destName, destFlags, destRaidFlags)
+--	print(timestamp, event, hideCaster, srcGUID, srcName, srcFlags, srcRaidFlags, destGUID, destName, destFlags, destRaidFlags)
 	local instance = select(2, IsInInstance())
 --	if not (UnitInRaid(destName) or UnitInParty(destName)) then return end
 
