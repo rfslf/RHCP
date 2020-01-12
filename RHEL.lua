@@ -42,7 +42,6 @@ end
 --Add command line reaction. DONE
 SLASH_RHEL_SLASHCMD1 = '/RHEL'
 SLASH_RHEL_SLASHCMD2 = '/rhel'
-SLASH_RHEL_SLASHCMD3 = '/????'
 SlashCmdList["RHEL_SLASHCMD"] = function(msg)
     RHEL_MainFrame:Show()
 end
@@ -157,12 +156,12 @@ end
 
 --Load saved Raid&Boss. CHECK
 function RHEL_RaidBossSaved()
+	RHEL_RaidBossReverse()
 	RaidName_OnSelect(revRaidNameList[RHEL_Raid]);
 	UIDropDownMenu_SetText(RaidNameDropdown, RHEL_Raid);
-	if revBossNameList[RHEL_Boss] == nil then
+	if RHEL_Boss == nil or revBossNameList[RHEL_Boss] == nil then
 		RHEL_Boss = BossNameList[dungeons[RHEL_Raid]][1]
 	end
---	print(revBossNameList[RHEL_Boss])
 	BossName_OnSelect(revBossNameList[RHEL_Boss]);
 end
 
@@ -203,7 +202,7 @@ end
 
 --Heals checkboxes on load. Optimaze
 function RHEL_HealsLoad()
-	print("RHEL: Healers load for ",RHEL_Raid,RHEL_Boss)
+--	print("RHEL: Healers load for ",RHEL_Raid,RHEL_Boss)
 	for i = 1, totalHealers do
 		for j = 1, 12 do
 			if type(RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j]) == "boolean" then
@@ -349,53 +348,58 @@ function RHEL_HealerWisper(number)
 	local healer = _G['HealerName'..number]:GetText()
 	local wisper = healer .. " in " .. RHEL_Raid .." on " .. RHEL_Boss .. ": "
 	if healer ~= "" then
+		if not (UnitInRaid(healer) or UnitInParty(healer)) then
+			print("RHEL: " .. healer .." is not in your raid or party")
+		else
 --		wisper = healer .. ". "
-		local HealsPart = "[Heals - "
-		if RHEL_Heals[RHEL_Raid][RHEL_Boss][number] then
-			for j = 1, 12 do
-				if RHEL_Heals[RHEL_Raid][RHEL_Boss][number][j] then
-					if j < 9 then
-						HealsPart = HealsPart .. " Group" .. j
-					elseif j == 9 then
-						HealsPart = HealsPart .. " MT"
-					elseif j > 9 then
-						HealsPart = HealsPart .. " OT" .. (j-9)
+			local HealsPart = "[Heals - "
+			if RHEL_Heals[RHEL_Raid][RHEL_Boss][number] then
+				for j = 1, 12 do
+					if RHEL_Heals[RHEL_Raid][RHEL_Boss][number][j] then
+						if j < 9 then
+							HealsPart = HealsPart .. " Group" .. j
+						elseif j == 9 then
+							HealsPart = HealsPart .. " MT"
+						elseif j > 9 then
+							HealsPart = HealsPart .. " OT" .. (j-9)
+						end
 					end
-				end
-			end	
-		end
-		HealsPart = HealsPart .. "] "
+				end	
+			end
+
+			HealsPart = HealsPart .. "] "
 		
-		local BuffsPart = "[Buff groups - "
-		if RHEL_Buffs[RHEL_Raid][number] then
-			for j = 1, 8 do
-				if RHEL_Buffs[RHEL_Raid][number][j] then
-					BuffsPart = BuffsPart .. j .. " "
-				end
-			end	
-		end
-		if BuffsPart == "[Buff groups - " then
-			BuffsPart = " "
-		else
-			BuffsPart = BuffsPart .. "] "
-		end
+			local BuffsPart = "[Buff groups - "
+			if RHEL_Buffs[RHEL_Raid][number] then
+				for j = 1, 8 do
+					if RHEL_Buffs[RHEL_Raid][number][j] then
+						BuffsPart = BuffsPart .. j .. " "
+					end
+				end	
+			end
+			if BuffsPart == "[Buff groups - " then
+				BuffsPart = " "
+			else
+				BuffsPart = BuffsPart .. "] "
+			end
 
-		local DispellsPart = "[Dispell groups - "
-		if RHEL_Dispells[RHEL_Raid][number] then
-			for j = 1, 8 do
-				if RHEL_Dispells[RHEL_Raid][number][j] then
-					DispellsPart = DispellsPart .. j .. " "
-				end
-			end	
-		end
-		if DispellsPart == "[Dispell groups - " then
-			DispellsPart = " "
-		else
-			DispellsPart = DispellsPart .. "] "
-		end
+			local DispellsPart = "[Dispell groups - "
+			if RHEL_Dispells[RHEL_Raid][number] then
+				for j = 1, 8 do
+					if RHEL_Dispells[RHEL_Raid][number][j] then
+						DispellsPart = DispellsPart .. j .. " "
+					end
+				end	
+			end
+			if DispellsPart == "[Dispell groups - " then
+				DispellsPart = " "
+			else
+				DispellsPart = DispellsPart .. "] "
+			end
 
-		SendChatMessage(wisper..HealsPart..BuffsPart..DispellsPart, "WHISPER", nil, healer)
---		print(wisper..HealsPart..BuffsPart..DispellsPart)
+			SendChatMessage(wisper..HealsPart..BuffsPart..DispellsPart, "WHISPER", nil, healer)
+	--		print(wisper..HealsPart..BuffsPart..DispellsPart)
+		end
 	end
 end
 
@@ -505,7 +509,7 @@ function RaidName_OnSelect(value)
 	if (UIDropDownMenu_GetSelectedValue(_G["RaidNameDropdown"]) ~= value) then
 		UIDropDownMenu_SetSelectedValue(_G["RaidNameDropdown"], value);
 		UIDropDownMenu_ClearAll(_G["BossNameDropdown"]);
-		print("508")
+--		print("508")
 		BossNameDropdown_OnLoad();
 	end
 --	print(RHEL_Raid, "RaidNameDropdown")
@@ -516,7 +520,7 @@ function RaidName_OnSelect(value)
 --	RHEL_RaidBossReverse()
 	RHEL_Boss = BossNameList[dungeons[RHEL_Raid]][1]
 --	print(RHEL_Boss, "BossNameDropdown")
-	print("519")
+--	print("519")
 	RHEL_HealsDefault();
 	RHEL_HealsLoad();
 
@@ -562,7 +566,8 @@ function BossName_OnSelect(value)
 --	print(UIDropDownMenu_GetText(_G["RaidNameDropdown"]).." - "..UIDropDownMenu_GetText(_G["BossNameDropdown"]));
 	RHEL_Boss = UIDropDownMenu_GetText(_G["BossNameDropdown"])
 --	print(RHEL_Boss,BossNameList[dungeons[RHEL_Raid]][value], value, "BossNameDropdown2")
-	print("565")
+--	print("565")
+--	print(RHEL_Raid, RHEL_Boss)
 	RHEL_HealsDefault();
 	RHEL_HealsLoad();
 --	RHEL_VariablesDefaultSet()
@@ -580,10 +585,11 @@ end)
 
 --Prep fro death anonce. TO DO
 function DeathFrame:COMBAT_LOG_EVENT_UNFILTERED(timestamp, event, hideCaster, srcGUID, srcName, srcFlags, srcRaidFlags, destGUID, destName, destFlags, destRaidFlags, ...)
+	print(timestamp, event, hideCaster, srcGUID, srcName, srcFlags, srcRaidFlags, destGUID, destName, destFlags, destRaidFlags)
 	local instance = select(2, IsInInstance())
-	if not (UnitInRaid(destName) or UnitInParty(destName)) then return end
+--	if not (UnitInRaid(destName) or UnitInParty(destName)) then return end
 
-	if (event == "UNIT_DIED" and instance == "raid") or (event == "UNIT_DIED" and instance == "party") then
+	if (event == "UNIT_DIED" and instance == "raid") or (event == "UNIT_DIED" and instance == "party") or (event == "UNIT_DIED" and instance == "pvp") then
 		RHEL_ReportDeath(destGUID, destName, destRaidFlags)
 	end
 end
@@ -591,13 +597,14 @@ DeathFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
 
 --Check if works
 function DeathFrame:ADDON_LOADED(addon)
-	if addon ~= "RHEL" then 
+	if addon ~= "RHEL" or VariablesLoaded then 
 		return
 	else
-		print("RHEL:Loaded")
+--		print("RHEL:Loaded")
+		return
 	end
 end
-Fatality:RegisterEvent("ADDON_LOADED")
+DeathFrame:RegisterEvent("ADDON_LOADED")
 	
 --for debug
 function dump(o)
