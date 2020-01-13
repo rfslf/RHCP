@@ -14,6 +14,7 @@ Welcome to the RHEL wiki!
 10. Закрыть/перетащить/вызвать окно.
 
   0.7.2 Minor fixes
+  
   0.7.1 Points: 6, minor fixes
 0.7.0 Points: 7, 4, 3
 0.6.0 Points: 6, 5
