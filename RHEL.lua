@@ -1,8 +1,8 @@
 -- Author      : Virgo
 -- Create Date : 12/19/2019 7:43:57 PM
--- Update	   : 10/01/2020
+-- Update	   : 13/01/2020
 
-local version = "0.7.2"
+local version = "0.8.0"
 local totalHealers = 8
 
 local RaidNameList = {"Molten Core","Onyxia & Outdoors","Blackwing Lair","Ahn'Qiraj","Naxxramas", "Custome"};
@@ -22,6 +22,15 @@ BossNameList.NAX = {"Trash","Anub'Rekhan","Grand Widow Faerlina","Maexxna",
 	"Instructor Razuvious","Gothic the Harvester","The Four Horsemen",
 	"Patchwerk","Grobbulus","Gluth","Thaddius","Sapphiron","Kel'Thuzad"};
 BossNameList.Custome = {"Frame_1","Frame_2","Frame_3","Frame_4"};
+
+function RHEL_print(str, err)
+	if not str then return; end;
+	if err == nil then
+		DEFAULT_CHAT_FRAME:AddMessage("|c006969FFRHEL: " .. tostring(str) .. "|r");
+	else
+		DEFAULT_CHAT_FRAME:AddMessage("|c006969FFRHEL:|r " .. "|c00FF0000Error|r|c006969FF - " .. tostring(str) .. "|r");
+	end
+end
 
 local revRaidNameList = {}
 for i,v in ipairs(RaidNameList) do
@@ -48,7 +57,7 @@ end
 
 --Greetings. DONE
 function RHEL_Loaded()
-	print('RaidHealersEasyLife loaded. Type /rhel to open menu. Version '..version);
+	RHEL_print('RaidHealersEasyLife loaded. Type /rhel to open. Version '..version);
 	RHEL_MainFrame:Hide();
 end
 
@@ -244,7 +253,7 @@ end
 function RHEL_SendMessage(msg)
 --	print(RHEL_Channel)
 	if string.len(msg) > 255 then
-		print("RHEL:Long message."..string.len(msg))
+		RHEL_print("Too long message."..string.len(msg), true)
 	else
 		if toRaid:GetChecked() and not toChannel:GetChecked() then
 			SendChatMessage(msg ,"RAID");
@@ -252,7 +261,7 @@ function RHEL_SendMessage(msg)
 		elseif not toRaid:GetChecked() and toChannel:GetChecked() then
 			SendChatMessage(msg ,"CHANNEL", nil, RHEL_Channel);
 		else
-			print('RHEL:Error while sending message')
+			RHEL_print('Error while sending message', true)
 		end
 	end
 end
@@ -349,7 +358,7 @@ function RHEL_HealerWisper(number)
 	local wisper = healer .. " in " .. RHEL_Raid .." on " .. RHEL_Boss .. ": "
 	if healer ~= "" then
 		if not (UnitInRaid(healer) or UnitInParty(healer)) then
-			print("RHEL: " .. healer .." is not in your raid or party")
+			RHEL_print(healer .." is not in your raid or party", true)
 		else
 --		wisper = healer .. ". "
 			local HealsPart = "[Heals - "
@@ -575,7 +584,7 @@ end
 
 --Prep fro death anonce. TO DO
 function RHEL_ReportDeath(guid, name, flags)
-	print('RHEL:death', guid, name, flags)
+	RHEL_print('death '..guid.." "..name.." "..flags,true)
 end
 
 local DeathFrame = CreateFrame("FRAME", "RHEL");
@@ -583,19 +592,33 @@ DeathFrame:SetScript("OnEvent", function(self, event, ...)
 	self[event](self, ...)
 end)
 
---Prep fro death anonce. TO DO
-function DeathFrame:COMBAT_LOG_EVENT_UNFILTERED(timestamp, event, hideCaster, srcGUID, srcName, srcFlags, srcRaidFlags, destGUID, destName, destFlags, destRaidFlags, ...)
-	print(timestamp, event, hideCaster, srcGUID, srcName, srcFlags, srcRaidFlags, destGUID, destName, destFlags, destRaidFlags)
+--Prep for death anonce. TO DO
+function DeathFrame:COMBAT_LOG_EVENT_UNFILTERED(event, CombatLogGetCurrentEventInfo())
+	local _, subevent, _, _, _, _, _, guid, name, flags = CombatLogGetCurrentEventInfo();
 	local instance = select(2, IsInInstance())
 --	if not (UnitInRaid(destName) or UnitInParty(destName)) then return end
 
-	if (event == "UNIT_DIED" and instance == "raid") or (event == "UNIT_DIED" and instance == "party") or (event == "UNIT_DIED" and instance == "pvp") then
-		RHEL_ReportDeath(destGUID, destName, destRaidFlags)
+	if (subevent == "UNIT_DIED" and (instance == "raid" or instance == "party" or instance == "pvp")) then
+		RHEL_ReportDeath(guid, name, flags)
 	end
 end
 DeathFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
 
---Check if works
+BossNoteEditBox = CreateFrame("EditBox", "BossNoteEditBox", RHEL_MainFrame );
+
+BossNoteEditBox:SetPoint("TOP", BossNoteWindow, "TOP", 0, 0);
+BossNoteEditBox:SetPoint("BOTTOM", BossNoteWindow, "BOTTOM", 0, 0);
+BossNoteEditBox:SetSize(125,45);
+BossNoteEditBox:SetTextInsets(8, 9, 9, 8);
+BossNoteEditBox:SetMaxLetters(255);
+BossNoteEditBox:SetMultiLine(true);
+BossNoteEditBox:SetSpacing (1);
+BossNoteEditBox:EnableMouse(true);
+BossNoteEditBox:SetFrameStrata("HIGH");
+BossNoteEditBox:SetText("hello!")
+
+
+--Alternative variant for SavedVariables load. Not in use.
 function DeathFrame:ADDON_LOADED(addon)
 	if addon ~= "RHEL" or VariablesLoaded then 
 		return
