@@ -13,6 +13,8 @@ Welcome to the RHEL wiki!
 9. Сообщить о смерти лекаря и его задачах в чате. --TO DO
 10. Закрыть/перетащить/вызвать окно.
 
+Version history
+
   0.7.2 Minor fixes
   
   0.7.1 Points: 6, minor fixes
