@@ -16,10 +16,17 @@ Welcome to the RHEL wiki!
   0.7.2 Minor fixes
   
   0.7.1 Points: 6, minor fixes
+  
 0.7.0 Points: 7, 4, 3
+
 0.6.0 Points: 6, 5
+
 0.5.0 Points: 2
+
 0.4.0 Points: 1
+
 0.3.0 Points: 1
+
 0.2.0 Points: 10
+
 0.1.0 Initial creation
