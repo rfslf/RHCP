@@ -1,6 +1,6 @@
 -- Author      : Virgo
 -- Create Date : 12/19/2019 7:43:57 PM
--- Update	   : 13/01/2020
+-- Update	   : 14/01/2020
 
 local version = "0.8.0"
 local totalHealers = 8
@@ -137,7 +137,7 @@ function RHEL_VariablesDefaultSet()
 -- For the first time RHEL_Raid RHEL_Boss is loaded; initialize to defaults.
 	if (RHEL_Raid == nil) or (RHEL_Boss == nil) or (dungeons[RHEL_Raid] == nil) then
 		RHEL_Raid = RaidNameList[6];
-		RHEL_Boss = BossNameList[RHEL_Raid][1];
+		RHEL_Boss = BossNameList[dungeons[RHEL_Raid]][1];
 	else
 		RHEL_RaidBossReverse();
 		if revBossNameList[RHEL_Boss] == nil then
@@ -174,34 +174,6 @@ function RHEL_RaidBossSaved()
 	BossName_OnSelect(revBossNameList[RHEL_Boss]);
 end
 
---Variables loading detection. CHECK 
-local VariablesLoaded
-local FirstTime = true
-local oneTimer = true
-local frame = CreateFrame("FRAME", "RHEL");
---frame:RegisterEvent("VARIABLES_LOADED");
---frame:SetScript("OnEvent", function(self, event, ...)
-frame:RegisterEvent("PLAYER_LOGIN");
-frame:SetScript("OnEvent", function(self, event, ...)
-	if (event == "PLAYER_LOGIN" and FirstTime) then
---		frame:UnregisterEvent("PLAYER_LOGIN");
-		FirstTime = false;
-		VariablesLoaded = true;
-		RHEL_VariablesDefaultSet();
-
-		if oneTimer then
-			oneTimer = false;	
-			RHEL_RaidBossSaved();
-		end
-
-		RHEL_HealersLoad();
-		RHEL_ChannelLoad();
---		RHEL_HealsLoad();
---		RHEL_BuffsLoad();
---		RHEL_DispellsLoad();
-	end
-end);
- 
 --Healers on load. DONE
 function RHEL_HealersLoad()
 	for i = 1, totalHealers do
@@ -251,17 +223,15 @@ end
 
 --Send message to raid or channel. DONE
 function RHEL_SendMessage(msg)
---	print(RHEL_Channel)
 	if string.len(msg) > 255 then
 		RHEL_print("Too long message."..string.len(msg), true)
 	else
 		if toRaid:GetChecked() and not toChannel:GetChecked() then
 			SendChatMessage(msg ,"RAID");
-	--		C_ChatInfo.SendAddonMessage("RHEL", msg, "RAID");
 		elseif not toRaid:GetChecked() and toChannel:GetChecked() then
 			SendChatMessage(msg ,"CHANNEL", nil, RHEL_Channel);
 		else
-			RHEL_print('Error while sending message', true)
+			RHEL_print('while sending message', true)
 		end
 	end
 end
@@ -360,7 +330,6 @@ function RHEL_HealerWisper(number)
 		if not (UnitInRaid(healer) or UnitInParty(healer)) then
 			RHEL_print(healer .." is not in your raid or party", true)
 		else
---		wisper = healer .. ". "
 			local HealsPart = "[Heals - "
 			if RHEL_Heals[RHEL_Raid][RHEL_Boss][number] then
 				for j = 1, 12 do
@@ -375,7 +344,6 @@ function RHEL_HealerWisper(number)
 					end
 				end	
 			end
-
 			HealsPart = HealsPart .. "] "
 		
 			local BuffsPart = "[Buff groups - "
@@ -486,7 +454,6 @@ end
 
 --RaidName menu. CHECK
 local info = {};
-
 function RaidNameDropdown_OnLoad()
 	if (VariablesLoaded == false) then
 		return;
@@ -518,7 +485,7 @@ function RaidName_OnSelect(value)
 	if (UIDropDownMenu_GetSelectedValue(_G["RaidNameDropdown"]) ~= value) then
 		UIDropDownMenu_SetSelectedValue(_G["RaidNameDropdown"], value);
 		UIDropDownMenu_ClearAll(_G["BossNameDropdown"]);
---		print("508")
+		print("489")
 		BossNameDropdown_OnLoad();
 	end
 --	print(RHEL_Raid, "RaidNameDropdown")
@@ -526,13 +493,15 @@ function RaidName_OnSelect(value)
 	RHEL_BuffsLoad();
 	RHEL_DispellsDefault();
 	RHEL_DispellsLoad();
---	RHEL_RaidBossReverse()
-	RHEL_Boss = BossNameList[dungeons[RHEL_Raid]][1]
---	print(RHEL_Boss, "BossNameDropdown")
---	print("519")
-	RHEL_HealsDefault();
-	RHEL_HealsLoad();
-
+	RHEL_RaidBossReverse()
+	if RHEL_Boss == nil or revBossNameList[RHEL_Boss] == nil then
+		print("499")
+		RHEL_Boss = BossNameList[dungeons[RHEL_Raid]][1]
+--		RHEL_HealsDefault();
+--		RHEL_HealsLoad();
+	else
+		print("504")
+	end
 end
 
 --BossName menu. CHECK
@@ -548,7 +517,7 @@ function BossNameDropdown_OnLoad()
 		List = select(UIDropDownMenu_GetSelectedValue(_G["RaidNameDropdown"]),BossNameList.MC, BossNameList.Onyxia, BossNameList.BWL, BossNameList.AQ, BossNameList.NAX, BossNameList.Custome);
 	end
 
-	for x=1,getn(List) do
+	for x=1, getn(List) do
 		info.text = List[x];
 		info.value = x;
 		info.owner = _G["BossNameDropdown"]:GetParent();
@@ -575,59 +544,118 @@ function BossName_OnSelect(value)
 --	print(UIDropDownMenu_GetText(_G["RaidNameDropdown"]).." - "..UIDropDownMenu_GetText(_G["BossNameDropdown"]));
 	RHEL_Boss = UIDropDownMenu_GetText(_G["BossNameDropdown"])
 --	print(RHEL_Boss,BossNameList[dungeons[RHEL_Raid]][value], value, "BossNameDropdown2")
---	print("565")
+	print("548")
 --	print(RHEL_Raid, RHEL_Boss)
 	RHEL_HealsDefault();
 	RHEL_HealsLoad();
 --	RHEL_VariablesDefaultSet()
 end
 
---Prep fro death anonce. TO DO
+--Healer death warning. CHECK
 function RHEL_ReportDeath(guid, name, flags)
-	RHEL_print('death '..guid.." "..name.." "..flags,true)
+	for i = 1, totalHealers do
+		if RHEL_Healers[i] ~= name then
+			return
+		else
+			local HealsPart = ""
+			if RHEL_Heals[RHEL_Raid][RHEL_Boss][i] then
+				for j = 1, 12 do
+					if RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j] then
+						if j < 9 then
+							HealsPart = HealsPart .. " G" .. j
+						elseif j == 9 then
+							HealsPart = HealsPart .. " MT"
+						elseif j > 9 then
+							HealsPart = HealsPart .. " OT" .. (j-9)
+						end
+					end
+				end	
+			end
+			if HealsPart ~= "" then
+				msg = name..' is dead. Heal '.. HealsPart
+				if toRaid:GetChecked() and not toChannel:GetChecked() then
+					SendChatMessage(msg, "RAID");
+				elseif not toRaid:GetChecked() and toChannel:GetChecked() then
+					SendChatMessage(msg, "CHANNEL", nil, RHEL_Channel);
+				else
+					RHEL_print('on warning healer death', true)
+				end
+			end
+		end
+	end
 end
 
-local DeathFrame = CreateFrame("FRAME", "RHEL");
-DeathFrame:SetScript("OnEvent", function(self, event, ...)
+local RHEL_Frame = CreateFrame("FRAME", "RHEL");
+RHEL_Frame:SetScript("OnEvent", function(self, event, ...)
 	self[event](self, ...)
 end)
 
 --Prep for death anonce. TO DO
-function DeathFrame:COMBAT_LOG_EVENT_UNFILTERED(event, CombatLogGetCurrentEventInfo())
+function RHEL_Frame:COMBAT_LOG_EVENT_UNFILTERED(event, CombatLogGetCurrentEventInfo())
 	local _, subevent, _, _, _, _, _, guid, name, flags = CombatLogGetCurrentEventInfo();
 	local instance = select(2, IsInInstance())
---	if not (UnitInRaid(destName) or UnitInParty(destName)) then return end
+	if not (UnitInRaid(destName) or UnitInParty(destName)) then return end
 
-	if (subevent == "UNIT_DIED" and (instance == "raid" or instance == "party" or instance == "pvp")) then
+	if (subevent == "UNIT_DIED" and (instance == "raid" or instance == "party")) then
 		RHEL_ReportDeath(guid, name, flags)
 	end
 end
-DeathFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
-
-BossNoteEditBox = CreateFrame("EditBox", "BossNoteEditBox", RHEL_MainFrame );
-
-BossNoteEditBox:SetPoint("TOP", BossNoteWindow, "TOP", 0, 0);
-BossNoteEditBox:SetPoint("BOTTOM", BossNoteWindow, "BOTTOM", 0, 0);
-BossNoteEditBox:SetSize(125,45);
-BossNoteEditBox:SetTextInsets(8, 9, 9, 8);
-BossNoteEditBox:SetMaxLetters(255);
-BossNoteEditBox:SetMultiLine(true);
-BossNoteEditBox:SetSpacing (1);
-BossNoteEditBox:EnableMouse(true);
-BossNoteEditBox:SetFrameStrata("HIGH");
-BossNoteEditBox:SetText("hello!")
 
 
---Alternative variant for SavedVariables load. Not in use.
-function DeathFrame:ADDON_LOADED(addon)
+--Alternative variant for SavedVariables load. CHECK
+local VariablesLoaded = false
+function RHEL_Frame:ADDON_LOADED(addon)
 	if addon ~= "RHEL" or VariablesLoaded then 
 		return
 	else
---		print("RHEL:Loaded")
-		return
+		RHEL_print("Saved variables loaded")
+		VariablesLoaded = true;
+		RHEL_VariablesDefaultSet();
+		RHEL_RaidBossSaved();
+		RHEL_HealersLoad();
+		RHEL_ChannelLoad();
 	end
 end
-DeathFrame:RegisterEvent("ADDON_LOADED")
+RHEL_Frame:RegisterEvent("ADDON_LOADED")
+
+--Variables loading detection. CHECK 
+--[[local VariablesLoaded
+local FirstTime = true
+local oneTimer = true
+local frame = CreateFrame("FRAME", "RHEL");
+--frame:RegisterEvent("VARIABLES_LOADED");
+--frame:SetScript("OnEvent", function(self, event, ...)
+frame:RegisterEvent("PLAYER_LOGIN");
+frame:SetScript("OnEvent", function(self, event, ...)
+	if (event == "PLAYER_LOGIN" and FirstTime) then
+--		frame:UnregisterEvent("PLAYER_LOGIN");
+		FirstTime = false;
+		VariablesLoaded = true;
+		RHEL_VariablesDefaultSet();
+
+		if oneTimer then
+			oneTimer = false;	
+			RHEL_RaidBossSaved();
+		end
+
+		RHEL_HealersLoad();
+		RHEL_ChannelLoad();
+--		RHEL_HealsLoad();
+--		RHEL_BuffsLoad();
+--		RHEL_DispellsLoad();
+	end
+end);]]--
+
+--Click on warning checkbox reaction. CHECK
+--local warningChecked = false
+function ClickOnWarningCheckBox()
+--   warningChecked = CheckButtonWarning:GetChecked();
+	if CheckButtonWarning:GetChecked() then
+		RHEL_Frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
+	else
+		RHEL_Frame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
+	end
+end
 	
 --for debug
 function dump(o)
@@ -642,3 +670,35 @@ function dump(o)
       return tostring(o)
    end
 end
+
+--[[BossNoteWindow = CreateFrame("Frame", "BossNoteWindow", RHEL_MainFrame);
+BossNoteEditBox = CreateFrame("EditBox", "BossNoteEditBox", RHEL_MainFrame);
+
+BossNoteTitle = RHEL_MainFrame:CreateFontString("BossNoteTitle", "OVERLAY", "GameFontNormalSmall");
+BossNoteTitle:SetPoint("BOTTOMLEFT", BossNoteWindow, "TOPLEFT", 5, 0);
+BossNoteTitle:SetText("Boss Note:");
+BossNoteTitle:SetJustifyH("LEFT");
+BossNoteTitle:SetWidth(120);
+BossNoteTitle:SetWordWrap(false);
+BossnoteFontString2 = BossNoteWindow:CreateFontString("BossnoteFontString2", "OVERLAY", "GameFontWhiteTiny");
+
+ -- Officer Note
+BossNoteWindow:SetPoint( "RIGHT" , RHEL_MainFrame , -15 , 10 );
+BossnoteFontString2:SetPoint("TOPLEFT", BossPlayerOfficerNoteWindow, 8, -7);
+BossnoteFontString2:SetWordWrap(true);
+BossnoteFontString2:SetSpacing(1);
+BossnoteFontString2:SetWidth(108);
+BossnoteFontString2:SetJustifyH("LEFT");
+BossnoteFontString2:SetMaxLines(3);
+BossNoteWindow:SetBackdrop(noteBackdrop);
+BossNoteWindow:SetSize(125,40);
+BossNoteEditBox:SetPoint("TOP", BossNoteWindow, "TOP", 0, 0);
+BossNoteEditBox:SetPoint("BOTTOM", BossNoteWindow, "BOTTOM", 0, 0);
+BossNoteEditBox:SetSize(125,45);
+BossNoteEditBox:SetTextInsets(8, 9, 9, 8);
+BossNoteEditBox:SetMaxLetters(255);
+BossNoteEditBox:SetMultiLine(true);
+BossNoteEditBox:SetSpacing (1);
+BossNoteEditBox:EnableMouse(true);
+BossNoteEditBox:SetFrameStrata("HIGH");
+BossNoteEditBox:SetText("hello!") ]]--

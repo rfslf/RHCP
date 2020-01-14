@@ -1,6 +1,4 @@
-﻿
-<Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.blizzard.com/wow/ui/">
-	<Script file="RHEL.lua" />
+﻿<Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.blizzard.com/wow/ui/">
 	<Frame name="RHEL_MainFrame" parent="UIParent" movable="true" enableMouse="true">
 		<Size>
 			<AbsDimension x="1025" y="760" />
@@ -20,6 +18,29 @@
 			</EdgeSize>
 		</Backdrop>
 		<Frames>
+			<CheckButton name="CheckButtonWarning" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOP" x="-250" y="-30" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="Warning on healers death">
+							<Size x="25" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="20" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnWarningCheckBox();
+					</OnClick>
+				</Scripts>
+			</CheckButton>
 			<Frame name="RaidNameDropdown" inherits="UIDropDownMenuTemplate" id="1">
 				<Anchors>
 					<Anchor point="TOP">
