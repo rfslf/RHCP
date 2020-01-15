@@ -15,4 +15,4 @@ Welcome to the RHEL wiki!
 
 ===============================================================================
 <h5>Slash Commands</h5>
-<div>/rhel or /RHEL- shows/hides the GUI</div>
+<div>/rhel or /RHEL - shows/hides the GUI</div>
