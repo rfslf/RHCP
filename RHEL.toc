@@ -5,4 +5,3 @@
 ## SavedVariables: RHEL_Raid, RHEL_Boss, RHEL_Heals, RHEL_Buffs, RHEL_Dispells, RHEL_Healers, RHEL_Channel
 
 RHEL.xml
-RHEL.lua
