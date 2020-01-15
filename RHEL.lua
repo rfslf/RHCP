@@ -223,7 +223,7 @@ end
 
 --Send message to raid or channel. DONE
 function RHEL_SendMessage(msg)
-	if string.len(tostring(msg) > 255) then
+	if string.len(tostring(msg)) > 255 then
 		RHEL_print("Too long message."..string.len(msg), true)
 	else
 		if toRaid:GetChecked() and not toChannel:GetChecked() then
