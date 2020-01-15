@@ -1,18 +1,5 @@
 <h1>RHEL</h1>
-<h3>English</h3>
-<h5>Greetings , travaler!</h3>
-<p><div>I will try to help you and make your Raid Healer Easier Life!<div></p>
-<ol>
-<li style="text-align: justify;">portal.unn.ru</li>
-<li style="text-align: justify;">cloud.unn.ru</li>
-<li style="text-align: justify;">login.unn.ru</li>
-<li style="text-align: justify;">sotrudnik.unn.ru</li>
-<li style="text-align: justify;">домен unn.global</li>
-<li style="text-align: justify;">...</li>
-</ol>
-</li>
-<h5>Slash Commands</h5>
-<div>/rhel or /RHEL - shows/hides the GUI</div>
+<h3>Русский</h3>
 Аддон версии 0.7.2 может проделать следующую работу:
 
 1. Загрузить по умолчанию конфигурацию "хил-баф-диспел".
@@ -27,4 +14,21 @@
 10. Закрыть/перетащить/вызвать окно.
 
 ===============================================================================
+
+<h3>English</h3>
+<h5>Greetings , travaler!</h3>
+<p><div>I will try to help you and make your Raid Healer Easier Life!<div></p>
+<ol>
+<li style="text-align: justify;">Load default configuration for "heal-buff-dispell"</li>
+<li style="text-align: justify;">Load up to 8 healers names or load dummy</li>
+<li style="text-align: justify;">Select heal configuration for every healer for 5 dungeons</li>
+<li style="text-align: justify;">Select "buff-dispell" configuration for every healer for 5 dungeons</li>
+<li style="text-align: justify;">Select channel for anounces (to raid or choose custome)</li>
+<li style="text-align: justify;">...</li>
+</ol>
+
+<h5>Slash Commands</h5>
+<div>/rhel or /RHEL - shows/hides the GUI</div>
+
+
 
