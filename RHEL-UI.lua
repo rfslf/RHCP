@@ -123,3 +123,45 @@ BossNoteEditBox:SetSpacing (1);
 BossNoteEditBox:EnableMouse(true);
 BossNoteEditBox:SetFrameStrata("HIGH");
 BossNoteEditBox:SetText("hello!")
+
+
+local uniquealyzer = 1;
+function createCheckbutton(parent, x_loc, y_loc, displayname)
+	uniquealyzer = uniquealyzer + 1;
+	
+	local checkbutton = CreateFrame("CheckButton", "CheckButton12_2" .. uniquealyzer, parent, "UICheckButtonTemplate");
+	checkbutton:SetPoint("TOPLEFT", x_loc, y_loc);
+	checkbutton:SetSize(25,25)
+	getglobal(checkbutton:GetName() .. 'Text'):SetText(displayname);
+	checkbutton:SetScript("OnClick", ClickOnHealCheckBox(2,12))
+	local checkbuttonfont:CreateFontString(checkbutton, "OVERLAY", "GameFontNormal")
+	checkbuttonfont:SetPoint("TOPLEFT", -20, 0)
+	checkbuttonfont:SetSize(25,25)
+	return checkbutton;
+end
+
+RHELCheckButton = RHEL.createCheckbutton(RHEL_MainFrame, 400, -250 "CheckButton12_13");
+			
+<CheckButton name="CheckButton12_13" inherits="UICheckButtonTemplate" text="CheckButton12_13">
+	<Size>
+		<AbsDimension x="25" y="25" />
+	</Size>
+	<Anchors>
+		<Anchor point="TOPLEFT" x="350" y="-245" />
+	</Anchors>
+	<Layers>
+		<Layer level="OVERLAY">
+			<FontString inherits="GameFontNormal" text="T4">
+				<Size x="25" y="25" />
+				<Anchors>
+					<Anchor point="TOPLEFT" x="-20" y="0" />
+				</Anchors>
+			</FontString>
+		</Layer>
+	</Layers>
+	<Scripts>
+		<OnClick>
+			ClickOnHealCheckBox(2,12);
+		</OnClick>
+	</Scripts>
+</CheckButton>

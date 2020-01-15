@@ -1,6 +1,6 @@
 -- Author      : Virgo
 -- Create Date : 12/19/2019 7:43:57 PM
--- Update	   : 14/01/2020
+-- Update	   : 15/01/2020
 
 local version = "0.8.0"
 local totalHealers = 8
@@ -112,7 +112,7 @@ function RHEL_BuffsDefault()
 	end
 end
 
--- For the first time RHEL_Dispells is loaded; initialize dispells to defaults. CHECK
+-- For the first time RHEL_Dispells is loaded; initialize dispells to defaults. DONE
 function RHEL_DispellsDefault()
 	if RHEL_Dispells == nil then
 		RHEL_Dispells={}
@@ -132,7 +132,7 @@ function RHEL_DispellsDefault()
 	end
 end
 
---Set defaults values to variables. TO DO
+--Set defaults values to variables. DONE
 function RHEL_VariablesDefaultSet()
 -- For the first time RHEL_Raid RHEL_Boss is loaded; initialize to defaults.
 	if (RHEL_Raid == nil) or (RHEL_Boss == nil) or (dungeons[RHEL_Raid] == nil) then
@@ -163,7 +163,7 @@ function RHEL_VariablesDefaultSet()
 	RHEL_DispellsDefault();
 end
 
---Load saved Raid&Boss. CHECK
+--Load saved Raid&Boss. OPTIMAZE
 function RHEL_RaidBossSaved()
 	RHEL_RaidBossReverse()
 	RaidName_OnSelect(revRaidNameList[RHEL_Raid]);
@@ -181,7 +181,7 @@ function RHEL_HealersLoad()
 	end
 end
 
---Heals checkboxes on load. Optimaze
+--Heals checkboxes on load. DONE
 function RHEL_HealsLoad()
 --	print("RHEL: Healers load for ",RHEL_Raid,RHEL_Boss)
 	for i = 1, totalHealers do
@@ -197,7 +197,7 @@ function RHEL_HealsLoad()
 	end
 end
 
---Buffs checkboxes on load. Optimaze
+--Buffs checkboxes on load. DONE
 function RHEL_BuffsLoad()
 	for i = 1, totalHealers do
 		for j = 1, 8 do
@@ -207,7 +207,7 @@ function RHEL_BuffsLoad()
 	end
 end
 
---Dispells checkboxes on load. Optimaze
+--Dispells checkboxes on load. DONE
 function RHEL_DispellsLoad()
 	for i = 1, totalHealers do
 		for j = 1, 8 do
@@ -223,13 +223,13 @@ end
 
 --Send message to raid or channel. DONE
 function RHEL_SendMessage(msg)
-	if string.len(msg) > 255 then
+	if string.len(tostring(msg) > 255) then
 		RHEL_print("Too long message."..string.len(msg), true)
 	else
 		if toRaid:GetChecked() and not toChannel:GetChecked() then
-			SendChatMessage(msg ,"RAID");
+			SendChatMessage(tostring(msg), "RAID");
 		elseif not toRaid:GetChecked() and toChannel:GetChecked() then
-			SendChatMessage(msg ,"CHANNEL", nil, RHEL_Channel);
+			SendChatMessage(tostring(msg), "CHANNEL", nil, RHEL_Channel);
 		else
 			RHEL_print('while sending message', true)
 		end
@@ -274,7 +274,7 @@ function RHEL_HealAnounce()
 	RHEL_SendMessage(message)
 end
 
---Click on buffs anounce. TO DO
+--Click on buffs anounce. DONE
 function RHEL_BuffAnounce()
 	local anounce = RHEL_Raid..": BUFFS!"
 	local message = ""
@@ -298,7 +298,7 @@ function RHEL_BuffAnounce()
 	RHEL_SendMessage(message)
 end
 
---Click on buffs anounce. TO DO
+--Click on buffs anounce. DONE
 function RHEL_DispellAnounce()
 	local anounce = RHEL_Raid..": DISPELLS!"
 	local message = ""
@@ -375,12 +375,11 @@ function RHEL_HealerWisper(number)
 			end
 
 			SendChatMessage(wisper..HealsPart..BuffsPart..DispellsPart, "WHISPER", nil, healer)
-	--		print(wisper..HealsPart..BuffsPart..DispellsPart)
 		end
 	end
 end
 
---Click on heals checkbox reaction. CHECK
+--Click on heals checkbox reaction. DONE
 function ClickOnHealCheckBox(healer,target)
 --	print(RHEL_Raid,RHEL_Boss)
 	local isChecked
@@ -388,14 +387,14 @@ function ClickOnHealCheckBox(healer,target)
 	RHEL_Heals[RHEL_Raid][RHEL_Boss][healer][target] = isChecked
 end
 
---Click on buffs checkbox reaction. CHECK
+--Click on buffs checkbox reaction. DONE
 function ClickOnBuffCheckBox(buffer,target)
 	local isChecked
     isChecked=_G['CheckButton2' .. buffer.. '_'..target]:GetChecked();
 	RHEL_Buffs[RHEL_Raid][buffer][target] = isChecked
 end
 
---Click on dispells checkbox reaction. CHECK
+--Click on dispells checkbox reaction. DONE
 function ClickOnDispellCheckBox(buffer,target)
 	local isChecked
     isChecked=_G['CheckButton3' .. buffer.. '_'..target]:GetChecked();
@@ -413,7 +412,7 @@ function HealerNameChange(healer)
 	RHEL_Healers[id] = _G['HealerName'..id]:GetText()
 end
 
---Channel editing reaction. Optimaze
+--Channel editing reaction. DONE
 function ChannelChange()
 	RHEL_Channel = ChannelNumber:GetText()
 end
@@ -430,18 +429,18 @@ function UpdateHealerClass(icon)
 	end
 end
 
---Removes focus from healer name window. CHECK
+--Removes focus from healer name window. DONE
 function EditBox_OnEscapePressed(number)
 	_G["HealerName"..number]:ClearFocus()
 	--	RHEL_MainFrame:Hide()
 end
 
---Removes focus from channel name window. CHECK
+--Removes focus from channel name window. DONE
 function Channel_OnEscapePressed()
 	ChannelNumber:ClearFocus()
 end
 
---Swap chat to anounce. TO DO
+--Swap chat to anounce. DONE
 function SwapAnounceTo(to)
 	if to == toChannel then
 		toRaid:SetChecked(false)
@@ -480,7 +479,7 @@ function RaidName_OnSelect(value)
 	RHEL_Raid = RaidNameList[value]
 	if (RHEL_Raid == nil) then
 		RHEL_Raid = RaidNameList[6]
-		RHEL_Boss = BossNameList[RHEL_Raid][1]
+		RHEL_Boss = BossNameList[dungeons[RHEL_Raid]][1]
 	end
 	if (UIDropDownMenu_GetSelectedValue(_G["RaidNameDropdown"]) ~= value) then
 		UIDropDownMenu_SetSelectedValue(_G["RaidNameDropdown"], value);
@@ -488,19 +487,17 @@ function RaidName_OnSelect(value)
 		print("489")
 		BossNameDropdown_OnLoad();
 	end
---	print(RHEL_Raid, "RaidNameDropdown")
+	
 	RHEL_BuffsDefault();
 	RHEL_BuffsLoad();
 	RHEL_DispellsDefault();
 	RHEL_DispellsLoad();
 	RHEL_RaidBossReverse()
 	if RHEL_Boss == nil or revBossNameList[RHEL_Boss] == nil then
-		print("499")
+--		RHEL_print("499")
 		RHEL_Boss = BossNameList[dungeons[RHEL_Raid]][1]
---		RHEL_HealsDefault();
---		RHEL_HealsLoad();
-	else
-		print("504")
+		RHEL_HealsDefault();
+		RHEL_HealsLoad();
 	end
 end
 
@@ -544,7 +541,7 @@ function BossName_OnSelect(value)
 --	print(UIDropDownMenu_GetText(_G["RaidNameDropdown"]).." - "..UIDropDownMenu_GetText(_G["BossNameDropdown"]));
 	RHEL_Boss = UIDropDownMenu_GetText(_G["BossNameDropdown"])
 --	print(RHEL_Boss,BossNameList[dungeons[RHEL_Raid]][value], value, "BossNameDropdown2")
-	print("548")
+--	print("548")
 --	print(RHEL_Raid, RHEL_Boss)
 	RHEL_HealsDefault();
 	RHEL_HealsLoad();
@@ -555,8 +552,10 @@ end
 function RHEL_ReportDeath(guid, name, flags)
 	for i = 1, totalHealers do
 		if RHEL_Healers[i] ~= name then
+			RHEL_print('warning death'..name, true)
 			return
 		else
+			RHEL_print('warning healer death'..name, true)
 			local HealsPart = ""
 			if RHEL_Heals[RHEL_Raid][RHEL_Boss][i] then
 				for j = 1, 12 do
@@ -590,11 +589,11 @@ RHEL_Frame:SetScript("OnEvent", function(self, event, ...)
 	self[event](self, ...)
 end)
 
---Prep for death anonce. TO DO
-function RHEL_Frame:COMBAT_LOG_EVENT_UNFILTERED(event, CombatLogGetCurrentEventInfo())
+--Prep for death anonce. Check
+function RHEL_Frame:COMBAT_LOG_EVENT_UNFILTERED(event, ...)
 	local _, subevent, _, _, _, _, _, guid, name, flags = CombatLogGetCurrentEventInfo();
 	local instance = select(2, IsInInstance())
-	if not (UnitInRaid(destName) or UnitInParty(destName)) then return end
+	if not (UnitInRaid(name) or UnitInParty(name)) then return end
 
 	if (subevent == "UNIT_DIED" and (instance == "raid" or instance == "party")) then
 		RHEL_ReportDeath(guid, name, flags)
@@ -608,48 +607,21 @@ function RHEL_Frame:ADDON_LOADED(addon)
 	if addon ~= "RHEL" or VariablesLoaded then 
 		return
 	else
-		RHEL_print("Saved variables loaded")
 		VariablesLoaded = true;
 		RHEL_VariablesDefaultSet();
 		RHEL_RaidBossSaved();
 		RHEL_HealersLoad();
 		RHEL_ChannelLoad();
+--		RHEL_print("Saved variables loaded")
 	end
 end
 RHEL_Frame:RegisterEvent("ADDON_LOADED")
-
---Variables loading detection. CHECK 
---[[local VariablesLoaded
-local FirstTime = true
-local oneTimer = true
-local frame = CreateFrame("FRAME", "RHEL");
---frame:RegisterEvent("VARIABLES_LOADED");
---frame:SetScript("OnEvent", function(self, event, ...)
-frame:RegisterEvent("PLAYER_LOGIN");
-frame:SetScript("OnEvent", function(self, event, ...)
-	if (event == "PLAYER_LOGIN" and FirstTime) then
---		frame:UnregisterEvent("PLAYER_LOGIN");
-		FirstTime = false;
-		VariablesLoaded = true;
-		RHEL_VariablesDefaultSet();
-
-		if oneTimer then
-			oneTimer = false;	
-			RHEL_RaidBossSaved();
-		end
-
-		RHEL_HealersLoad();
-		RHEL_ChannelLoad();
---		RHEL_HealsLoad();
---		RHEL_BuffsLoad();
---		RHEL_DispellsLoad();
-	end
-end);]]--
 
 --Click on warning checkbox reaction. CHECK
 --local warningChecked = false
 function ClickOnWarningCheckBox()
 --   warningChecked = CheckButtonWarning:GetChecked();
+	RHEL_print('warning click', true)
 	if CheckButtonWarning:GetChecked() then
 		RHEL_Frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
 	else
@@ -682,7 +654,7 @@ BossNoteTitle:SetWidth(120);
 BossNoteTitle:SetWordWrap(false);
 BossnoteFontString2 = BossNoteWindow:CreateFontString("BossnoteFontString2", "OVERLAY", "GameFontWhiteTiny");
 
- -- Officer Note
+ -- Edit Note
 BossNoteWindow:SetPoint( "RIGHT" , RHEL_MainFrame , -15 , 10 );
 BossnoteFontString2:SetPoint("TOPLEFT", BossPlayerOfficerNoteWindow, 8, -7);
 BossnoteFontString2:SetWordWrap(true);

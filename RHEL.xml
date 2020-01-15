@@ -1,4 +1,5 @@
 ﻿<Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="RHEL.lua" />
 	<Frame name="RHEL_MainFrame" parent="UIParent" movable="true" enableMouse="true">
 		<Size>
 			<AbsDimension x="1025" y="760" />
@@ -18,29 +19,6 @@
 			</EdgeSize>
 		</Backdrop>
 		<Frames>
-			<CheckButton name="CheckButtonWarning" inherits="UICheckButtonTemplate" text="CheckButton1">
-				<Size>
-					<AbsDimension x="25" y="25" />
-				</Size>
-				<Anchors>
-					<Anchor point="TOP" x="-250" y="-30" />
-				</Anchors>
-				<Layers>
-					<Layer level="OVERLAY">
-						<FontString inherits="GameFontNormal" text="Warning on healers death">
-							<Size x="25" y="25" />
-							<Anchors>
-								<Anchor point="TOPLEFT" x="20" y="0" />
-							</Anchors>
-						</FontString>
-					</Layer>
-				</Layers>
-				<Scripts>
-					<OnClick>
-						ClickOnWarningCheckBox();
-					</OnClick>
-				</Scripts>
-			</CheckButton>
 			<Frame name="RaidNameDropdown" inherits="UIDropDownMenuTemplate" id="1">
 				<Anchors>
 					<Anchor point="TOP">
@@ -95,7 +73,29 @@
 					</OnLoad>
 				</Scripts>
 			</Frame>
-			
+			<CheckButton name="CheckButtonWarning" inherits="UICheckButtonTemplate" text="CheckButton1">
+				<Size>
+					<AbsDimension x="25" y="25" />
+				</Size>
+				<Anchors>
+					<Anchor point="TOP" x="-450" y="-30" />
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormal" text="Warning on healers death">
+							<Size x="200" y="25" />
+							<Anchors>
+								<Anchor point="TOPLEFT" x="15" y="0" />
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						ClickOnWarningCheckBox();
+					</OnClick>
+				</Scripts>
+			</CheckButton>
 			<CheckButton name="CheckButton11_1" inherits="UICheckButtonTemplate" text="CheckButton1">
 				<Size>
 					<AbsDimension x="25" y="25" />
@@ -5744,7 +5744,7 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Button name="UIPanelCloseButton" inherits="UIPanelButtonTemplate" text="Close">
+			<Button name="PanelCloseButton" inherits="UIPanelButtonTemplate" text="Close">
 				<Size x="120" y="50" />
 				<Anchors>
 					<Anchor point="TOPLEFT" x="880" y="-695" />
