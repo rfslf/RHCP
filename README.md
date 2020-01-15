@@ -14,22 +14,3 @@ Welcome to the RHEL wiki!
 10. Закрыть/перетащить/вызвать окно.
 
 ===============================================================================
-
-Version history
-|_0.7.0 Points: 7, 4, 3
-
-  |_0.7.2 Minor fixes
-
-  |_0.7.1 Points: 6, minor fixes 
-
-|_0.6.0 Points: 6, 5
-
-|_0.5.0 Points: 2
-
-|_0.4.0 Points: 1
-
-|_0.3.0 Points: 1
-
-|_0.2.0 Points: 10
-
-|_0.1.0 Initial creation
