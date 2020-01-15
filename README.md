@@ -14,3 +14,5 @@ Welcome to the RHEL wiki!
 10. Закрыть/перетащить/вызвать окно.
 
 ===============================================================================
+<h5>Slash Commands</h5>
+<div>/rhel or /RHEL- shows/hides the GUI</div>
