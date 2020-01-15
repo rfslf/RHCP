@@ -17,7 +17,9 @@ Welcome to the RHEL wiki!
 
 Version history
 |_0.7.0 Points: 7, 4, 3
+
   |_0.7.2 Minor fixes
+
   |_0.7.1 Points: 6, minor fixes 
 
 |_0.6.0 Points: 6, 5
