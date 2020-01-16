@@ -477,10 +477,14 @@ function RaidName_OnSelect(value)
 	end;
 
 	RHEL_Raid = RaidNameList[value]
+	
+-- ?????? ?? ???????????? ???????
 	if (RHEL_Raid == nil) then
+		print("483")
 		RHEL_Raid = RaidNameList[6]
 		RHEL_Boss = BossNameList[dungeons[RHEL_Raid]][1]
 	end
+	
 	if (UIDropDownMenu_GetSelectedValue(_G["RaidNameDropdown"]) ~= value) then
 		UIDropDownMenu_SetSelectedValue(_G["RaidNameDropdown"], value);
 		UIDropDownMenu_ClearAll(_G["BossNameDropdown"]);
@@ -494,8 +498,9 @@ function RaidName_OnSelect(value)
 	RHEL_DispellsLoad();
 	RHEL_RaidBossReverse()
 	if RHEL_Boss == nil or revBossNameList[RHEL_Boss] == nil then
---		RHEL_print("499")
+		RHEL_print("499")
 		RHEL_Boss = BossNameList[dungeons[RHEL_Raid]][1]
+		-- ??? 2 ?????? ???? ?????? ??? ?????????????, ?? ????? ?????
 		RHEL_HealsDefault();
 		RHEL_HealsLoad();
 	end
@@ -593,9 +598,10 @@ end)
 function RHEL_Frame:COMBAT_LOG_EVENT_UNFILTERED(event, ...)
 	local _, subevent, _, _, _, _, _, guid, name, flags = CombatLogGetCurrentEventInfo();
 	local instance = select(2, IsInInstance())
-	if not (UnitInRaid(name) or UnitInParty(name)) then return end
+--	if not (UnitInRaid(name) or UnitInParty(name)) then return end
 
-	if (subevent == "UNIT_DIED" and (instance == "raid" or instance == "party")) then
+--	if (subevent == "UNIT_DIED" and (instance == "raid" or instance == "party")) then
+	if (subevent == "UNIT_DIED") then
 		RHEL_ReportDeath(guid, name, flags)
 	end
 end
