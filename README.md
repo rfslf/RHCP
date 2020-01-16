@@ -23,14 +23,18 @@
 
 <h3>English</h3>
 <h5>Greetings , travaler!</h3>
-<p><div>I will try to help you and make your Raid Healer Easier Life!<div></p>
+<p><div>I will try to help you and make your Raid Healer Easier Life!<div>
+<div>Actual version of addon 0.7.2 and he can do next features:<div></p>
 <ol>
 <li style="text-align: justify;">Load default configuration for "heal-buff-dispell"</li>
 <li style="text-align: justify;">Load up to 8 healers names or load dummy</li>
 <li style="text-align: justify;">Select heal configuration for every healer for 5 dungeons</li>
 <li style="text-align: justify;">Select "buff-dispell" configuration for every healer for 5 dungeons</li>
 <li style="text-align: justify;">Select channel for anounces (to raid or choose custome)</li>
-<li style="text-align: justify;">...</li>
+<li style="text-align: justify;">Anounce in channel all targets of healers</li>
+<li style="text-align: justify;">Write and anounce about fight. --TO DO</li>
+<li style="text-align: justify;">Warning on healers death and his configuration of healing to channel. --TO DO</li>
+<li style="text-align: justify;">Close/drug/show window.</li>
 </ol>
 
 <h5>Slash Commands</h5>
