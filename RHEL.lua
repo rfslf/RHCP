@@ -239,34 +239,39 @@ end
 --Click on heals anounce. DONE
 function RHEL_HealAnounce()
 	local anounce = RHEL_Raid.." - "..RHEL_Boss..": HEALINGS!"
-	local message = ""
+	local message1 = ""
 	for i = 1, totalHealers do
 		if _G['HealerName'..i]:GetText() ~= "" then
-			local message1 = "[" .. _G['HealerName'..i]:GetText() .. " - "
-			local message2 = ""
+			local message2 = "[" .. _G['HealerName'..i]:GetText() .. " - "
+			local message3 = ""
 			if RHEL_Heals[RHEL_Raid][RHEL_Boss][i] then
-				message2 = "Groups: "
+				message3 = "Groups: "
+				local heal_count = 0
 				for j = 1, 8 do
 					if RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j] then
-						message2 = message2 .. j .. ", "
+						heal_count = heal_count + 1
+						message3 = message3 .. j .. ", "
 					end
-				end	
-				message2 = string.sub(message2, 1, -3)  .. "."
-				if message2 == "Groups." then
-					message2 = ""
+				end
+				if heal_count == 0 then
+					message3 = ""
+				elseif heal_count == 8 then
+					message3 = "All groups."
+				else
+					message3 = string.sub(message3, 1, -3)  .. "."
 				end
 				for j = 9, 12 do
 					if RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j] then
 						if j == 9 then
-							message2 = message2 .. " MT"
+							message3 = message3 .. " MT,"
 						else
-							message2 = message2 .. " OT" .. (j-9)
+							message3 = message3 .. " OT" .. (j-9) .. ","
 						end
 					end
 				end
 			end
-			if message2 ~= "" then
-				message = message .. message1 .. message2 .. "] "	
+			if message3 ~= "" then
+				message1 = message1 .. message2 .. message3 .. "] "	
 			end
 		end
 	end
@@ -283,14 +288,20 @@ function RHEL_BuffAnounce()
 			local message1 = "[" .. _G['HealerName'..i]:GetText() .. " - "
 			local message2 = "Groups: "
 			if RHEL_Buffs[RHEL_Raid][i] then
+				local buff_count = 0
 				for j = 1, 8 do
 					if RHEL_Buffs[RHEL_Raid][i][j] then
+						buff_count = buff_count + 1
 						message2 = message2 .. j .. ", "
 					end
 				end
 			end
-			if message2 ~= "Groups: " then
-				message = message .. message1 .. string.sub(message2, 1, -3) .. "] "	
+			if buff_count == 0 then
+				message1 = ""
+			elseif buff_count == 8 then
+				message2 = "All groups.] "
+			else
+				message = message .. message1 .. string.sub(message2, 1, -3) .. "] "
 			end
 		end
 	end
@@ -307,14 +318,20 @@ function RHEL_DispellAnounce()
 			local message1 = "[" .. _G['HealerName'..i]:GetText() .. " - "
 			local message2 = "Groups: "
 			if RHEL_Dispells[RHEL_Raid][i] then
+				local dispell_count = 0
 				for j = 1, 8 do
 					if RHEL_Dispells[RHEL_Raid][i][j] then
+						dispell_count = dispell_count + 1
 						message2 = message2 .. j .. ", "
 					end
 				end
 			end
-			if message2 ~= "Groups: " then
-				message = message .. message1 .. string.sub(message2, 1, -3) .. "] "	
+			if dispell_count == 0 then
+				message1 = ""
+			elseif dispell_count == 8 then
+				message2 = "All groups.] "
+			else
+				message = message .. message1 .. string.sub(message2, 1, -3) .. "] "
 			end
 		end
 	end
@@ -332,46 +349,62 @@ function RHEL_HealerWisper(number)
 		else
 			local HealsPart = "[Heals - "
 			if RHEL_Heals[RHEL_Raid][RHEL_Boss][number] then
-				for j = 1, 12 do
+				local heal_count = 0
+				for j = 1, 8 do
+					if RHEL_Heals[RHEL_Raid][RHEL_Boss][number][j] then					
+						heal_count = heal_count + 1
+						HealsPart = HealsPart .. " Group" .. j .. ","
+					end
+				end			
+				if 	heal_count == 8 then
+					HealsPart = "[Heals - All groups,"
+				end		
+				for j = 9, 12 do
 					if RHEL_Heals[RHEL_Raid][RHEL_Boss][number][j] then
-						if j < 9 then
-							HealsPart = HealsPart .. " Group" .. j
-						elseif j == 9 then
-							HealsPart = HealsPart .. " MT"
+						if j == 9 then
+							HealsPart = HealsPart .. " MT" .. ","
 						elseif j > 9 then
-							HealsPart = HealsPart .. " OT" .. (j-9)
+							HealsPart = HealsPart .. " OT" .. (j-9) .. ","
 						end
 					end
 				end	
 			end
-			HealsPart = HealsPart .. "] "
+			HealsPart = string.sub(HealsPart, 1, -2) .. "] "
 		
 			local BuffsPart = "[Buff groups - "
 			if RHEL_Buffs[RHEL_Raid][number] then
+				local buff_count = 0
 				for j = 1, 8 do
 					if RHEL_Buffs[RHEL_Raid][number][j] then
-						BuffsPart = BuffsPart .. j .. " "
+						buff_count = buff_count + 1
+						BuffsPart = BuffsPart .. j .. ", "
 					end
 				end	
 			end
-			if BuffsPart == "[Buff groups - " then
+			if buff_count == 0 then 
 				BuffsPart = " "
+			elseif buff_count == 8 then
+				BuffsPart = "[Buff all groups] "
 			else
-				BuffsPart = BuffsPart .. "] "
+				BuffsPart = string.sub(BuffsPart, 1, -3) .. "] "
 			end
 
 			local DispellsPart = "[Dispell groups - "
 			if RHEL_Dispells[RHEL_Raid][number] then
+				local dispell_count = 0
 				for j = 1, 8 do
 					if RHEL_Dispells[RHEL_Raid][number][j] then
-						DispellsPart = DispellsPart .. j .. " "
+						dispell_count = dispell_count + 1
+						DispellsPart = DispellsPart .. j .. ", "
 					end
 				end	
 			end
-			if DispellsPart == "[Dispell groups - " then
+			if dispell_count == 0 then
 				DispellsPart = " "
+			elseif dispell_count == 8 then
+				DispellsPart == "[Dispell all groups] " 
 			else
-				DispellsPart = DispellsPart .. "] "
+				DispellsPart = string.sub(DispellsPart, 1, -3) .. "]"
 			end
 
 			SendChatMessage(wisper..HealsPart..BuffsPart..DispellsPart, "WHISPER", nil, healer)
@@ -478,7 +511,6 @@ function RaidName_OnSelect(value)
 
 	RHEL_Raid = RaidNameList[value]
 	
--- ?????? ?? ???????????? ???????
 	if (RHEL_Raid == nil) then
 		print("483")
 		RHEL_Raid = RaidNameList[6]
@@ -500,7 +532,7 @@ function RaidName_OnSelect(value)
 	if RHEL_Boss == nil or revBossNameList[RHEL_Boss] == nil then
 		RHEL_print("499")
 		RHEL_Boss = BossNameList[dungeons[RHEL_Raid]][1]
-		-- ??? 2 ?????? ???? ?????? ??? ?????????????, ?? ????? ?????
+		-- next 2 rows needed for saved varisables and after raid menu chose load
 		RHEL_HealsDefault();
 		RHEL_HealsLoad();
 	end
