@@ -260,14 +260,21 @@ function RHEL_HealAnounce()
 				else
 					message3 = string.sub(message3, 1, -3)  .. "."
 				end
+				heal_count = 0
 				for j = 9, 12 do
 					if RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j] then
+						heal_count = heal_count + 1
 						if j == 9 then
 							message3 = message3 .. " MT,"
 						else
 							message3 = message3 .. " OT" .. (j-9) .. ","
 						end
 					end
+				end
+				if heal_count == 0 then
+					message3 = ""
+				else
+					message3 = string.sub(message3, 1, -2)
 				end
 			end
 			if message3 ~= "" then
@@ -276,11 +283,12 @@ function RHEL_HealAnounce()
 		end
 	end
 	RHEL_SendMessage(anounce)
-	RHEL_SendMessage(message)
+	RHEL_SendMessage(message1)
 end
 
 --Click on buffs anounce. DONE
 function RHEL_BuffAnounce()
+	local buff_count
 	local anounce = RHEL_Raid..": BUFFS!"
 	local message = ""
 	for i = 1,totalHealers do
@@ -288,7 +296,7 @@ function RHEL_BuffAnounce()
 			local message1 = "[" .. _G['HealerName'..i]:GetText() .. " - "
 			local message2 = "Groups: "
 			if RHEL_Buffs[RHEL_Raid][i] then
-				local buff_count = 0
+				buff_count = 0
 				for j = 1, 8 do
 					if RHEL_Buffs[RHEL_Raid][i][j] then
 						buff_count = buff_count + 1
@@ -299,7 +307,7 @@ function RHEL_BuffAnounce()
 			if buff_count == 0 then
 				message1 = ""
 			elseif buff_count == 8 then
-				message2 = "All groups.] "
+				message = message .. message1 .. "All groups] "
 			else
 				message = message .. message1 .. string.sub(message2, 1, -3) .. "] "
 			end
@@ -311,6 +319,7 @@ end
 
 --Click on buffs anounce. DONE
 function RHEL_DispellAnounce()
+	local dispell_count
 	local anounce = RHEL_Raid..": DISPELLS!"
 	local message = ""
 	for i = 1,totalHealers do
@@ -318,7 +327,7 @@ function RHEL_DispellAnounce()
 			local message1 = "[" .. _G['HealerName'..i]:GetText() .. " - "
 			local message2 = "Groups: "
 			if RHEL_Dispells[RHEL_Raid][i] then
-				local dispell_count = 0
+				dispell_count = 0
 				for j = 1, 8 do
 					if RHEL_Dispells[RHEL_Raid][i][j] then
 						dispell_count = dispell_count + 1
@@ -329,7 +338,7 @@ function RHEL_DispellAnounce()
 			if dispell_count == 0 then
 				message1 = ""
 			elseif dispell_count == 8 then
-				message2 = "All groups.] "
+				message = message .. message1 .. "All groups] "
 			else
 				message = message .. message1 .. string.sub(message2, 1, -3) .. "] "
 			end
@@ -372,8 +381,8 @@ function RHEL_HealerWisper(number)
 			HealsPart = string.sub(HealsPart, 1, -2) .. "] "
 		
 			local BuffsPart = "[Buff groups - "
-			if RHEL_Buffs[RHEL_Raid][number] then
-				local buff_count = 0
+			local buff_count = 0
+			if RHEL_Buffs[RHEL_Raid][number] then			
 				for j = 1, 8 do
 					if RHEL_Buffs[RHEL_Raid][number][j] then
 						buff_count = buff_count + 1
@@ -390,8 +399,8 @@ function RHEL_HealerWisper(number)
 			end
 
 			local DispellsPart = "[Dispell groups - "
+			local dispell_count = 0
 			if RHEL_Dispells[RHEL_Raid][number] then
-				local dispell_count = 0
 				for j = 1, 8 do
 					if RHEL_Dispells[RHEL_Raid][number][j] then
 						dispell_count = dispell_count + 1
@@ -402,7 +411,7 @@ function RHEL_HealerWisper(number)
 			if dispell_count == 0 then
 				DispellsPart = " "
 			elseif dispell_count == 8 then
-				DispellsPart == "[Dispell all groups] " 
+				DispellsPart = "[Dispell all groups] " 
 			else
 				DispellsPart = string.sub(DispellsPart, 1, -3) .. "]"
 			end
@@ -520,7 +529,7 @@ function RaidName_OnSelect(value)
 	if (UIDropDownMenu_GetSelectedValue(_G["RaidNameDropdown"]) ~= value) then
 		UIDropDownMenu_SetSelectedValue(_G["RaidNameDropdown"], value);
 		UIDropDownMenu_ClearAll(_G["BossNameDropdown"]);
-		print("489")
+--		print("489")
 		BossNameDropdown_OnLoad();
 	end
 	
@@ -530,7 +539,7 @@ function RaidName_OnSelect(value)
 	RHEL_DispellsLoad();
 	RHEL_RaidBossReverse()
 	if RHEL_Boss == nil or revBossNameList[RHEL_Boss] == nil then
-		RHEL_print("499")
+--		RHEL_print("499")
 		RHEL_Boss = BossNameList[dungeons[RHEL_Raid]][1]
 		-- next 2 rows needed for saved varisables and after raid menu chose load
 		RHEL_HealsDefault();
@@ -588,33 +597,37 @@ end
 --Healer death warning. CHECK
 function RHEL_ReportDeath(guid, name, flags)
 	for i = 1, totalHealers do
-		if RHEL_Healers[i] ~= name then
-			RHEL_print('warning death'..name, true)
-			return
-		else
-			RHEL_print('warning healer death'..name, true)
-			local HealsPart = ""
+		if RHEL_Healers[i] == name then
+			
+			local HealsPart = " is dead. Heal "
 			if RHEL_Heals[RHEL_Raid][RHEL_Boss][i] then
-				for j = 1, 12 do
+				local heal_count = 0
+				for j = 1, 8 do
+					if RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j] then					
+						heal_count = heal_count + 1
+						HealsPart = HealsPart .. " Group" .. j .. ","
+					end
+				end			
+				if 	heal_count == 8 then
+					HealsPart = " is dead. Heal all groups,"
+				end		
+				for j = 9, 12 do
 					if RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j] then
-						if j < 9 then
-							HealsPart = HealsPart .. " G" .. j
-						elseif j == 9 then
-							HealsPart = HealsPart .. " MT"
+						if j == 9 then
+							HealsPart = HealsPart .. " MT" .. ","
 						elseif j > 9 then
-							HealsPart = HealsPart .. " OT" .. (j-9)
+							HealsPart = HealsPart .. " OT" .. (j-9) .. ","
 						end
 					end
 				end	
-			end
-			if HealsPart ~= "" then
-				msg = name..' is dead. Heal '.. HealsPart
+			end	
+			if HealsPart ~= " is dead. Heal " then
+				HealsPart = string.sub(HealsPart, 1, -2) .. "!"
+				local dthmsg = name..HealsPart
 				if toRaid:GetChecked() and not toChannel:GetChecked() then
-					SendChatMessage(msg, "RAID");
-				elseif not toRaid:GetChecked() and toChannel:GetChecked() then
-					SendChatMessage(msg, "CHANNEL", nil, RHEL_Channel);
+					SendChatMessage(tostring(dthmsg), "RAID");
 				else
-					RHEL_print('on warning healer death', true)
+					RHEL_print(dthmsg)
 				end
 			end
 		end
@@ -630,10 +643,10 @@ end)
 function RHEL_Frame:COMBAT_LOG_EVENT_UNFILTERED(event, ...)
 	local _, subevent, _, _, _, _, _, guid, name, flags = CombatLogGetCurrentEventInfo();
 	local instance = select(2, IsInInstance())
---	if not (UnitInRaid(name) or UnitInParty(name)) then return end
+	if not UnitInRaid(name) then return end
 
---	if (subevent == "UNIT_DIED" and (instance == "raid" or instance == "party")) then
-	if (subevent == "UNIT_DIED") then
+	if (subevent == "UNIT_DIED" and (instance == "raid")) then
+--	if (subevent == "UNIT_DIED") then
 		RHEL_ReportDeath(guid, name, flags)
 	end
 end
@@ -659,7 +672,7 @@ RHEL_Frame:RegisterEvent("ADDON_LOADED")
 --local warningChecked = false
 function ClickOnWarningCheckBox()
 --   warningChecked = CheckButtonWarning:GetChecked();
-	RHEL_print('warning click', true)
+--	RHEL_print('warning click', true)
 	if CheckButtonWarning:GetChecked() then
 		RHEL_Frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
 	else
