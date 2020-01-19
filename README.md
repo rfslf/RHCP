@@ -2,7 +2,7 @@
 <h3>Русский</h3>
 <h5>Привет, путник!</h3>
 <p><div>Я попробую вам помочь и сделать Raid Healer Easier Life!<div>
-<div>Актуальная версия аддона 0.7.2 и он может проделать следующую работу:<div></p>
+<div>Актуальная версия аддона 0.8 и он может проделать следующую работу:<div></p>
 <ol>
 <li style="text-align: justify;">Загрузить по умолчанию конфигурацию "хил-баф-диспел".</li>
 <li style="text-align: justify;">Загрузить имена лекарей или подставить на их место "заглушки".</li>
@@ -24,7 +24,7 @@
 <h3>English</h3>
 <h5>Greetings , travaler!</h3>
 <p><div>I will try to help you and make your Raid Healer Easier Life!<div>
-<div>Actual version of addon is 0.7.2 and he can do next features:<div></p>
+<div>Actual version of addon is 0.8 and he can do next features:<div></p>
 <ol>
 <li style="text-align: justify;">Load default configuration for "heal-buff-dispell".</li>
 <li style="text-align: justify;">Load up to 8 healers names or load dummy.</li>
