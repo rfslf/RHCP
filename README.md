@@ -12,7 +12,7 @@
 <li style="text-align: justify;">Анонсировать в канал все заданные для лекарей цели.</li>
 <li style="text-align: justify;">Сообщить лекарю его персональные цели.</li>
 <li style="text-align: justify;">Записать и проинформировать особенности предстоящего сражения. --TO DO</li>
-<li style="text-align: justify;">Сообщить о смерти лекаря и его конфигурацию "хил" в канал. --TO DO</li>
+<li style="text-align: justify;">Сообщить о смерти лекаря и его конфигурацию "хила" в рейд.</li>
 <li style="text-align: justify;">Закрыть/перетащить/вызвать окно.</li>
 </ol>
  
@@ -34,7 +34,7 @@
 <li style="text-align: justify;">Anounce in channel all targets of healers.</li>
 <li style="text-align: justify;">Wisp to healer all his personal tasks.</li> 
 <li style="text-align: justify;">Write and anounce about fight. --TO DO</li>
-<li style="text-align: justify;">Warning on healers death and his configuration of healing to channel. --TO DO</li>
+<li style="text-align: justify;">Warning on healers death and кузщке his configuration of healing to raid.</li>
 <li style="text-align: justify;">Close/drug/show window.</li>
 </ol>
 
