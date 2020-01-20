@@ -44,8 +44,8 @@ RHEL_GUI.noteBackdrop3 = {
 }
 
 RHEL_GUI.RHEL_MainMenu = CreateFrame("Frame", "RHEL_MainMenu", UIParent, "TranslucentFrameTemplate");
-RHEL_GUI.RHEL_MainMenu.RHEL_MainMenuCloseButton = CreateFrame( "Button" , "RHEL_MainMenuCloseButton" , RHEL_GUI.RHEL_MainMenu , "UIPanelCloseButton");
-
+RHEL_GUI.RHEL_MainMenu.RHEL_MainMenuCloseButton = CreateFrame( "Button", "RHEL_MainMenuCloseButton", RHEL_GUI.RHEL_MainMenu, "UIPanelCloseButton");
+RHEL_GUI.RHEL_MainMenu.RHEL_MainMenuCloseButton:SetPoint( "TOPRIGHT", RHEL_MainMenu, 3, 3);
 RHEL_GUI.RHEL_MainMenu:SetSize(MainMenu_x, MainMenu_y);
 RHEL_GUI.RHEL_MainMenu:SetMovable(true);
 RHEL_GUI.RHEL_MainMenu:EnableMouse(true);
@@ -116,7 +116,7 @@ for i = 1, totalHealers do
 	end
 	
 	-- Wisp Button
-	RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i].RHEL_button = CreateFrame("Button", "RHEL_button"..i  , "RHEL_healerFrame"..i, "UIPanelButtonTemplate" );
+	RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i].RHEL_button = CreateFrame("Button", "RHEL_button"..i , "RHEL_healerFrame"..i, "UIPanelButtonTemplate");
 	RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i].RHEL_button:SetText(i);
 	RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i].RHEL_button:SetSize(80,40);
 	RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i].RHEL_button:SetPoint("TOPLEFT", "RHEL_healerFrame"..i, 10, -170);
