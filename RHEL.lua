@@ -1,8 +1,8 @@
 -- Author      : Virgo
 -- Create Date : 12/19/2019 7:43:57 PM
--- Update	   : 19/01/2020
+-- Update	   : 01/20/2020
 
-local version = "0.8.0"
+local version = "0.9.0"
 local totalHealers = 8
 
 local RaidNameList = {"Molten Core","Onyxia & Outdoors","Blackwing Lair","Ahn'Qiraj","Naxxramas", "Custome"};
@@ -672,7 +672,7 @@ RHEL_Frame:RegisterEvent("ADDON_LOADED")
 --local warningChecked = false
 function ClickOnWarningCheckBox()
 --   warningChecked = CheckButtonWarning:GetChecked();
---	RHEL_print('warning click', true)
+	RHEL_print('warning click', true)
 	if CheckButtonWarning:GetChecked() then
 		RHEL_Frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
 	else
@@ -694,34 +694,3 @@ function dump(o)
    end
 end
 
---[[BossNoteWindow = CreateFrame("Frame", "BossNoteWindow", RHEL_MainFrame);
-BossNoteEditBox = CreateFrame("EditBox", "BossNoteEditBox", RHEL_MainFrame);
-
-BossNoteTitle = RHEL_MainFrame:CreateFontString("BossNoteTitle", "OVERLAY", "GameFontNormalSmall");
-BossNoteTitle:SetPoint("BOTTOMLEFT", BossNoteWindow, "TOPLEFT", 5, 0);
-BossNoteTitle:SetText("Boss Note:");
-BossNoteTitle:SetJustifyH("LEFT");
-BossNoteTitle:SetWidth(120);
-BossNoteTitle:SetWordWrap(false);
-BossnoteFontString2 = BossNoteWindow:CreateFontString("BossnoteFontString2", "OVERLAY", "GameFontWhiteTiny");
-
- -- Edit Note
-BossNoteWindow:SetPoint( "RIGHT" , RHEL_MainFrame , -15 , 10 );
-BossnoteFontString2:SetPoint("TOPLEFT", BossPlayerOfficerNoteWindow, 8, -7);
-BossnoteFontString2:SetWordWrap(true);
-BossnoteFontString2:SetSpacing(1);
-BossnoteFontString2:SetWidth(108);
-BossnoteFontString2:SetJustifyH("LEFT");
-BossnoteFontString2:SetMaxLines(3);
-BossNoteWindow:SetBackdrop(noteBackdrop);
-BossNoteWindow:SetSize(125,40);
-BossNoteEditBox:SetPoint("TOP", BossNoteWindow, "TOP", 0, 0);
-BossNoteEditBox:SetPoint("BOTTOM", BossNoteWindow, "BOTTOM", 0, 0);
-BossNoteEditBox:SetSize(125,45);
-BossNoteEditBox:SetTextInsets(8, 9, 9, 8);
-BossNoteEditBox:SetMaxLetters(255);
-BossNoteEditBox:SetMultiLine(true);
-BossNoteEditBox:SetSpacing (1);
-BossNoteEditBox:EnableMouse(true);
-BossNoteEditBox:SetFrameStrata("HIGH");
-BossNoteEditBox:SetText("hello!") ]]--
