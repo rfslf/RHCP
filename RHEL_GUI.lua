@@ -1,16 +1,16 @@
-local MainMenu_x, MainMenu_y = 1000, 760
+local MainMenu_x, MainMenu_y = 1024, 512
 local totalHealers = 8
 local additionalTanks = true
 --local totalTanks = 4 + 4 * additionalTargets
-local checkbuttonSize = 10
-local healerFrame_x = 100
-local healerFrame_y = 200
-local healerFrame_delta = 5
-local CheckButton_Start_x = 10
-local CheckButton_Start_y = -25
-local CheckButton_Step_x = 20
+local checkbuttonSize = 15
+local healerFrame_x = 110
+local healerFrame_y = 250
+local healerFrame_delta = 7
+local CheckButton_Start_x = 6
+local CheckButton_Start_y = -65
+local CheckButton_Step_x = 23
 local CheckButton_Step_y = -20
-local CheckButton_Step_delta = -5
+local CheckButton_Step_delta = -7
 
 RHEL_GUI = {};
 
@@ -42,21 +42,23 @@ RHEL_GUI.noteBackdrop3 = {
     edgeSize = 6,
     insets = { left = 2 , right = 2 , top = 3 , bottom = 1 }
 }
-
-RHEL_GUI.RHEL_MainMenu = CreateFrame("Frame", "RHEL_MainMenu", UIParent, "TranslucentFrameTemplate");
+-- "TranslucentFrameTemplate"
+RHEL_GUI.RHEL_MainMenu = CreateFrame("Frame", "RHEL_MainMenu", UIParent);
 RHEL_GUI.RHEL_MainMenu.RHEL_MainMenuCloseButton = CreateFrame( "Button", "RHEL_MainMenuCloseButton", RHEL_GUI.RHEL_MainMenu, "UIPanelCloseButton");
 RHEL_GUI.RHEL_MainMenu.RHEL_MainMenuCloseButton:SetPoint( "TOPRIGHT", RHEL_MainMenu, 3, 3);
 RHEL_GUI.RHEL_MainMenu:SetSize(MainMenu_x, MainMenu_y);
 RHEL_GUI.RHEL_MainMenu:SetMovable(true);
 RHEL_GUI.RHEL_MainMenu:EnableMouse(true);
+RHEL_GUI.RHEL_MainMenu:SetToplevel (true);
+RHEL_GUI.RHEL_MainMenu:SetPoint ("CENTER", 0 , 0);
 RHEL_GUI.RHEL_MainMenu:SetBackdrop(RHEL_GUI.noteBackdrop);
 
 -- Checkbox generator
-function createCheckbutton(parent, x_loc, y_loc, displayname)
+function createCheckbutton(parent, x_loc, y_loc, displayname, text)
 	local checkbutton = CreateFrame("CheckButton", displayname, parent, "UICheckButtonTemplate");
 	checkbutton:SetPoint("TOPLEFT", x_loc, y_loc);
 	checkbutton:SetSize(checkbuttonSize,checkbuttonSize)
-	getglobal(checkbutton:GetName() .. 'Text'):SetText(displayname);
+	getglobal(checkbutton:GetName() .. 'Text'):SetText(text);
 	checkbutton:SetScript("OnClick", nil)
 	local checkbuttonfont=checkbutton:CreateFontString(checkbutton, "OVERLAY", "GameFontNormal")
 	checkbuttonfont:SetPoint("TOPLEFT", -10, 0)
@@ -66,65 +68,88 @@ end
 
 for i = 1, totalHealers do	
 	-- Healer frame.
-	RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i] = CreateFrame("Frame", "RHEL_healerFrame"..i, RHEL_MainMenu, "InputBoxTemplate");
-	RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i]:SetSize(healerFrame_x, healerFrame_y);
-	RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i]:SetBackdrop(RHEL_GUI.noteBackdrop);
-	RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i]:SetPoint("TOPLEFT", 100, -200);
+	local healerFrame = "RHEL_healerFrame"..i
+	RHEL_GUI.RHEL_MainMenu.healerFrame = CreateFrame("Frame", "RHEL_healerFrame"..i, RHEL_MainMenu);
+	RHEL_GUI.RHEL_MainMenu.healerFrame:SetSize(healerFrame_x, healerFrame_y);
+	RHEL_GUI.RHEL_MainMenu.healerFrame:SetBackdrop(RHEL_GUI.noteBackdrop);
+	RHEL_GUI.RHEL_MainMenu.healerFrame:SetPoint("TOPLEFT", (healerFrame_x * (i-1)  + healerFrame_delta * (i + 1)), -150);
 	
 	-- Healer EditBox
-	RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i].RHEL_healerEditBox = CreateFrame("EditBox", "RHEL_healerEditBox"..i, "RHEL_healerFrame"..i);
-	RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i].RHEL_healerEditBox:SetSize(80, 24);
-	RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i].RHEL_healerEditBox:SetPoint("TOPLEFT", 10, -50);
-	RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i].RHEL_healerEditBox:SetScript("OnClick", nil)			
+	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBox = CreateFrame("EditBox", "RHEL_healerEditBox"..i, RHEL_GUI.RHEL_MainMenu.healerFrame, "InputBoxTemplate");
+	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBox:SetSize(90, 24);
+	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBox:SetPoint("TOP", 0, -40);																																	
+--	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBox:SetScript("OnClick", nil)			
 	
 	-- Healer EditBox frame
-	RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i].RHEL_healerEditBoxFrame = CreateFrame("Frame", "RHEL_HealerClass"..i, "RHEL_healerFrame"..i, "InputBoxTemplate");
-	RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i].RHEL_healerEditBoxFrame:SetSize(24, 24);
-	RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i].RHEL_healerEditBoxFrame.texture = CreateTexture(nil, "Background", RHEL_healerEditBoxFrame)
-	RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i].RHEL_healerEditBoxFrame.texture:SetTexture("Interface\AddOns\RHEL\Icons\Warrior")
+	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBoxFrame = CreateFrame("Frame", "RHEL_HealerClass"..i, RHEL_GUI.RHEL_MainMenu.healerFrame);
+	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBoxFrame:SetSize(24, 24);
 	
+	local texture = "texture"..i
+	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBoxFrame.texture = RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBoxFrame:CreateTexture(nil, "Background", RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBoxFrame, "TranslucentFrameTemplate")
+ 	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBoxFrame.texture:SetTexture("Interface\\AddOns\\RHEL\\Icons\\Warrior")
+	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBoxFrame.texture:SetPoint("TOPLEFT", RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBoxFrame, 10, -20);
+	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBoxFrame.texture:SetWidth ( 24 );
+	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBoxFrame.texture:SetHeight ( 24 );
+
 	-- Heals checkboxes
 	for j = 1, 4 do
-		local RHEL_CheckButton_Poz_x, RHEL_CheckButton_Poz_y = (RHEL_CheckButton_Start_x + RHEL_CheckButton_Step_x * (j-1)), RHEL_CheckButton_Start_y 
-		RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i]._G["RHELCheckButton1_"..i.."_"..j] = createCheckbutton("RHEL_healerFrame"..i, RHEL_CheckButton_Poz_x, RHEL_CheckButton_Poz_y, "RHELCheckButton1_"..i.."_"..j);
+		local CheckButton_Poz_x, CheckButton_Poz_y = (CheckButton_Start_x + CheckButton_Step_x * (j-1)), CheckButton_Start_y
+		local RHELCheckButton = "RHELCheckButton1_"..i.."_"..j
+		RHEL_GUI.RHEL_MainMenu.healerFrame.RHELCheckButton = createCheckbutton(RHEL_GUI.RHEL_MainMenu.healerFrame, CheckButton_Poz_x, CheckButton_Poz_y, RHELCheckButton, j);
 	end
 	for j = 5, 8 do
-		local RHEL_CheckButton_Poz_x, RHEL_CheckButton_Poz_y = (RHEL_CheckButton_Start_x + RHEL_CheckButton_Step_x * (j-1)), RHEL_CheckButton_Start_y + RHEL_CheckButton_Step_y
-		RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i]._G["RHELCheckButton1_"..i.."_"..j] = createCheckbutton("RHEL_healerFrame"..i, RHEL_CheckButton_Poz_x, RHEL_CheckButton_Poz_y, "RHELCheckButton1_"..i.."_"..j);
+		local CheckButton_Poz_x, CheckButton_Poz_y = (CheckButton_Start_x + CheckButton_Step_x * (j-5)), CheckButton_Start_y + CheckButton_Step_y
+		local RHELCheckButton = "RHELCheckButton1_"..i.."_"..j
+		RHEL_GUI.RHEL_MainMenu.healerFrame.RHELCheckButton = createCheckbutton(RHEL_GUI.RHEL_MainMenu.healerFrame, CheckButton_Poz_x, CheckButton_Poz_y, RHELCheckButton, j);
 	end
 	for j = 9, 12 do
-		local RHEL_CheckButton_Poz_x, RHEL_CheckButton_Poz_y = (RHEL_CheckButton_Start_x + RHEL_CheckButton_Step_x * (j-1)), RHEL_CheckButton_Start_y + 2 * RHEL_CheckButton_Step_y
-		RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i]._G["RHELCheckButton1_"..i.."_"..j] = createCheckbutton("HEL_healerFrame"..i, RHEL_CheckButton_Poz_x, RHEL_CheckButton_Poz_y, "RHELCheckButton1_"..i.."_"..j);
+		local CheckButton_Poz_x, CheckButton_Poz_y = (CheckButton_Start_x + CheckButton_Step_x * (j-9)), CheckButton_Start_y + 2 * CheckButton_Step_y
+		local RHELCheckButton = "RHELCheckButton1_"..i.."_"..j
+		RHEL_GUI.RHEL_MainMenu.healerFrame.RHELCheckButton = createCheckbutton(RHEL_GUI.RHEL_MainMenu.healerFrame, CheckButton_Poz_x, CheckButton_Poz_y, RHELCheckButton, j);
 	end
 	if additionalTanks then
 		for j = 13, 16 do
-			local RHEL_CheckButton_Poz_x, RHEL_CheckButton_Poz_y = (RHEL_CheckButton_Start_x + RHEL_CheckButton_Step_x * (j-1)), RHEL_CheckButton_Start_y + 3 * RHEL_CheckButton_Step_y
-			RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i]._G["RHELCheckButton1_"..i.."_"..j] = createCheckbutton(RHEL_healerFrame, RHEL_CheckButton_Poz_x, RHEL_CheckButton_Poz_y, "RHELCheckButton1_"..i.."_"..j);
+			local CheckButton_Poz_x, CheckButton_Poz_y = (CheckButton_Start_x + CheckButton_Step_x * (j-13)), CheckButton_Start_y + 3 * CheckButton_Step_y
+			local RHELCheckButton = "RHELCheckButton1_"..i.."_"..j
+			RHEL_GUI.RHEL_MainMenu.healerFrame.RHELCheckButton = createCheckbutton(RHEL_GUI.RHEL_MainMenu.healerFrame, CheckButton_Poz_x, CheckButton_Poz_y, RHELCheckButton, j);
 		end
 	end
 	
 	-- Buffs checkboxes
-	for j = 1, 8 do
-		local RHEL_CheckButton_Poz_x, RHEL_CheckButton_Poz_y = (RHEL_CheckButton_Start_x + RHEL_CheckButton_Step_x * (j-1)), RHEL_CheckButton_Start_y + 4 * RHEL_CheckButton_Step_y + RHEL_CheckButton_Step_delta
-		RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i]._G["RHELCheckButton2_"..i.."_"..j] = createCheckbutton(RHEL_healerFrame, RHEL_CheckButton_Poz_x, RHEL_CheckButton_Poz_y, "RHELCheckButton2_"..i.."_"..j);
+	for j = 1, 4 do
+		local CheckButton_Poz_x, CheckButton_Poz_y = (CheckButton_Start_x + CheckButton_Step_x * (j-1)), CheckButton_Start_y + 4 * CheckButton_Step_y + CheckButton_Step_delta
+		local RHELCheckButton = "RHELCheckButton2_"..i.."_"..j
+		RHEL_GUI.RHEL_MainMenu.healerFrame.RHELCheckButton = createCheckbutton(RHEL_GUI.RHEL_MainMenu.healerFrame, CheckButton_Poz_x, CheckButton_Poz_y, RHELCheckButton, j);
+	end
+	for j = 5, 8 do
+		local CheckButton_Poz_x, CheckButton_Poz_y = (CheckButton_Start_x + CheckButton_Step_x * (j-5)), CheckButton_Start_y + 5 * CheckButton_Step_y + CheckButton_Step_delta
+		local RHELCheckButton = "RHELCheckButton2_"..i.."_"..j
+		RHEL_GUI.RHEL_MainMenu.healerFrame.RHELCheckButton = createCheckbutton(RHEL_GUI.RHEL_MainMenu.healerFrame, CheckButton_Poz_x, CheckButton_Poz_y, RHELCheckButton, j);
 	end
 	
 	-- Dispells checkboxes
-	for j = 1, 8 do
-		local RHEL_CheckButton_Poz_x, RHEL_CheckButton_Poz_y = (RHEL_CheckButton_Start_x + RHEL_CheckButton_Step_x * (j-1)), RHEL_CheckButton_Start_y + 5 * RHEL_CheckButton_Step_y + RHEL_CheckButton_Step_delta
-		RHEL_GUI.RHEL_MainMenu.RHEL_healerFrame._G["RHELCheckButton3_"..i.."_"..j] = createCheckbutton(RHEL_healerFrame, RHEL_CheckButton_Poz_x, RHEL_CheckButton_Poz_y, "RHELCheckButton3_"..i.."_"..j);
+	for j = 1, 4 do
+		local CheckButton_Poz_x, CheckButton_Poz_y = (CheckButton_Start_x + CheckButton_Step_x * (j-1)), CheckButton_Start_y + 6 * CheckButton_Step_y + 2 * CheckButton_Step_delta
+		local RHELCheckButton = "RHELCheckButton3_"..i.."_"..j
+		RHEL_GUI.RHEL_MainMenu.healerFrame.RHELCheckButton = createCheckbutton(RHEL_GUI.RHEL_MainMenu.healerFrame, CheckButton_Poz_x, CheckButton_Poz_y, RHELCheckButton, j);
+	end
+	for j = 5, 8 do
+		local CheckButton_Poz_x, CheckButton_Poz_y = (CheckButton_Start_x + CheckButton_Step_x * (j-5)), CheckButton_Start_y + 7 * CheckButton_Step_y + 2 * CheckButton_Step_delta
+		local RHELCheckButton = "RHELCheckButton3_"..i.."_"..j
+		RHEL_GUI.RHEL_MainMenu.healerFrame.RHELCheckButton = createCheckbutton(RHEL_GUI.RHEL_MainMenu.healerFrame, CheckButton_Poz_x, CheckButton_Poz_y, RHELCheckButton, j);
 	end
 	
 	-- Wisp Button
-	RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i].RHEL_button = CreateFrame("Button", "RHEL_button"..i , "RHEL_healerFrame"..i, "UIPanelButtonTemplate");
-	RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i].RHEL_button:SetText(i);
-	RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i].RHEL_button:SetSize(80,40);
-	RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i].RHEL_button:SetPoint("TOPLEFT", "RHEL_healerFrame"..i, 10, -170);
-	RHEL_GUI.RHEL_MainMenu._G["RHEL_healerFrame"..i].RHEL_button:SetScript("OnClick", nil)
+	local wisp_button = "wisp_button"..i
+	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_button = CreateFrame("Button", wisp_button, RHEL_GUI.RHEL_MainMenu.healerFrame, "UIPanelButtonTemplate");
+	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_button:SetText(i);
+	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_button:SetSize(60,30);
+	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_button:SetPoint("TOPRIGHT", "RHEL_healerFrame"..i, -10, -10);
+	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_button:SetScript("OnClick", nil)
 	
 end
 
-
+RHEL_GUI.RHEL_MainMenu:Show()
 
 --[[BossNoteWindow = CreateFrame("Frame", "BossNoteWindow", RHEL_MainFrame);
 BossNoteEditBox = CreateFrame("EditBox", "BossNoteEditBox", RHEL_MainFrame);
