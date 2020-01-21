@@ -5515,7 +5515,7 @@
 				</Anchors>
 				<Layers>
 					<Layer level="BACKGROUND">
-						<Texture name="$parentTexture" file="Interface\AddOns\RHEL\Icons\Warrior">
+						<Texture name="$parentTexture" file="Interface\Addons\RHEL\Icons\Warrior">
 							<Anchors>
 								<Anchor point="CENTER" relativeTo="CENTER" />
 							</Anchors>

@@ -1,6 +1,6 @@
 -- Author      : Virgo
 -- Create Date : 12/19/2019 7:43:57 PM
--- Update	   : 01/20/2020
+-- Update	   : 01/21/2020
 
 local version = "0.9.0"
 local totalHealers = 8
@@ -307,7 +307,7 @@ function RHEL_BuffAnounce()
 			if buff_count == 0 then
 				message1 = ""
 			elseif buff_count == 8 then
-				message = message .. message1 .. "All groups] "
+				message = message .. message1 .. "All groups or fallen] "
 			else
 				message = message .. message1 .. string.sub(message2, 1, -3) .. "] "
 			end
@@ -393,7 +393,7 @@ function RHEL_HealerWisper(number)
 			if buff_count == 0 then 
 				BuffsPart = " "
 			elseif buff_count == 8 then
-				BuffsPart = "[Buff all groups] "
+				BuffsPart = "[Buff all groups or fallen] "
 			else
 				BuffsPart = string.sub(BuffsPart, 1, -3) .. "] "
 			end
