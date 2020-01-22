@@ -1,9 +1,9 @@
 -- Author      : Virgo
 -- Create Date : 12/19/2019 7:43:57 PM
--- Update	   : 01/21/2020
+-- Update	   : 01/22/2020
 
 local version = "0.9.0"
-local totalHealers = 8
+--local total_healers = 8
 
 local RaidNameList = {"Molten Core","Onyxia & Outdoors","Blackwing Lair","Ahn'Qiraj","Naxxramas", "Custome"};
 local dungeons = {["Molten Core"] = "MC", ["Onyxia & Outdoors"] = "Onyxia",
@@ -40,25 +40,25 @@ local revBossNameList = {}
 
 --Frame starts moving. DONE
 function RHEL_OnMouseDown()
-	RHEL_MainFrame:StartMoving()
+	RHEL_MainMenu:StartMoving()
 end
 
 --Frame stops moving. DONE
 function RHEL_OnMouseUp()
-	RHEL_MainFrame:StopMovingOrSizing()
+	RHEL_MainMenu:StopMovingOrSizing()
 end		   
 
 --Add command line reaction. DONE
 SLASH_RHEL_SLASHCMD1 = '/RHEL'
 SLASH_RHEL_SLASHCMD2 = '/rhel'
 SlashCmdList["RHEL_SLASHCMD"] = function(msg)
-    RHEL_MainFrame:Show()
+    RHEL_MainMenu:Show()
 end
 
 --Greetings. DONE
 function RHEL_Loaded()
 	RHEL_print('RaidHealersEasyLife loaded. Type /rhel to open. Version '..version);
-	RHEL_MainFrame:Hide();
+	RHEL_MainMenu:Hide();
 end
 
 --Reverse Raid-Boss table. DONE
@@ -77,18 +77,18 @@ function RHEL_HealsDefault()
 	if RHEL_Heals[RHEL_Raid] == nil then
 		RHEL_Heals[RHEL_Raid]={}
 	end
-	if (RHEL_Heals[RHEL_Raid][RHEL_Boss] == nil) or (table.getn(RHEL_Heals[RHEL_Raid][RHEL_Boss]) ~= totalHealers) then
---		    	 1	   2     3     4     5     6     7     8    MT    T2	T3	  T4
+	if (RHEL_Heals[RHEL_Raid][RHEL_Boss] == nil) or (table.getn(RHEL_Heals[RHEL_Raid][RHEL_Boss]) ~= total_healers) then
+--		    	 1	   2     3     4     5     6     7     8    MT    OT	T3	  T4    A    B    C     D
 		RHEL_Heals[RHEL_Raid][RHEL_Boss] = {
-		    {false,false,false,false,false,false,false,false,true,false,false,false},
-			{false,false,false,false,false,false,false,false,true,false,false,false},
-			{false,false,false,false,false,false,false,false,true,true,false,false},
-			{false,false,false,false,false,false,false,false,false,true,false,false},
-			{true,false,true,false,true,false,true,false,false,false,false,false},
-			{true,false,true,false,true,false,true,false,false,false,false,false},
-			{false,true,false,true,false,true,false,true,false,false,false,false},
-			{false,true,false,true,false,true,false,true,false,false,false,false}};
---	      	 1	   2    3     4    5     6    7     8    MT    T2	T3	  T4					  
+		    {false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false},
+			{false,false,false,false,false,false,false,false,true,false,false,false,false,false,false,false},
+			{false,false,false,false,false,false,false,false,true,true,false,false,false,false,false,false},
+			{false,false,false,false,false,false,false,false,false,true,false,false,false,false,false,false},
+			{true,false,true,false,true,false,true,false,false,false,false,false,false,false,false,false},
+			{true,false,true,false,true,false,true,false,false,false,false,false,false,false,false,false},
+			{false,true,false,true,false,true,false,true,false,false,false,false,false,false,false,false},
+			{false,true,false,true,false,true,false,true,false,false,false,false,false,false,false,false}};
+--	      	 1	   2    3     4    5     6    7     8    MT    OT	T3	  T4    A    B    C     D					  
 	end
 end
 
@@ -97,7 +97,7 @@ function RHEL_BuffsDefault()
 	if RHEL_Buffs == nil then
 		RHEL_Buffs={}
 	end
-	if (RHEL_Buffs[RHEL_Raid] == nil) or (table.getn(RHEL_Buffs[RHEL_Raid]) ~= totalHealers) then
+	if (RHEL_Buffs[RHEL_Raid] == nil) or (table.getn(RHEL_Buffs[RHEL_Raid]) ~= total_healers) then
 --		      1	     2     3     4     5     6     7     8
 		RHEL_Buffs[RHEL_Raid] = {
 		    {true,false,true,false,false,false,false,false},
@@ -117,7 +117,7 @@ function RHEL_DispellsDefault()
 	if RHEL_Dispells == nil then
 		RHEL_Dispells={}
 	end
-	if (RHEL_Dispells[RHEL_Raid] == nil) or (table.getn(RHEL_Dispells[RHEL_Raid]) ~= totalHealers) then
+	if (RHEL_Dispells[RHEL_Raid] == nil) or (table.getn(RHEL_Dispells[RHEL_Raid]) ~= total_healers) then
 --		      1	     2     3     4     5     6     7     8
 		RHEL_Dispells[RHEL_Raid] = {
 		    {true,false,true,false,true,false,true,false},
@@ -153,7 +153,7 @@ function RHEL_VariablesDefaultSet()
 -- For first time RHEL_Healers is loaded; initialize healers to NameNumber. DONE
 	if RHEL_Healers == nil then
 		RHEL_Healers = {};
-		for i = 1, totalHealers do
+		for i = 1, total_healers do
 			RHEL_Healers[i] = "Name"..i;
 		end 
 	end
@@ -176,7 +176,7 @@ end
 
 --Healers on load. DONE
 function RHEL_HealersLoad()
-	for i = 1, totalHealers do
+	for i = 1, total_healers do
 		_G['HealerName'..i]:SetText(RHEL_Healers[i]);
 	end
 end
@@ -184,7 +184,7 @@ end
 --Heals checkboxes on load. DONE
 function RHEL_HealsLoad()
 --	print("RHEL: Healers load for ",RHEL_Raid,RHEL_Boss)
-	for i = 1, totalHealers do
+	for i = 1, total_healers do
 		for j = 1, 12 do
 			if type(RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j]) == "boolean" then
 				checker = RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j]
@@ -192,27 +192,38 @@ function RHEL_HealsLoad()
 				checker = false
 				RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j] = false
 			end
-			_G['CheckButton1' .. i .. "_"..j]:SetChecked(checker);
+			_G['CheckButton1' .."_".. i .. "_"..j]:SetChecked(checker);
+		end
+		if additional_tanks then
+			for j = 13, 16 do
+				if type(RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j]) == "boolean" then
+					checker = RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j]
+				else
+					checker = false
+					RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j] = false
+				end
+				_G['CheckButton1' .."_".. i .. "_"..j]:SetChecked(checker);
+			end	
 		end
 	end
 end
 
 --Buffs checkboxes on load. DONE
 function RHEL_BuffsLoad()
-	for i = 1, totalHealers do
+	for i = 1, total_healers do
 		for j = 1, 8 do
 			checker = RHEL_Buffs[RHEL_Raid][i][j]
-			_G['CheckButton2' .. i .. "_".. j]:SetChecked(checker);
+			_G['CheckButton2' .."_".. i .. "_".. j]:SetChecked(checker);
 		end
 	end
 end
 
 --Dispells checkboxes on load. DONE
 function RHEL_DispellsLoad()
-	for i = 1, totalHealers do
+	for i = 1, total_healers do
 		for j = 1, 8 do
 			checker = RHEL_Dispells[RHEL_Raid][i][j]
-			_G['CheckButton3' .. i .. "_"..j]:SetChecked(checker);
+			_G['CheckButton3' .."_".. i .. "_"..j]:SetChecked(checker);
 		end
 	end
 end
@@ -240,7 +251,7 @@ end
 function RHEL_HealAnounce()
 	local anounce = RHEL_Raid.." - "..RHEL_Boss..": HEALINGS!"
 	local message1 = ""
-	for i = 1, totalHealers do
+	for i = 1, total_healers do
 		if _G['HealerName'..i]:GetText() ~= "" then
 			local message2 = "[" .. _G['HealerName'..i]:GetText() .. " - "
 			local message3 = ""
@@ -264,10 +275,14 @@ function RHEL_HealAnounce()
 				for j = 9, 12 do
 					if RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j] then
 						heal_count = heal_count + 1
-						if j == 9 then
-							message3 = message3 .. " MT,"
-						else
-							message3 = message3 .. " OT" .. (j-9) .. ","
+						message3 = message3 .. ' ' .. tanks[j-8]
+					end
+				end
+				if additional_tanks then
+					for j = 13, 16 do
+						if RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j] then
+							heal_count = heal_count + 1
+							message3 = message3 .. ' ' .. tanks[j-8]
 						end
 					end
 				end
@@ -291,7 +306,7 @@ function RHEL_BuffAnounce()
 	local buff_count
 	local anounce = RHEL_Raid..": BUFFS!"
 	local message = ""
-	for i = 1,totalHealers do
+	for i = 1,total_healers do
 		if _G['HealerName'..i]:GetText() ~= "" then
 			local message1 = "[" .. _G['HealerName'..i]:GetText() .. " - "
 			local message2 = "Groups: "
@@ -322,7 +337,7 @@ function RHEL_DispellAnounce()
 	local dispell_count
 	local anounce = RHEL_Raid..": DISPELLS!"
 	local message = ""
-	for i = 1,totalHealers do
+	for i = 1,total_healers do
 		if _G['HealerName'..i]:GetText() ~= "" then
 			local message1 = "[" .. _G['HealerName'..i]:GetText() .. " - "
 			local message2 = "Groups: "
@@ -370,13 +385,16 @@ function RHEL_HealerWisper(number)
 				end		
 				for j = 9, 12 do
 					if RHEL_Heals[RHEL_Raid][RHEL_Boss][number][j] then
-						if j == 9 then
-							HealsPart = HealsPart .. " MT" .. ","
-						elseif j > 9 then
-							HealsPart = HealsPart .. " OT" .. (j-9) .. ","
-						end
+						HealsPart = HealsPart .. ' ' .. tanks[j-9] .. ","
 					end
 				end	
+				if additional_tanks then
+					for j = 13, 16 do
+						if RHEL_Heals[RHEL_Raid][RHEL_Boss][number][j] then
+							HealsPart = HealsPart .. ' ' .. tanks[j-9] .. ","
+						end
+					end
+				end
 			end
 			HealsPart = string.sub(HealsPart, 1, -2) .. "] "
 		
@@ -421,26 +439,20 @@ function RHEL_HealerWisper(number)
 	end
 end
 
---Click on heals checkbox reaction. DONE
-function ClickOnHealCheckBox(healer,target)
+--Click on heals, buffs, dispells checkbox reaction. DONE
+function ClickOnCheckBox(role,healer,target)
 --	print(RHEL_Raid,RHEL_Boss)
 	local isChecked
-    isChecked=_G['CheckButton1' .. healer.. '_'..target]:GetChecked();
-	RHEL_Heals[RHEL_Raid][RHEL_Boss][healer][target] = isChecked
-end
-
---Click on buffs checkbox reaction. DONE
-function ClickOnBuffCheckBox(buffer,target)
-	local isChecked
-    isChecked=_G['CheckButton2' .. buffer.. '_'..target]:GetChecked();
-	RHEL_Buffs[RHEL_Raid][buffer][target] = isChecked
-end
-
---Click on dispells checkbox reaction. DONE
-function ClickOnDispellCheckBox(buffer,target)
-	local isChecked
-    isChecked=_G['CheckButton3' .. buffer.. '_'..target]:GetChecked();
-	RHEL_Dispells[RHEL_Raid][buffer][target] = isChecked
+    isChecked=_G['CheckButton'..role .. '_' .. healer.. '_'..target]:GetChecked();
+	if role == 1 then
+		RHEL_Heals[RHEL_Raid][RHEL_Boss][healer][target] = isChecked
+	elseif role == 2 then
+		RHEL_Buffs[RHEL_Raid][healer][target] = isChecked
+	elseif role == 3 then
+		RHEL_Dispells[RHEL_Raid][healer][target] = isChecked
+	else
+		RHEL_print("Click on checkbox with unknown role", true)
+	end
 end
 
 --Healer name editing reaction. DONE
@@ -469,17 +481,6 @@ function UpdateHealerClass(icon)
 		_G["HealerClass"..icon.."Texture"]:SetTexture(nil);
 --		_G["HealerClass"..icon.."DragTexture"]:SetTexture(nil);
 	end
-end
-
---Removes focus from healer name window. DONE
-function EditBox_OnEscapePressed(number)
-	_G["HealerName"..number]:ClearFocus()
-	--	RHEL_MainFrame:Hide()
-end
-
---Removes focus from channel name window. DONE
-function Channel_OnEscapePressed()
-	ChannelNumber:ClearFocus()
 end
 
 --Swap chat to anounce. DONE
@@ -596,7 +597,7 @@ end
 
 --Healer death warning. CHECK
 function RHEL_ReportDeath(guid, name, flags)
-	for i = 1, totalHealers do
+	for i = 1, total_healers do
 		if RHEL_Healers[i] == name then
 			
 			local HealsPart = " is dead. Heal "
