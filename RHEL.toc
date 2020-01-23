@@ -2,6 +2,6 @@
 ## Version: 0.9.0
 ## Author: Virgo
 ## Interface: 11303
-## SavedVariables: RHEL_Raid, RHEL_Boss, RHEL_Heals, RHEL_Buffs, RHEL_Dispells, RHEL_Healers, RHEL_Channel
+## SavedVariables: RHEL_Raid, RHEL_Boss, RHEL_Heals, RHEL_Buffs, RHEL_Dispells, RHEL_Healers, RHEL_Tanks, RHEL_Channel, RHEL_Add_Tanks
 RHEL_GUI.lua
 RHEL.xml

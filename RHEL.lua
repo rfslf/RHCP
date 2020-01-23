@@ -1,9 +1,16 @@
 -- Author      : Virgo
 -- Create Date : 12/19/2019 7:43:57 PM
--- Update	   : 01/22/2020
+-- Update	   : 01/23/2020
 
 local version = "0.9.0"
---local total_healers = 8
+local total_healers = 8
+local tanks = {"MT","OT", "T3", "T4", "A", "B", "C", "D"}
+local total_tanks
+if additional_tanks then
+	total_tanks = 8
+else
+	total_tanks = 4
+end
 
 local RaidNameList = {"Molten Core","Onyxia & Outdoors","Blackwing Lair","Ahn'Qiraj","Naxxramas", "Custome"};
 local dungeons = {["Molten Core"] = "MC", ["Onyxia & Outdoors"] = "Onyxia",
@@ -48,11 +55,36 @@ function RHEL_OnMouseUp()
 	RHEL_MainMenu:StopMovingOrSizing()
 end		   
 
---Add command line reaction. DONE
+--Add slash command line logic. TO DO
 SLASH_RHEL_SLASHCMD1 = '/RHEL'
 SLASH_RHEL_SLASHCMD2 = '/rhel'
-SlashCmdList["RHEL_SLASHCMD"] = function(msg)
-    RHEL_MainMenu:Show()
+SlashCmdList["RHEL_SLASHCMD"] = function(input)
+    local command;
+    if input ~= nil and string.lower(input) ~= nil then
+        command = string.lower(input);
+	end
+	
+	if input == nil or input:trim() == "" then
+		if RHEL_GUI.RHEL_MainMenu ~= nil and not RHEL_GUI.RHEL_MainMenu:IsVisible() then
+			RHEL_GUI.RHEL_MainMenu:Show();
+		elseif RHEL_GUI.RHEL_MainMenu ~= nil and RHEL_GUI.RHEL_MainMenu:IsVisible() then
+            RHEL_GUI.RHEL_MainMenu:Hide();
+		else
+			RHEL_print("Main menu is not ready. Try one more time.", true)
+		end
+	elseif command == "mini" then
+        if RHEL_MiniFrame ~= nil and not RHEL_MiniFrame:IsVisible() then
+			RHEL_MiniFrame:Show();
+		elseif RRHEL_MiniFrame ~= nil and RHEL_MiniFrame:IsVisible() then
+            RHEL_MiniFrame:Hide();
+		else
+			RHEL_print("Mini menu is not ready. Try one more time.", true)
+		end
+	elseif command == "option" or command == 'help' then
+		RHEL_print("Wo-wo-wo, take it easy! Not ready yet.")
+	else
+		RHEL_print("Invalid Command. Type '/rhel help'!", true)
+	end
 end
 
 --Greetings. DONE
@@ -157,6 +189,13 @@ function RHEL_VariablesDefaultSet()
 			RHEL_Healers[i] = "Name"..i;
 		end 
 	end
+-- For first time RHEL_Tanks is loaded; initialize tanks/ DONE
+	if RHEL_Tanks == nil then
+		RHEL_Tanks = {};
+		for i = 1, total_tanks do
+			RHEL_Healers[i] = tanks[i];
+		end 
+	end
 
 	RHEL_HealsDefault();
 	RHEL_BuffsDefault();
@@ -181,6 +220,13 @@ function RHEL_HealersLoad()
 	end
 end
 
+--Tanks on load. DONE
+function RHEL_TanksLoad()
+	for i = 1, total_tanks do
+		_G['TankName'..i]:SetText(RHEL_Tanks[i]);
+	end
+end
+
 --Heals checkboxes on load. DONE
 function RHEL_HealsLoad()
 --	print("RHEL: Healers load for ",RHEL_Raid,RHEL_Boss)
@@ -192,7 +238,7 @@ function RHEL_HealsLoad()
 				checker = false
 				RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j] = false
 			end
-			_G['CheckButton1' .."_".. i .. "_"..j]:SetChecked(checker);
+			_G['RHELCheckButton1' .."_".. i .. "_"..j]:SetChecked(checker);
 		end
 		if additional_tanks then
 			for j = 13, 16 do
@@ -202,7 +248,7 @@ function RHEL_HealsLoad()
 					checker = false
 					RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j] = false
 				end
-				_G['CheckButton1' .."_".. i .. "_"..j]:SetChecked(checker);
+				_G['RHELCheckButton1' .."_".. i .. "_"..j]:SetChecked(checker);
 			end	
 		end
 	end
@@ -213,7 +259,7 @@ function RHEL_BuffsLoad()
 	for i = 1, total_healers do
 		for j = 1, 8 do
 			checker = RHEL_Buffs[RHEL_Raid][i][j]
-			_G['CheckButton2' .."_".. i .. "_".. j]:SetChecked(checker);
+			_G['RHELCheckButton2' .."_".. i .. "_".. j]:SetChecked(checker);
 		end
 	end
 end
@@ -223,7 +269,7 @@ function RHEL_DispellsLoad()
 	for i = 1, total_healers do
 		for j = 1, 8 do
 			checker = RHEL_Dispells[RHEL_Raid][i][j]
-			_G['CheckButton3' .."_".. i .. "_"..j]:SetChecked(checker);
+			_G['RHELCheckButton3' .."_".. i .. "_"..j]:SetChecked(checker);
 		end
 	end
 end
@@ -237,9 +283,9 @@ function RHEL_SendMessage(msg)
 	if string.len(tostring(msg)) > 255 then
 		RHEL_print("Too long message."..string.len(msg), true)
 	else
-		if toRaid:GetChecked() and not toChannel:GetChecked() then
+		if toRaid:GetChecked() and not ChannelNumber:GetChecked() then
 			SendChatMessage(tostring(msg), "RAID");
-		elseif not toRaid:GetChecked() and toChannel:GetChecked() then
+		elseif not toRaid:GetChecked() and ChannelNumber:GetChecked() then
 			SendChatMessage(tostring(msg), "CHANNEL", nil, RHEL_Channel);
 		else
 			RHEL_print('while sending message', true)
@@ -443,54 +489,91 @@ end
 function ClickOnCheckBox(role,healer,target)
 --	print(RHEL_Raid,RHEL_Boss)
 	local isChecked
-    isChecked=_G['CheckButton'..role .. '_' .. healer.. '_'..target]:GetChecked();
+    isChecked=_G['RHELCheckButton'..role .. '_' .. healer.. '_'..target]:GetChecked();
 	if role == 1 then
-		RHEL_Heals[RHEL_Raid][RHEL_Boss][healer][target] = isChecked
+		RHEL_Heals[RHEL_Raid][RHEL_Boss][healer][target] = isChecked;
 	elseif role == 2 then
-		RHEL_Buffs[RHEL_Raid][healer][target] = isChecked
+		RHEL_Buffs[RHEL_Raid][healer][target] = isChecked;
 	elseif role == 3 then
-		RHEL_Dispells[RHEL_Raid][healer][target] = isChecked
+		RHEL_Dispells[RHEL_Raid][healer][target] = isChecked;
 	else
 		RHEL_print("Click on checkbox with unknown role", true)
 	end
 end
 
+--Healer insert reaction. CHECK
+-- for example
+-- healer:GetName() get "Ins_button1"
+-- string.sub(healer:GetName(),11) take from 11-th character inclusive and get '1'
+-- tonumber turns variable to 1
+function HealerInsert(healer)
+	local id = tonumber(string.sub(healer:GetName(),11))
+	local name, realm = UnitName("target")
+	if (UnitInRaid(name) or UnitInParty(name) or UnitInBattleground(name)) in
+		UpdateClass(id, 'Healer');
+		RHEL_Healers[id] = name;
+		_G['HealerName'..id]:SetText(name);
+	else
+		RHEL_print("Wrong target or not friendly player", true)
+	end
+end
+
 --Healer name editing reaction. DONE
 -- for example
--- healer:GetName() get HealerName1
+-- healer:GetName() get "HealerName1"
 -- string.sub(healer:GetName(),11) take from 11-th character inclusive and get '1'
 -- tonumber turns variable to 1
 function HealerNameChange(healer)
-	local id = tonumber(string.sub(healer:GetName(),11))
-	UpdateHealerClass(id);
+	local id = tonumber(string.sub(healer:GetName(),11));
+	UpdateClass(id, 'Healer');
 	RHEL_Healers[id] = _G['HealerName'..id]:GetText()
 end
 
---Channel editing reaction. DONE
-function ChannelChange()
-	RHEL_Channel = ChannelNumber:GetText()
+--Select icon for target. DONE
+function UpdateClass(icon, class)
+	local localizedClass, englishClass, classIndex =  UnitClass(_G[class.."Name"..icon]:GetText());
+	if englishClass ~= nil then
+		_G[class.."Name"..icon.."Texture"]:SetTexture("Interface\\Addons\\RHEL\\Icons\\"..englishClass);
+--		_G[class.."Name"..icon.."DragTexture"]:SetTexture("Interface\\Addons\\RHEL\\Icons\\"..englishClass);
+	else
+		_G[class.."Name"..icon.."Texture"]:SetTexture(nil);
+--		_G[class.."Name"..icon.."DragTexture"]:SetTexture(nil);
+	end
 end
 
---Select icon for healer. DONE
-function UpdateHealerClass(icon)
-	local localizedClass, englishClass, classIndex =  UnitClass(_G["HealerName"..icon]:GetText());
-	if englishClass ~= nil then
-		_G["HealerClass"..icon.."Texture"]:SetTexture("Interface\\Addons\\RHEL\\Icons\\"..englishClass);
---		_G["HealerClass"..icon.."DragTexture"]:SetTexture("Interface\\Addons\\RHEL\\Icons\\"..englishClass);
+-- Tank insert reaction. CHECK
+function TankInsert(tank)
+	local id = tonumber(string.sub(healer:GetName(),15))
+	local name, realm = UnitName("target")
+	if (UnitInRaid(name) or UnitInParty(name) or UnitInBattleground(name)) in
+		UpdateTankClass(id, 'Tank');
+		RHEL_Tanks[id] = name;
+		_G['TankName'..id]:SetText(name);
 	else
-		_G["HealerClass"..icon.."Texture"]:SetTexture(nil);
---		_G["HealerClass"..icon.."DragTexture"]:SetTexture(nil);
+		RHEL_print("Wrong target or not friendly player", true)
 	end
+end
+
+--Tank name editing reaction. CHECK
+function TankNameChange(tank)
+	local id = tonumber(string.sub(tank:GetName(),15));
+	UpdateTankClass(id, 'Tank');
+	RHEL_Tanks[id] = _G['TankName'..id]:GetText()
+end	
+
+--Channel editing reaction. DONE
+function ChannelChange()
+	RHEL_Channel = ChannelNumber:GetText();
 end
 
 --Swap chat to anounce. DONE
 function SwapAnounceTo(to)
-	if to == toChannel then
-		toRaid:SetChecked(false)
-		toChannel:SetChecked(true)
+	if to == to_Channel then
+		to_Raid:SetChecked(false)
+		to_Channel:SetChecked(true)
 	else
-		toRaid:SetChecked(true)
-		toChannel:SetChecked(false)
+		to_Raid:SetChecked(true)
+		to_Channel:SetChecked(false)
 	end
 end
 
@@ -625,7 +708,7 @@ function RHEL_ReportDeath(guid, name, flags)
 			if HealsPart ~= " is dead. Heal " then
 				HealsPart = string.sub(HealsPart, 1, -2) .. "!"
 				local dthmsg = name..HealsPart
-				if toRaid:GetChecked() and not toChannel:GetChecked() then
+				if to_Raid:GetChecked() and not to_Channel:GetChecked() then
 					SendChatMessage(tostring(dthmsg), "RAID");
 				else
 					RHEL_print(dthmsg)
@@ -662,6 +745,7 @@ function RHEL_Frame:ADDON_LOADED(addon)
 		VariablesLoaded = true;
 		RHEL_VariablesDefaultSet();
 		RHEL_RaidBossSaved();
+		RHEL_TanksLoad();
 		RHEL_HealersLoad();
 		RHEL_ChannelLoad();
 --		RHEL_print("Saved variables loaded")
