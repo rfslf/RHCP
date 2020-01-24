@@ -1,8 +1,8 @@
 local total_healers = 8
-local additional_tanks = true
-local tanks = {"MT","OT", "T3", "T4", "A", "B", "C", "D"}
+local tanks = {"MT", "OT", "T3", "T4", "A", "B", "C", "D"}
 -- Healer frame pozitions
-local healer_frame_start_x, healer_frame_start_y, healer_frame_finish_y, healer_frame_region = 10, -80, 60, "TOPLEFT"
+local tank_frame = 40
+local healer_frame_start_x, healer_frame_start_y, healer_frame_finish_y, healer_frame_region = 10, -80 - tank_frame, 40, "TOPLEFT"
 local healer_frame_x, healer_frame_y = 1000, 50
 local healer_frame_delta = -4
 -- CheckButton pozitions
@@ -17,40 +17,40 @@ local icon_size = 20
 local editbox_start_x, editbox_start_y, editbox_region = 40, 0, "LEFT"
 local editbox_size_x, editbox_size_y = 90, 20
 -- Insert button pozition
-local ins_button_start_x, ins_button_start_y, ins_button_region = 150, 0, "LEFT"
+local ins_button_start_x, ins_button_start_y, ins_button_region = 130, 0, "LEFT"
 local ins_button_size_x, ins_button_size_y = 30, 20
 -- Wisper button pozition
 local button_start_x, button_start_y, button_region = -10, 0, "RIGHT"
 local button_size_x, button_size_y = 40, 30
 -- Anounce button pozition
-local anounce_size_x, anounce_size_y = 130, 50
+local anounce_size_x, anounce_size_y = 120, 40
 local anounce_start_x, anounce_start_y, anounce_region = 220, 10, "BOTTOMLEFT"
-local anounce_delta = 275
+local anounce_delta = 250
 -- ToChannel button pozition
 local to_channel_size = 20
-local to_channel_start_x, to_channel_start_y, to_channel_region = 25, 40, "BOTTOMLEFT"
-local to_channel_delta = -25
+local to_channel_start_x, to_channel_start_y, to_channel_region = 25, 30, "BOTTOMLEFT"
+local to_channel_delta = -20
 local to_channel_font_size_x, to_channel_font_size_y = 80, 20
 -- Channel EditBox pozition
 local channel_editbox_size_x, channel_editbox_size_y = 20, 40
 local channel_editbox_start_x, channel_editbox_start_y, channel_editbox_region = 120, 30, "BOTTOMLEFT"
 -- Tanks pozition 
-local tank_editbox_start_x, tank_editbox_start_y, tank_editbox_region = 20, -120, "TOPLEFT"
-local tank_editbox_step_x, tank_editbox_step_y = 130, 20
-local tank_icon_start_x, tank_icon_start_y, tank_icon_region = 10, -120, "TOPLEFT"
-local tank_ins_button_start_x, tank_ins_button_start_y, tank_ins_button_region = 140, -120, "TOPLEFT"
+local tank_editbox_start_x, tank_editbox_start_y, tank_editbox_region = 30, -74, "TOPLEFT"
+local tank_editbox_step_x, tank_editbox_step_y = 140, 20
+local tank_icon_start_x, tank_icon_start_y, tank_icon_region = 10, -74, "TOPLEFT"
+local tank_ins_button_start_x, tank_ins_button_start_y, tank_ins_button_region = 120, -74, "TOPLEFT"
 -- DropDown menu pozition
 local raid_name_dropdown_start_x, raid_name_dropdown_start_y, raid_name_dropdown_region = 10, -20, "TOPLEFT"
 local raid_name_dropdown_delta = 130
 -- Warning checkbox
 local warning_check_size_x, warning_check_size_y = 25, 25
-local warning_check_start_x, warning_check_start_y, warning_check_region = 10, -50, "TOPLEFT"
+local warning_check_start_x, warning_check_start_y, warning_check_region = 10, 50, "BOTTOMLEFT"
 -- BossNote Window
-local boss_note_size_x,  boss_note_size_y = 140, 60
+local boss_note_size_x, boss_note_size_y = 140, 60
 local boss_note_start_x, boss_note_start_y, boss_note_region = -200, -20, "RIGHT"
 -- Main menu pozition
 local main_menu_start_x, main_menu_start_y, main_menu_region = 0, 0, "CENTER"
-local main_menu_x, main_menu_y = healer_frame_start_x * 2 + healer_frame_x, abs(healer_frame_start_y) + total_healers * (healer_frame_y + abs(healer_frame_delta)) + healer_frame_finish_y
+local main_menu_x, main_menu_y = healer_frame_start_x * 2 + healer_frame_x, abs(healer_frame_start_y) + total_healers * (healer_frame_y + abs(healer_frame_delta)) + tank_frame + healer_frame_finish_y
 
 RHEL_GUI = {};
 
@@ -96,10 +96,10 @@ RHEL_GUI.RHEL_MainMenu:SetScript("OnLoad", function(self)
 	RHEL_Loaded();
 end);
 RHEL_GUI.RHEL_MainMenu:SetScript("OnMouseDown", function(self)
-	RHEL_OnMouseDown();
+	RHEL_OnMouseDown(self);
 end);
 RHEL_GUI.RHEL_MainMenu:SetScript("OnMouseUp", function(self)
-	RHEL_OnMouseUp();
+	RHEL_OnMouseUp(self);
 end);
 
 -- Raid dropdown
@@ -136,7 +136,7 @@ end);
 
 -- Tanks
 local total_tanks
-if additional_tanks then
+if RHEL_Add_Tanks then
 	total_tanks = 8
 else
 	total_tanks = 4
@@ -149,7 +149,7 @@ for  i = 1, total_tanks do
 	if i <= 4 then
 		RHEL_GUI.RHEL_MainMenu.tank_editbox:SetPoint(tank_editbox_region, tank_editbox_start_x + tank_editbox_step_x * (i-1), tank_editbox_start_y);	
 	else
-		RHEL_GUI.RHEL_MainMenu.tank_editbox:SetPoint(tank_editbox_region, tank_editbox_start_x + tank_editbox_step_x * (i-4), tank_editbox_start_y + tank_editbox_step_y);
+		RHEL_GUI.RHEL_MainMenu.tank_editbox:SetPoint(tank_editbox_region, tank_editbox_start_x + tank_editbox_step_x * (i-5), tank_editbox_start_y - tank_editbox_step_y);
 	end
 	RHEL_GUI.RHEL_MainMenu.tank_editbox:SetScript("OnEscapePressed", function(self)
 		self:ClearFocus();    
@@ -158,10 +158,10 @@ for  i = 1, total_tanks do
 		if i == total_tanks then
 			RHEL_healerFrame1:SetFocus();
 		else
-			_G["TankName"..(i+1)):SetFocus();
+			_G["TankName"..(i+1)]:SetFocus();
 		end
 	end);
-	RHEL_GUI.RHEL_MainMenu.healerFrame.tank_editbox:SetScript("OnTextChanged", function(self)
+	RHEL_GUI.RHEL_MainMenu.tank_editbox:SetScript("OnTextChanged", function(self)
 		TankNameChange(self); -- TO DO
 	end);
 	
@@ -172,10 +172,10 @@ for  i = 1, total_tanks do
 	if i <= 4 then
 		RHEL_GUI.RHEL_MainMenu.tank_icon:SetPoint(tank_icon_region, tank_icon_start_x + tank_editbox_step_x * (i-1), tank_icon_start_y);
 	else 
-		RHEL_GUI.RHEL_MainMenu.tank_icon:SetPoint(tank_icon_region, tank_icon_start_x + tank_editbox_step_x * (i-4), tank_icon_start_y + tank_editbox_step_y);
+		RHEL_GUI.RHEL_MainMenu.tank_icon:SetPoint(tank_icon_region, tank_icon_start_x + tank_editbox_step_x * (i-5), tank_icon_start_y - tank_editbox_step_y);
 	end
-	local texture
-	RHEL_GUI.RHEL_MainMenu.tank_icon.texture = RHEL_GUI.RHEL_MainMenu.tank_icon:CreateTexture( "TankClass"..i.."Texture", "Background");
+	local texture = "TankClassIcon"..i
+	RHEL_GUI.RHEL_MainMenu.tank_icon.texture = RHEL_GUI.RHEL_MainMenu.tank_icon:CreateTexture("TankClassIcon"..i, "Background");
 	RHEL_GUI.RHEL_MainMenu.tank_icon.texture:SetPoint("CENTER");
  	RHEL_GUI.RHEL_MainMenu.tank_icon.texture:SetTexture("Interface\\AddOns\\RHEL\\Icons\\WARRIOR")
 	RHEL_GUI.RHEL_MainMenu.tank_icon.texture:SetSize(icon_size, icon_size);
@@ -185,14 +185,17 @@ for  i = 1, total_tanks do
 	RHEL_GUI.RHEL_MainMenu.ins_button = CreateFrame("Button", ins_button, RHEL_GUI.RHEL_MainMenu, "UIPanelButtonTemplate");
 	RHEL_GUI.RHEL_MainMenu.ins_button:SetText(tanks[i]);
 	RHEL_GUI.RHEL_MainMenu.ins_button:SetSize(ins_button_size_x, ins_button_size_y);
-	RHEL_GUI.RHEL_MainMenu.ins_button:SetPoint(ins_button_region, "RHEL_healerFrame"..i, ins_button_start_x, ins_button_start_y);
+	if i <= 4 then
+		RHEL_GUI.RHEL_MainMenu.ins_button:SetPoint(tank_ins_button_region, tank_ins_button_start_x + tank_editbox_step_x * (i-1), tank_ins_button_start_y);
+	else
+		RHEL_GUI.RHEL_MainMenu.ins_button:SetPoint(tank_ins_button_region, tank_ins_button_start_x + tank_editbox_step_x * (i-5), tank_ins_button_start_y - tank_editbox_step_y);
+	end
 	RHEL_GUI.RHEL_MainMenu.ins_button:SetScript("OnClick", function(self, button)
 		if button == "LeftButton" then
 			TankInsert(self); -- TO DO
 		end
 	end);
-
-
+end
 
 -- Checkbox generator
 function createCheckbutton(parent, x_loc, y_loc, name, text, role, hlr, ckckbx)
@@ -204,7 +207,12 @@ function createCheckbutton(parent, x_loc, y_loc, name, text, role, hlr, ckckbx)
 		ClickOnCheckBox(role, hlr, ckckbx);
 	end);
 	local checkbuttonfont=checkbutton:CreateFontString(checkbutton, "OVERLAY", "GameFontNormal");
-	checkbuttonfont:SetPoint("TOPLEFT", -10, 0);
+	local id = tonumber(string.sub(name, 16))
+	if id = 1 then
+		checkbuttonfont:SetPoint("TOPLEFT", -10, 0);
+	else
+		checkbuttonfont:SetPoint("TOPLEFT", 0, 10);
+	end
 	checkbuttonfont:SetSize(check_button_size,check_button_size);
 	return checkbutton;
 end
@@ -241,8 +249,8 @@ for i = 1, total_healers do
 	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBoxFrame:SetPoint("LEFT", 10 , 0);
 --	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBoxFrame:SetBackdrop(RHEL_GUI.RHEL_Backdrop2);
 	
-	local texture = "HealerClass"..i
-	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBoxFrame.texture = RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBoxFrame:CreateTexture( "HealerClass"..i.."Texture", "Background");
+	local texture = "HealerClassIcon"..i
+	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBoxFrame.texture = RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBoxFrame:CreateTexture( "HealerClassIcon"..i, "Background");
 	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBoxFrame.texture:SetPoint("CENTER");
  	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBoxFrame.texture:SetTexture("Interface\\AddOns\\RHEL\\Icons\\WARRIOR")
 	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBoxFrame.texture:SetSize(icon_size, icon_size);
@@ -270,7 +278,7 @@ for i = 1, total_healers do
 		local RHELCheckButton = "RHELCheckButton1_"..i.."_"..j
 		RHEL_GUI.RHEL_MainMenu.healerFrame.RHELCheckButton = createCheckbutton(RHEL_GUI.RHEL_MainMenu.healerFrame, CheckButton_Poz_x, CheckButton_Poz_y, RHELCheckButton, tanks[j-8], 1, i, j);
 	end
-	if additional_tanks then
+	if RHEL_Add_Tanks then
 		for j = 13, 16 do
 			local CheckButton_Poz_x, CheckButton_Poz_y = (check_button_start_x + check_button_step_x * (j-9)), check_button_start_y - check_button_step_y
 			local RHELCheckButton = "RHELCheckButton1_"..i.."_"..j
@@ -280,14 +288,14 @@ for i = 1, total_healers do
 	
 	-- Buffs checkboxes
 	for j = 1, 8 do
-		local CheckButton_Poz_x, CheckButton_Poz_y = (check_button_start_x + (8 * check_button_step_x  + check_button_step_delta) + check_button_step_x * (j-1)), check_button_start_y
+		local CheckButton_Poz_x, CheckButton_Poz_y = (check_button_start_x + (8 * check_button_step_x  + check_button_step_delta) + check_button_step_x * (j-1)/2), check_button_start_y - check_button_step_y
 		local RHELCheckButton = "RHELCheckButton2_"..i.."_"..j
 		RHEL_GUI.RHEL_MainMenu.healerFrame.RHELCheckButton = createCheckbutton(RHEL_GUI.RHEL_MainMenu.healerFrame, CheckButton_Poz_x, CheckButton_Poz_y, RHELCheckButton, j , 2, i, j);
 	end
 	
 	-- Dispells checkboxes
 	for j = 1, 8 do
-		local CheckButton_Poz_x, CheckButton_Poz_y = (check_button_start_x + (16 * check_button_step_x + 2 * check_button_step_delta) + check_button_step_x * (j-1)), check_button_start_y
+		local CheckButton_Poz_x, CheckButton_Poz_y = (check_button_start_x + (12 * check_button_step_x + 2 * check_button_step_delta) + check_button_step_x * (j-1)/2), check_button_start_y
 		local RHELCheckButton = "RHELCheckButton3_"..i.."_"..j
 		RHEL_GUI.RHEL_MainMenu.healerFrame.RHELCheckButton = createCheckbutton(RHEL_GUI.RHEL_MainMenu.healerFrame, CheckButton_Poz_x, CheckButton_Poz_y, RHELCheckButton, j , 3, i, j);
 	end
@@ -338,6 +346,7 @@ function createTochannelbutton(parent, x_loc, y_loc, name, text, selection)
 	tochannelbutton:SetSize(to_channel_size, to_channel_size)
 	getglobal(tochannelbutton:GetName() .. 'Text'):SetText(text);
 	tochannelbutton:SetScript("OnLoad", function(self)
+		RHEL_print(self..selection, true)
 		self:SetChecked(selection);
 	end);
 	tochannelbutton:SetScript("OnClick", function(self, button)
@@ -383,7 +392,7 @@ RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow = CreateFrame("Frame", "BossNoteWindo
 RHEL_GUI.RHEL_MainMenu.BossNoteWindow:SetBackdrop(RHEL_GUI.RHEL_Backdrop);
 RHEL_GUI.RHEL_MainMenu.BossNoteWindow:SetSize(boss_note_size_x, boss_note_size_y);
 RHEL_GUI.RHEL_MainMenu.BossNoteWindow:SetPoint(boss_note_region, boss_note_start_x, boss_note_start_y);
---]]
+]]--
 --[[
 -- Boss note editbox
 RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow.BossNoteEditBox = CreateFrame("EditBox", "BossNoteEditBox", RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow);
@@ -416,4 +425,4 @@ BossnoteFontString2:SetSpacing(1);
 BossnoteFontString2:SetWidth(108);
 BossnoteFontString2:SetJustifyH("LEFT");
 BossnoteFontString2:SetMaxLines(3);
- ]]--
+]]--

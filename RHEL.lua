@@ -1,12 +1,12 @@
 -- Author      : Virgo
 -- Create Date : 12/19/2019 7:43:57 PM
--- Update	   : 01/23/2020
+-- Update	   : 01/24/2020
 
 local version = "0.9.0"
 local total_healers = 8
 local tanks = {"MT","OT", "T3", "T4", "A", "B", "C", "D"}
-local total_tanks
-if additional_tanks then
+RHEL_Add_Tanks = true
+if RHEL_Add_Tanks then
 	total_tanks = 8
 else
 	total_tanks = 4
@@ -46,13 +46,13 @@ end
 local revBossNameList = {}
 
 --Frame starts moving. DONE
-function RHEL_OnMouseDown()
-	RHEL_MainMenu:StartMoving()
+function RHEL_OnMouseDown(frame)
+	frame:StartMoving()
 end
 
 --Frame stops moving. DONE
-function RHEL_OnMouseUp()
-	RHEL_MainMenu:StopMovingOrSizing()
+function RHEL_OnMouseUp(frame)
+	frame:StopMovingOrSizing()
 end		   
 
 --Add slash command line logic. TO DO
@@ -65,10 +65,10 @@ SlashCmdList["RHEL_SLASHCMD"] = function(input)
 	end
 	
 	if input == nil or input:trim() == "" then
-		if RHEL_GUI.RHEL_MainMenu ~= nil and not RHEL_GUI.RHEL_MainMenu:IsVisible() then
-			RHEL_GUI.RHEL_MainMenu:Show();
-		elseif RHEL_GUI.RHEL_MainMenu ~= nil and RHEL_GUI.RHEL_MainMenu:IsVisible() then
-            RHEL_GUI.RHEL_MainMenu:Hide();
+		if RHEL_MainMenu ~= nil and not RHEL_MainMenu:IsVisible() then
+			RHEL_MainMenu:Show();
+		elseif RHEL_MainMenu ~= nil and RHEL_MainMenu:IsVisible() then
+            RHEL_MainMenu:Hide();
 		else
 			RHEL_print("Main menu is not ready. Try one more time.", true)
 		end
@@ -178,22 +178,26 @@ function RHEL_VariablesDefaultSet()
 	end
 
 -- For the first time RHEL_Channel is loaded; initialize channel to 5. DONE
-	if RHEL_Channel == nil then
+	if RHEL_Channel == nil or RHEL_Channel == "" then
 		RHEL_Channel = 5;
 	end
 
 -- For first time RHEL_Healers is loaded; initialize healers to NameNumber. DONE
 	if RHEL_Healers == nil then
 		RHEL_Healers = {};
-		for i = 1, total_healers do
+	end
+	for i = 1, total_healers do
+		if not RHEL_Healers[i] then
 			RHEL_Healers[i] = "Name"..i;
 		end 
 	end
 -- For first time RHEL_Tanks is loaded; initialize tanks/ DONE
 	if RHEL_Tanks == nil then
 		RHEL_Tanks = {};
-		for i = 1, total_tanks do
-			RHEL_Healers[i] = tanks[i];
+	end
+	for i = 1, total_tanks do
+		if not RHEL_Tanks[i] then
+			RHEL_Tanks[i] = tanks[i];
 		end 
 	end
 
@@ -228,6 +232,7 @@ function RHEL_TanksLoad()
 end
 
 --Heals checkboxes on load. DONE
+local checker
 function RHEL_HealsLoad()
 --	print("RHEL: Healers load for ",RHEL_Raid,RHEL_Boss)
 	for i = 1, total_healers do
@@ -282,15 +287,99 @@ end
 function RHEL_SendMessage(msg)
 	if string.len(tostring(msg)) > 255 then
 		RHEL_print("Too long message."..string.len(msg), true)
+		RHEL_SendMessage(msg)
 	else
-		if toRaid:GetChecked() and not ChannelNumber:GetChecked() then
+		if to_Raid:GetChecked() and not ChannelNumber:GetChecked() then
 			SendChatMessage(tostring(msg), "RAID");
-		elseif not toRaid:GetChecked() and ChannelNumber:GetChecked() then
+		elseif not to_Raid:GetChecked() and ChannelNumber:GetChecked() then
 			SendChatMessage(tostring(msg), "CHANNEL", nil, RHEL_Channel);
 		else
 			RHEL_print('while sending message', true)
 		end
 	end
+end
+
+
+-- Anounce part about healings. CHECK
+-- Groups: 1, 2, 3... Name, OT.
+function RHEL_Healings(position)
+	if RHEL_Heals[RHEL_Raid][RHEL_Boss][position] then
+		local msg = "Groups: "
+		local heal_count = 0
+		for j = 1, 8 do
+			if RHEL_Heals[RHEL_Raid][RHEL_Boss][position][j] then
+				heal_count = heal_count + 1
+				msg = msg .. j .. ", "
+			end
+		end
+		if heal_count == 0 then
+			msg = ""
+		elseif heal_count == 8 then
+			msg = "All groups."
+		else
+			msg = string.sub(msg, 1, -3)  .. "."
+		end
+		heal_count = 0
+		for j = 9, (8 + total_tanks) do
+			if RHEL_Heals[RHEL_Raid][RHEL_Boss][position][j] then
+				heal_count = heal_count + 1
+				if G['TankName'..j]:GetText() == "" then
+					msg = msg .. ' ' .. tanks[j-8] .. ","
+				else
+					msg = msg .. ' ' .. G['TankName'..j]:GetText() .. ","
+			end
+		end
+		if heal_count ~= 0 then
+			msg = string.sub(msg, 1, -2) .. "."
+		end
+	end
+	return msg
+end
+
+-- Anounce part about buffings. CHECK
+-- All groups or fallen.
+function RHEL_Buffings(position)
+	local msg = "Groups: "
+	local buff_count = 0
+	if RHEL_Buffs[RHEL_Raid][position] then		
+		for j = 1, 8 do
+			if RHEL_Buffs[RHEL_Raid][position][j] then
+				buff_count = buff_count + 1
+				msg = msg .. j .. ", "
+			end
+		end
+	end
+	if buff_count == 0 then
+		msg = ""
+	elseif buff_count == 8 then
+		msg = "All groups or fallen."
+	else
+		msg = string.sub(msg, 1, -3)
+	end
+	return msg
+end
+
+-- Anounce part about dispellings. CHECK
+-- All groups.
+function RHEL_Dispellings(position)
+	local msg = "Groups: "
+	local dispel_count = 0
+	if RHEL_Dispells[RHEL_Raid][position] then		
+		for j = 1, 8 do
+			if RHEL_Dispells[RHEL_Raid][position][j] then
+				dispel_count = dispel_count + 1
+				msg = msg .. j .. ", "
+			end
+		end
+	end
+	if dispel_count == 0 then
+		msg = ""
+	elseif dispel_count == 8 then
+		msg = "All groups."
+	else
+		msg = string.sub(msg, 1, -3)
+	end
+	return msg
 end
 
 --Click on heals anounce. DONE
@@ -300,44 +389,7 @@ function RHEL_HealAnounce()
 	for i = 1, total_healers do
 		if _G['HealerName'..i]:GetText() ~= "" then
 			local message2 = "[" .. _G['HealerName'..i]:GetText() .. " - "
-			local message3 = ""
-			if RHEL_Heals[RHEL_Raid][RHEL_Boss][i] then
-				message3 = "Groups: "
-				local heal_count = 0
-				for j = 1, 8 do
-					if RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j] then
-						heal_count = heal_count + 1
-						message3 = message3 .. j .. ", "
-					end
-				end
-				if heal_count == 0 then
-					message3 = ""
-				elseif heal_count == 8 then
-					message3 = "All groups."
-				else
-					message3 = string.sub(message3, 1, -3)  .. "."
-				end
-				heal_count = 0
-				for j = 9, 12 do
-					if RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j] then
-						heal_count = heal_count + 1
-						message3 = message3 .. ' ' .. tanks[j-8]
-					end
-				end
-				if additional_tanks then
-					for j = 13, 16 do
-						if RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j] then
-							heal_count = heal_count + 1
-							message3 = message3 .. ' ' .. tanks[j-8]
-						end
-					end
-				end
-				if heal_count == 0 then
-					message3 = ""
-				else
-					message3 = string.sub(message3, 1, -2)
-				end
-			end
+			local message3 = RHEL_Healings(i)
 			if message3 ~= "" then
 				message1 = message1 .. message2 .. message3 .. "] "	
 			end
@@ -349,28 +401,14 @@ end
 
 --Click on buffs anounce. DONE
 function RHEL_BuffAnounce()
-	local buff_count
 	local anounce = RHEL_Raid..": BUFFS!"
-	local message = ""
-	for i = 1,total_healers do
+	local message1 = ""
+	for i = 1, total_healers do
 		if _G['HealerName'..i]:GetText() ~= "" then
-			local message1 = "[" .. _G['HealerName'..i]:GetText() .. " - "
-			local message2 = "Groups: "
-			if RHEL_Buffs[RHEL_Raid][i] then
-				buff_count = 0
-				for j = 1, 8 do
-					if RHEL_Buffs[RHEL_Raid][i][j] then
-						buff_count = buff_count + 1
-						message2 = message2 .. j .. ", "
-					end
-				end
-			end
-			if buff_count == 0 then
-				message1 = ""
-			elseif buff_count == 8 then
-				message = message .. message1 .. "All groups or fallen] "
-			else
-				message = message .. message1 .. string.sub(message2, 1, -3) .. "] "
+			local message2 = "[" .. _G['HealerName'..i]:GetText() .. " - "
+			local message3 = RHEL_Buffings(i)
+			if message3 ~= "" then
+				message1 = message1 .. message2 .. message3 .. "] "	
 			end
 		end
 	end
@@ -380,28 +418,14 @@ end
 
 --Click on buffs anounce. DONE
 function RHEL_DispellAnounce()
-	local dispell_count
 	local anounce = RHEL_Raid..": DISPELLS!"
-	local message = ""
-	for i = 1,total_healers do
+	local message1 = ""
+	for i = 1, total_healers do
 		if _G['HealerName'..i]:GetText() ~= "" then
-			local message1 = "[" .. _G['HealerName'..i]:GetText() .. " - "
-			local message2 = "Groups: "
-			if RHEL_Dispells[RHEL_Raid][i] then
-				dispell_count = 0
-				for j = 1, 8 do
-					if RHEL_Dispells[RHEL_Raid][i][j] then
-						dispell_count = dispell_count + 1
-						message2 = message2 .. j .. ", "
-					end
-				end
-			end
-			if dispell_count == 0 then
-				message1 = ""
-			elseif dispell_count == 8 then
-				message = message .. message1 .. "All groups] "
-			else
-				message = message .. message1 .. string.sub(message2, 1, -3) .. "] "
+			local message2 = "[" .. _G['HealerName'..i]:GetText() .. " - "		
+			local message3 = RHEL_Dispellings(i)
+			if message3 ~= "" then
+				message1 = message1 .. message2 .. message3 .. "] "
 			end
 		end
 	end
@@ -414,73 +438,25 @@ function RHEL_HealerWisper(number)
 	local healer = _G['HealerName'..number]:GetText()
 	local wisper = healer .. " in " .. RHEL_Raid .." on " .. RHEL_Boss .. ": "
 	if healer ~= "" then
-		if not (UnitInRaid(healer) or UnitInParty(healer)) then
-			RHEL_print(healer .." is not in your raid or party", true)
+		if (UnitInRaid(healer) or UnitInParty(healer)) then
+			local HealsPart = RHEL_Healings(number)
+			if HealsPart ~= '' then
+				HealsPart = "[Heals - " + HealsPart .. "] "
+			end
+			
+			local BuffsPart = RHEL_Buffings(number)
+			if BuffsPart ~= '' then		
+				BuffsPart = "[Buffs - " + BuffsPart .. "] "
+			end
+
+			local DispellsPart = RHEL_Dispellings(number)
+			if DispellsPart ~= '' then		
+				DispellsPart = "[Dispells - " + DispellsPart .. "] "
+			end
+
+			SendChatMessage(wisper..HealsPart..BuffsPart..DispellsPart, "WHISPER", nil, healer)		
 		else
-			local HealsPart = "[Heals - "
-			if RHEL_Heals[RHEL_Raid][RHEL_Boss][number] then
-				local heal_count = 0
-				for j = 1, 8 do
-					if RHEL_Heals[RHEL_Raid][RHEL_Boss][number][j] then					
-						heal_count = heal_count + 1
-						HealsPart = HealsPart .. " Group" .. j .. ","
-					end
-				end			
-				if 	heal_count == 8 then
-					HealsPart = "[Heals - All groups,"
-				end		
-				for j = 9, 12 do
-					if RHEL_Heals[RHEL_Raid][RHEL_Boss][number][j] then
-						HealsPart = HealsPart .. ' ' .. tanks[j-9] .. ","
-					end
-				end	
-				if additional_tanks then
-					for j = 13, 16 do
-						if RHEL_Heals[RHEL_Raid][RHEL_Boss][number][j] then
-							HealsPart = HealsPart .. ' ' .. tanks[j-9] .. ","
-						end
-					end
-				end
-			end
-			HealsPart = string.sub(HealsPart, 1, -2) .. "] "
-		
-			local BuffsPart = "[Buff groups - "
-			local buff_count = 0
-			if RHEL_Buffs[RHEL_Raid][number] then			
-				for j = 1, 8 do
-					if RHEL_Buffs[RHEL_Raid][number][j] then
-						buff_count = buff_count + 1
-						BuffsPart = BuffsPart .. j .. ", "
-					end
-				end	
-			end
-			if buff_count == 0 then 
-				BuffsPart = " "
-			elseif buff_count == 8 then
-				BuffsPart = "[Buff all groups or fallen] "
-			else
-				BuffsPart = string.sub(BuffsPart, 1, -3) .. "] "
-			end
-
-			local DispellsPart = "[Dispell groups - "
-			local dispell_count = 0
-			if RHEL_Dispells[RHEL_Raid][number] then
-				for j = 1, 8 do
-					if RHEL_Dispells[RHEL_Raid][number][j] then
-						dispell_count = dispell_count + 1
-						DispellsPart = DispellsPart .. j .. ", "
-					end
-				end	
-			end
-			if dispell_count == 0 then
-				DispellsPart = " "
-			elseif dispell_count == 8 then
-				DispellsPart = "[Dispell all groups] " 
-			else
-				DispellsPart = string.sub(DispellsPart, 1, -3) .. "]"
-			end
-
-			SendChatMessage(wisper..HealsPart..BuffsPart..DispellsPart, "WHISPER", nil, healer)
+			RHEL_print(healer .." is not in your raid or party", true)
 		end
 	end
 end
@@ -509,7 +485,7 @@ end
 function HealerInsert(healer)
 	local id = tonumber(string.sub(healer:GetName(),11))
 	local name, realm = UnitName("target")
-	if (UnitInRaid(name) or UnitInParty(name) or UnitInBattleground(name)) in
+	if (UnitInRaid(name) or UnitInParty(name) or UnitInBattleground(name)) then
 		UpdateClass(id, 'Healer');
 		RHEL_Healers[id] = name;
 		_G['HealerName'..id]:SetText(name);
@@ -532,21 +508,23 @@ end
 --Select icon for target. DONE
 function UpdateClass(icon, class)
 	local localizedClass, englishClass, classIndex =  UnitClass(_G[class.."Name"..icon]:GetText());
+	
 	if englishClass ~= nil then
-		_G[class.."Name"..icon.."Texture"]:SetTexture("Interface\\Addons\\RHEL\\Icons\\"..englishClass);
+		_G[class.."ClassIcon"..icon]:SetTexture("Interface\\Addons\\RHEL\\Icons\\"..englishClass);
 --		_G[class.."Name"..icon.."DragTexture"]:SetTexture("Interface\\Addons\\RHEL\\Icons\\"..englishClass);
 	else
-		_G[class.."Name"..icon.."Texture"]:SetTexture(nil);
+		print(icon, class, _G[class.."ClassIcon"..icon])
+		_G[class.."ClassIcon"..icon]:SetTexture(nil);
 --		_G[class.."Name"..icon.."DragTexture"]:SetTexture(nil);
 	end
 end
 
 -- Tank insert reaction. CHECK
 function TankInsert(tank)
-	local id = tonumber(string.sub(healer:GetName(),15))
+	local id = tonumber(string.sub(tank:GetName(),9))
 	local name, realm = UnitName("target")
-	if (UnitInRaid(name) or UnitInParty(name) or UnitInBattleground(name)) in
-		UpdateTankClass(id, 'Tank');
+	if (UnitInRaid(name) or UnitInParty(name) or UnitInBattleground(name)) then
+		UpdateClass(id, 'Tank');
 		RHEL_Tanks[id] = name;
 		_G['TankName'..id]:SetText(name);
 	else
@@ -556,8 +534,8 @@ end
 
 --Tank name editing reaction. CHECK
 function TankNameChange(tank)
-	local id = tonumber(string.sub(tank:GetName(),15));
-	UpdateTankClass(id, 'Tank');
+	local id = tonumber(string.sub(tank:GetName(),9));
+	UpdateClass(id, 'Tank');
 	RHEL_Tanks[id] = _G['TankName'..id]:GetText()
 end	
 
@@ -682,37 +660,15 @@ end
 function RHEL_ReportDeath(guid, name, flags)
 	for i = 1, total_healers do
 		if RHEL_Healers[i] == name then
-			
-			local HealsPart = " is dead. Heal "
-			if RHEL_Heals[RHEL_Raid][RHEL_Boss][i] then
-				local heal_count = 0
-				for j = 1, 8 do
-					if RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j] then					
-						heal_count = heal_count + 1
-						HealsPart = HealsPart .. " Group" .. j .. ","
-					end
-				end			
-				if 	heal_count == 8 then
-					HealsPart = " is dead. Heal all groups,"
-				end		
-				for j = 9, 12 do
-					if RHEL_Heals[RHEL_Raid][RHEL_Boss][i][j] then
-						if j == 9 then
-							HealsPart = HealsPart .. " MT" .. ","
-						elseif j > 9 then
-							HealsPart = HealsPart .. " OT" .. (j-9) .. ","
-						end
-					end
-				end	
-			end	
-			if HealsPart ~= " is dead. Heal " then
-				HealsPart = string.sub(HealsPart, 1, -2) .. "!"
-				local dthmsg = name..HealsPart
-				if to_Raid:GetChecked() and not to_Channel:GetChecked() then
-					SendChatMessage(tostring(dthmsg), "RAID");
-				else
-					RHEL_print(dthmsg)
-				end
+			local HealsPart = RHEL_Healings(i)		
+			local dthmsg = name.." is dead."
+			if HealsPart ~= "" then
+				dthmsg = dthmsg .. " Heal " .. HealsPart
+			end
+			if to_Raid:GetChecked() and not to_Channel:GetChecked() then
+				SendChatMessage(tostring(dthmsg), "RAID");
+			else
+				RHEL_print(dthmsg)
 			end
 		end
 	end

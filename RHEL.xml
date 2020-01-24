@@ -22,7 +22,7 @@
 			<Button name="Heals" inherits="UIPanelButtonTemplate" text="Heals anounce">
 				<Size x="120" y="50" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="220" y="-695" />
+					<Anchor point="TOPLEFT" x="20" y="-30" />
 				</Anchors>
 				<Scripts>
 					<OnClick>
@@ -33,7 +33,7 @@
 			<Button name="Buffs" inherits="UIPanelButtonTemplate" text="Buffs anounce">
 				<Size x="120" y="50" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="440" y="-695" />
+					<Anchor point="TOPLEFT" x="40" y="-20" />
 				</Anchors>
 				<Scripts>
 					<OnClick>
@@ -44,7 +44,7 @@
 			<Button name="Dispells" inherits="UIPanelButtonTemplate" text="Dispells anounce">
 				<Size x="120" y="50" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="660" y="-695" />
+					<Anchor point="TOPLEFT" x="60" y="-10" />
 				</Anchors>
 				<Scripts>
 					<OnClick>
@@ -52,10 +52,10 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Button name="PanelCloseButton" inherits="UIPanelButtonTemplate" text="Close">
+			<Button name="PanelCloseButton" inherits="UIPanelCloseButton" text="Close">
 				<Size x="120" y="50" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="880" y="-695" />
+					<Anchor point="TOPRIGHT" x="2" y="2" />
 				</Anchors>
 				<Scripts>
 					<OnClick>
@@ -66,10 +66,10 @@
 		</Frames>
 		<Scripts>
 			<OnMouseDown>
-				RHEL_OnMouseDown();
+				RHEL_OnMouseDown(self);
 			</OnMouseDown>
 			<OnMouseUp>
-				RHEL_OnMouseUp();
+				RHEL_OnMouseUp(self);
 			</OnMouseUp>
 		</Scripts>
 	</Frame>
