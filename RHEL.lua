@@ -1,6 +1,6 @@
 -- Author      : Virgo
 -- Create Date : 12/19/2019 7:43:57 PM
--- Update	   : 01/24/2020
+-- Update	   : 01/27/2020
 
 local version = "0.9.0"
 local total_healers = 8
@@ -73,10 +73,10 @@ SlashCmdList["RHEL_SLASHCMD"] = function(input)
 			RHEL_print("Main menu is not ready. Try one more time.", true)
 		end
 	elseif command == "mini" then
-        if RHEL_MiniFrame ~= nil and not RHEL_MiniFrame:IsVisible() then
-			RHEL_MiniFrame:Show();
-		elseif RRHEL_MiniFrame ~= nil and RHEL_MiniFrame:IsVisible() then
-            RHEL_MiniFrame:Hide();
+        if RHEL_Mini ~= nil and not RHEL_Mini:IsVisible() then
+			RHEL_Mini:Show();
+		elseif RRHEL_MiniFrame ~= nil and RHEL_Mini:IsVisible() then
+            RHEL_Mini:Hide();
 		else
 			RHEL_print("Mini menu is not ready. Try one more time.", true)
 		end
@@ -209,12 +209,12 @@ end
 --Load saved Raid&Boss. OPTIMAZE
 function RHEL_RaidBossSaved()
 	RHEL_RaidBossReverse()
-	RaidName_OnSelect(revRaidNameList[RHEL_Raid]);
+	RHEL_RaidName_OnSelect(revRaidNameList[RHEL_Raid]);
 	UIDropDownMenu_SetText(RaidNameDropdown, RHEL_Raid);
 	if RHEL_Boss == nil or revBossNameList[RHEL_Boss] == nil then
 		RHEL_Boss = BossNameList[dungeons[RHEL_Raid]][1]
 	end
-	BossName_OnSelect(revBossNameList[RHEL_Boss]);
+	RHEL_BossName_OnSelect(revBossNameList[RHEL_Boss]);
 end
 
 --Healers on load. DONE
@@ -289,12 +289,14 @@ function RHEL_SendMessage(msg)
 		RHEL_print("Too long message."..string.len(msg), true)
 		RHEL_SendMessage(msg)
 	else
-		if to_Raid:GetChecked() and not ChannelNumber:GetChecked() then
+		if to_Raid:GetChecked() and not to_Channel:GetChecked() then
 			SendChatMessage(tostring(msg), "RAID");
-		elseif not to_Raid:GetChecked() and ChannelNumber:GetChecked() then
+		elseif to_Channel:GetChecked() and  not RaidWarning:GetChecked() then
 			SendChatMessage(tostring(msg), "CHANNEL", nil, RHEL_Channel);
+		elseif RaidWarning:GetChecked() and not to_Raid:GetChecked()
+			SendChatMessage(tostring(msg), "RAID_WARNING");
 		else
-			RHEL_print('while sending message', true)
+			RHEL_print('Wrong channel.', true)
 		end
 	end
 end
@@ -303,8 +305,9 @@ end
 -- Anounce part about healings. CHECK
 -- Groups: 1, 2, 3... Name, OT.
 function RHEL_Healings(position)
+	local msg = ""
 	if RHEL_Heals[RHEL_Raid][RHEL_Boss][position] then
-		local msg = "Groups: "
+		msg = "Groups: "
 		local heal_count = 0
 		for j = 1, 8 do
 			if RHEL_Heals[RHEL_Raid][RHEL_Boss][position][j] then
@@ -323,10 +326,11 @@ function RHEL_Healings(position)
 		for j = 9, (8 + total_tanks) do
 			if RHEL_Heals[RHEL_Raid][RHEL_Boss][position][j] then
 				heal_count = heal_count + 1
-				if G['TankName'..j]:GetText() == "" then
+				if _G['TankName'..(j-8)]:GetText() == "" then
 					msg = msg .. ' ' .. tanks[j-8] .. ","
 				else
-					msg = msg .. ' ' .. G['TankName'..j]:GetText() .. ","
+					msg = msg .. ' ' .. _G['TankName'..(j-8)]:GetText() .. ","
+				end
 			end
 		end
 		if heal_count ~= 0 then
@@ -413,7 +417,7 @@ function RHEL_BuffAnounce()
 		end
 	end
 	RHEL_SendMessage(anounce)
-	RHEL_SendMessage(message)
+	RHEL_SendMessage(message1)
 end
 
 --Click on buffs anounce. DONE
@@ -430,7 +434,7 @@ function RHEL_DispellAnounce()
 		end
 	end
 	RHEL_SendMessage(anounce)
-	RHEL_SendMessage(message)
+	RHEL_SendMessage(message1)
 end
 
 --Click on healers personal anounce. DONE
@@ -441,17 +445,17 @@ function RHEL_HealerWisper(number)
 		if (UnitInRaid(healer) or UnitInParty(healer)) then
 			local HealsPart = RHEL_Healings(number)
 			if HealsPart ~= '' then
-				HealsPart = "[Heals - " + HealsPart .. "] "
+				HealsPart = "[Heals - " .. HealsPart .. "] "
 			end
 			
 			local BuffsPart = RHEL_Buffings(number)
 			if BuffsPart ~= '' then		
-				BuffsPart = "[Buffs - " + BuffsPart .. "] "
+				BuffsPart = "[Buffs - " .. BuffsPart .. "] "
 			end
 
 			local DispellsPart = RHEL_Dispellings(number)
 			if DispellsPart ~= '' then		
-				DispellsPart = "[Dispells - " + DispellsPart .. "] "
+				DispellsPart = "[Dispells - " .. DispellsPart .. "] "
 			end
 
 			SendChatMessage(wisper..HealsPart..BuffsPart..DispellsPart, "WHISPER", nil, healer)		
@@ -462,7 +466,7 @@ function RHEL_HealerWisper(number)
 end
 
 --Click on heals, buffs, dispells checkbox reaction. DONE
-function ClickOnCheckBox(role,healer,target)
+function RHEL_ClickOnCheckBox(role,healer,target)
 --	print(RHEL_Raid,RHEL_Boss)
 	local isChecked
     isChecked=_G['RHELCheckButton'..role .. '_' .. healer.. '_'..target]:GetChecked();
@@ -482,11 +486,11 @@ end
 -- healer:GetName() get "Ins_button1"
 -- string.sub(healer:GetName(),11) take from 11-th character inclusive and get '1'
 -- tonumber turns variable to 1
-function HealerInsert(healer)
+function RHEL_HealerInsert(healer)
 	local id = tonumber(string.sub(healer:GetName(),11))
 	local name, realm = UnitName("target")
 	if (UnitInRaid(name) or UnitInParty(name) or UnitInBattleground(name)) then
-		UpdateClass(id, 'Healer');
+		RHEL_UpdateClass(id, 'Healer');
 		RHEL_Healers[id] = name;
 		_G['HealerName'..id]:SetText(name);
 	else
@@ -499,32 +503,31 @@ end
 -- healer:GetName() get "HealerName1"
 -- string.sub(healer:GetName(),11) take from 11-th character inclusive and get '1'
 -- tonumber turns variable to 1
-function HealerNameChange(healer)
+function RHEL_HealerNameChange(healer)
 	local id = tonumber(string.sub(healer:GetName(),11));
-	UpdateClass(id, 'Healer');
+	RHEL_UpdateClass(id, 'Healer');
 	RHEL_Healers[id] = _G['HealerName'..id]:GetText()
 end
 
 --Select icon for target. DONE
-function UpdateClass(icon, class)
+function RHEL_UpdateClass(icon, class)
 	local localizedClass, englishClass, classIndex =  UnitClass(_G[class.."Name"..icon]:GetText());
 	
 	if englishClass ~= nil then
 		_G[class.."ClassIcon"..icon]:SetTexture("Interface\\Addons\\RHEL\\Icons\\"..englishClass);
 --		_G[class.."Name"..icon.."DragTexture"]:SetTexture("Interface\\Addons\\RHEL\\Icons\\"..englishClass);
 	else
-		print(icon, class, _G[class.."ClassIcon"..icon])
 		_G[class.."ClassIcon"..icon]:SetTexture(nil);
 --		_G[class.."Name"..icon.."DragTexture"]:SetTexture(nil);
 	end
 end
 
 -- Tank insert reaction. CHECK
-function TankInsert(tank)
+function RHEL_TankInsert(tank)
 	local id = tonumber(string.sub(tank:GetName(),9))
 	local name, realm = UnitName("target")
 	if (UnitInRaid(name) or UnitInParty(name) or UnitInBattleground(name)) then
-		UpdateClass(id, 'Tank');
+		RHEL_UpdateClass(id, 'Tank');
 		RHEL_Tanks[id] = name;
 		_G['TankName'..id]:SetText(name);
 	else
@@ -533,31 +536,37 @@ function TankInsert(tank)
 end
 
 --Tank name editing reaction. CHECK
-function TankNameChange(tank)
+function RHEL_TankNameChange(tank)
 	local id = tonumber(string.sub(tank:GetName(),9));
-	UpdateClass(id, 'Tank');
+	RHEL_UpdateClass(id, 'Tank');
 	RHEL_Tanks[id] = _G['TankName'..id]:GetText()
 end	
 
 --Channel editing reaction. DONE
-function ChannelChange()
+function RHEL_ChannelChange()
 	RHEL_Channel = ChannelNumber:GetText();
 end
 
 --Swap chat to anounce. DONE
-function SwapAnounceTo(to)
+function RHEL_SwapAnounceTo(to)
 	if to == to_Channel then
 		to_Raid:SetChecked(false)
 		to_Channel:SetChecked(true)
-	else
+		RaidWarning:SetChecked(false)
+	elseif to = to_Raid then
 		to_Raid:SetChecked(true)
 		to_Channel:SetChecked(false)
+		RaidWarning:SetChecked(false)
+	else
+		to_Raid:SetChecked(false)
+		to_Channel:SetChecked(false)
+		RaidWarning:SetChecked(true)
 	end
 end
 
 --RaidName menu. CHECK
 local info = {};
-function RaidNameDropdown_OnLoad()
+function RHEL_RaidNameDropdown_OnLoad()
 	if (VariablesLoaded == false) then
 		return;
 	end;
@@ -568,14 +577,14 @@ function RaidNameDropdown_OnLoad()
 		info.text = List[x];
 		info.value = x;
 		info.owner = _G["RaidNameDropdown"]:GetParent();
-		info.func = function() RaidName_OnSelect(x) end;
+		info.func = function() RHEL_RaidName_OnSelect(x) end;
 		info.checked = nil;
 		UIDropDownMenu_AddButton(info);
 	end
 end
 
 --Set raid name on select. CHECK 
-function RaidName_OnSelect(value)
+function RHEL_RaidName_OnSelect(value)
 	if (VariablesLoaded == false) then
 		return;
 	end;
@@ -592,7 +601,7 @@ function RaidName_OnSelect(value)
 		UIDropDownMenu_SetSelectedValue(_G["RaidNameDropdown"], value);
 		UIDropDownMenu_ClearAll(_G["BossNameDropdown"]);
 --		print("489")
-		BossNameDropdown_OnLoad();
+		RHEL_BossNameDropdown_OnLoad();
 	end
 	
 	RHEL_BuffsDefault();
@@ -610,14 +619,14 @@ function RaidName_OnSelect(value)
 end
 
 --BossName menu. CHECK
-function BossNameDropdown_OnLoad()
+function RHEL_BossNameDropdown_OnLoad()
 	if (VariablesLoaded == false) then
 		return;
 	end;
 	
 	local x;
 	local List = {};
-	
+
 	if UIDropDownMenu_GetSelectedValue(_G["RaidNameDropdown"]) ~= nil then
 		List = select(UIDropDownMenu_GetSelectedValue(_G["RaidNameDropdown"]),BossNameList.MC, BossNameList.Onyxia, BossNameList.BWL, BossNameList.AQ, BossNameList.NAX, BossNameList.Custome);
 	end
@@ -627,7 +636,7 @@ function BossNameDropdown_OnLoad()
 		info.value = x;
 		info.owner = _G["BossNameDropdown"]:GetParent();
 		info.hasarrow = true;
-		info.func = function() BossName_OnSelect(x) end;
+		info.func = function() RHEL_BossName_OnSelect(x) end;
 		info.checked = nil;
 		UIDropDownMenu_AddButton(info);
 	end
@@ -639,7 +648,7 @@ function BossNameDropdown_OnLoad()
 end
 
 --Set boss name on select. CHECK
-function BossName_OnSelect(value)
+function RHEL_BossName_OnSelect(value)
 	if (VariablesLoaded == false) then
 		return;
 	end;
@@ -711,7 +720,7 @@ RHEL_Frame:RegisterEvent("ADDON_LOADED")
 
 --Click on warning checkbox reaction. CHECK
 --local warningChecked = false
-function ClickOnWarningCheckBox()
+function RHEL_ClickOnWarningCheckBox()
 --   warningChecked = CheckButtonWarning:GetChecked();
 --	RHEL_print('warning click', true)
 	if CheckButtonWarning:GetChecked() then

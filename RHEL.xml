@@ -2,27 +2,87 @@
 	<Script file="RHEL.lua" />
 	<Frame name="RHEL_MiniFrame" parent="UIParent" movable="true" enableMouse="true">
 		<Size>
-			<AbsDimension x="60" y="120" />
+			<AbsDimension x="160" y="240" />
 		</Size>
 		<Anchors>
 			<Anchor point="LEFT" x="0" y="0" />
 		</Anchors>
 		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
 			<BackgroundInsets>
-				<AbsInset left="11" right="12" top="12" bottom="11" />
+				<AbsInset left="2" right="2" top="2" bottom="2" />
 			</BackgroundInsets>
 			<TileSize>
 				<AbsValue val="32" />
 			</TileSize>
 			<EdgeSize>
-				<AbsValue val="32" />
+				<AbsValue val="10" />
 			</EdgeSize>
 		</Backdrop>	
 		<Frames>
-			<Button name="Heals" inherits="UIPanelButtonTemplate" text="Heals anounce">
-				<Size x="120" y="50" />
+			<Frame name="RHEL_TOPFrame" parent="RHEL_MiniFrame" movable="false" enableMouse="true">
+				<Size>
+					<AbsDimension x="160" y="25" />
+				</Size>
 				<Anchors>
-					<Anchor point="TOPLEFT" x="20" y="-30" />
+					<Anchor point="TOP" x="0" y="0" />
+				</Anchors>
+				<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" tile="true">
+					<BackgroundInsets>
+						<AbsInset left="2" right="2" top="2" bottom="2" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="32" />
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="10" />
+					</EdgeSize>
+				</Backdrop>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormalSmall" text="123werwerwerwerwerx">
+							<Anchors>
+								<Anchor point="TOP">
+									<Offset>
+										<AbsDimension x="10" y="0" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+			</Frame>
+			<Frame name="BossNameDropdown" inherits="UIDropDownMenuTemplate" id="1">
+				<Size x="44" y="30" />
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="0" y="-40" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString inherits="GameFontNormalSmall" text="x">
+							<Anchors>
+								<Anchor point="TOP">
+									<Offset>
+										<AbsDimension x="10" y="15" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad>
+						UIDropDownMenu_Initialize(BossNameDropdown, RHEL_BossNameDropdown_OnLoad);
+					</OnLoad>
+				</Scripts>
+			</Frame>
+			<Button name="Heals" inherits="UIPanelButtonTemplate" text="Heal">
+				<Size x="50" y="30" />
+				<Anchors>
+					<Anchor point="BOTTOM" x="-50" y="6" />
 				</Anchors>
 				<Scripts>
 					<OnClick>
@@ -30,10 +90,10 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Button name="Buffs" inherits="UIPanelButtonTemplate" text="Buffs anounce">
-				<Size x="120" y="50" />
+			<Button name="Buffs" inherits="UIPanelButtonTemplate" text="Buff">
+				<Size x="50" y="30" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="40" y="-20" />
+					<Anchor point="BOTTOM" x="0" y="6" />
 				</Anchors>
 				<Scripts>
 					<OnClick>
@@ -41,10 +101,10 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Button name="Dispells" inherits="UIPanelButtonTemplate" text="Dispells anounce">
-				<Size x="120" y="50" />
+			<Button name="Dispells" inherits="UIPanelButtonTemplate" text="Disp">
+				<Size x="50" y="30" />
 				<Anchors>
-					<Anchor point="TOPLEFT" x="60" y="-10" />
+					<Anchor point="BOTTOM" x="50" y="6" />
 				</Anchors>
 				<Scripts>
 					<OnClick>
@@ -53,9 +113,8 @@
 				</Scripts>
 			</Button>
 			<Button name="PanelCloseButton" inherits="UIPanelCloseButton" text="Close">
-				<Size x="120" y="50" />
 				<Anchors>
-					<Anchor point="TOPRIGHT" x="2" y="2" />
+					<Anchor point="TOPRIGHT" x="3" y="3" />
 				</Anchors>
 				<Scripts>
 					<OnClick>
