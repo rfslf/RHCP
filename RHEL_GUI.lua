@@ -5,7 +5,7 @@ local tanks = {"MT", "OT", "T3", "T4", "A", "B", "C", "D"}
 local tank_frame = 40
 local healer_frame_start_x, healer_frame_start_y, healer_frame_finish_y, healer_frame_region = 10, -70 - tank_frame, 10, "TOPLEFT"
 local healer_frame_x, healer_frame_y = 780, 50
-local healer_frame_delta = -4
+local healer_frame_delta = -3
 -- CheckButton pozitions
 local check_button_start_x, check_button_start_y, check_button_start_region = 180, 0, "LEFT"
 local check_button_step_x, check_button_step_y = 32, 8
@@ -28,20 +28,20 @@ local anounce_size_x, anounce_size_y = 120, 40
 local anounce_start_x, anounce_start_y, anounce_region = 254, 10, "BOTTOMLEFT"
 local anounce_delta = 210
 -- ToChannel button pozition
-local to_channel_size = 20
-local to_channel_start_x, to_channel_start_y, to_channel_region = 25, 30, "BOTTOMLEFT"
-local to_channel_delta = -20
+local to_channel_size = 18
+local to_channel_start_x, to_channel_start_y, to_channel_region = 30, 34, "BOTTOMLEFT"
+local to_channel_delta = -15
 local to_channel_font_size_x, to_channel_font_size_y = 80, 20
 -- Channel EditBox pozition
-local channel_editbox_size_x, channel_editbox_size_y = 20, 40
-local channel_editbox_start_x, channel_editbox_start_y, channel_editbox_region = 120, 20, "BOTTOMLEFT"
+local channel_editbox_size_x, channel_editbox_size_y = 18, 40
+local channel_editbox_start_x, channel_editbox_start_y, channel_editbox_region = 124, 23, "BOTTOMLEFT"
 -- Tanks pozition 
 local tank_editbox_start_x, tank_editbox_start_y, tank_editbox_region = 46, -68, "TOPLEFT"
 local tank_editbox_step_x, tank_editbox_step_y = 196, 20
 local tank_icon_start_x, tank_icon_start_y, tank_icon_region = 16, -68, "TOPLEFT"
-local tank_ins_button_start_x, tank_ins_button_start_y, tank_ins_button_region = 150, -68, "TOPLEFT"
+local tank_ins_button_start_x, tank_ins_button_start_y, tank_ins_button_region = 155, -68, "TOPLEFT"
 -- DropDown menu pozition
-local raid_name_dropdown_start_x, raid_name_dropdown_start_y, raid_name_dropdown_region = 10, -20, "TOPLEFT"
+local raid_name_dropdown_start_x, raid_name_dropdown_start_y, raid_name_dropdown_region = 15, -20, "TOPLEFT"
 local raid_name_dropdown_delta = 130
 -- Warning checkbox
 local warning_check_size_x, warning_check_size_y = 25, 25
@@ -54,7 +54,7 @@ local main_menu_start_x, main_menu_start_y, main_menu_region = 0, 0, "CENTER"
 local main_menu_x, main_menu_y = healer_frame_start_x * 2 + healer_frame_x, abs(healer_frame_start_y) + total_healers * (healer_frame_y + abs(healer_frame_delta)) + tank_frame + healer_frame_finish_y
 
 RHEL_GUI = {};
-
+-- Bold frame translucent template
 RHEL_GUI.RHEL_Backdrop = {
     bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
     edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
@@ -63,7 +63,6 @@ RHEL_GUI.RHEL_Backdrop = {
     edgeSize = 18,
     insets = { left = 5 , right = 5 , top = 5 , bottom = 5 }
 }
-
 -- Thinnner frame translucent template
 RHEL_GUI.RHEL_Backdrop2 = {
     bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
@@ -73,7 +72,6 @@ RHEL_GUI.RHEL_Backdrop2 = {
     edgeSize = 10,
     insets = { left = 2 , right = 2 , top = 3 , bottom = 1 }
 }
-
 -- Clear frame - no translucent background
 RHEL_GUI.RHEL_Backdrop3 = {
     bgFile = nil,
@@ -93,9 +91,6 @@ RHEL_GUI.RHEL_MainMenu:EnableMouse(true);
 RHEL_GUI.RHEL_MainMenu:SetToplevel(true);
 RHEL_GUI.RHEL_MainMenu:SetPoint("CENTER", 0 , 0);
 RHEL_GUI.RHEL_MainMenu:SetBackdrop(RHEL_GUI.RHEL_Backdrop2);
---RHEL_GUI.RHEL_MainMenu:SetScript("OnLoad", function(self)
---	RHEL_Loaded();
---end);
 RHEL_Loaded();
 RHEL_GUI.RHEL_MainMenu:SetScript("OnMouseDown", function(self)
 	RHEL_OnMouseDown(self);
@@ -108,22 +103,16 @@ end);
 RHEL_GUI.RHEL_MainMenu.RHEL_RaidNameDropdown = CreateFrame("Frame", "RaidNameDropdown", RHEL_GUI.RHEL_MainMenu, "UIDropDownMenuTemplate");
 RHEL_GUI.RHEL_MainMenu.RHEL_RaidNameDropdown:SetPoint(raid_name_dropdown_region, raid_name_dropdown_start_x, raid_name_dropdown_start_y);
 local RaidNameDropdownFont = RHEL_GUI.RHEL_MainMenu.RHEL_RaidNameDropdown:CreateFontString(RHEL_GUI.RHEL_MainMenu.RHEL_RaidNameDropdown, "OVERLAY", "GameFontNormalSmall");		
-RaidNameDropdownFont:SetPoint("TOPRIGHT", 55, 10);	
+RaidNameDropdownFont:SetPoint("TOPRIGHT", 65, 10);	
 RaidNameDropdownFont:SetText("Raid Name");	
---RHEL_GUI.RHEL_MainMenu.RHEL_RaidNameDropdown:SetScript("OnLoad", function(self)
---	UIDropDownMenu_Initialize(RaidNameDropdown, RHEL_RaidNameDropdown_OnLoad);
---end);
 UIDropDownMenu_Initialize(RaidNameDropdown, RHEL_RaidNameDropdown_OnLoad);
 
 -- Boss dropdown
 RHEL_GUI.RHEL_MainMenu.RHEL_BossNameDropdown = CreateFrame("Frame", "BossNameDropdown", RHEL_GUI.RHEL_MainMenu, "UIDropDownMenuTemplate");
 RHEL_GUI.RHEL_MainMenu.RHEL_BossNameDropdown:SetPoint(raid_name_dropdown_region, raid_name_dropdown_start_x + raid_name_dropdown_delta, raid_name_dropdown_start_y);
 local BossNameDropdownFont = RHEL_GUI.RHEL_MainMenu.RHEL_BossNameDropdown:CreateFontString(RHEL_GUI.RHEL_MainMenu.RHEL_BossNameDropdown, "OVERLAY", "GameFontNormalSmall");		
-BossNameDropdownFont:SetPoint("TOPRIGHT", 55, 10);	
+BossNameDropdownFont:SetPoint("TOPRIGHT", 65, 10);	
 BossNameDropdownFont:SetText("Boss Name");	
---RHEL_GUI.RHEL_MainMenu.RHEL_BossNameDropdown:SetScript("OnLoad", function(self)
---	UIDropDownMenu_Initialize(BossNameDropdown, RHEL_BossNameDropdown_OnLoad);
---end);
 UIDropDownMenu_Initialize(BossNameDropdown, RHEL_BossNameDropdown_OnLoad);
 
 -- Warning CheckButton
@@ -131,7 +120,7 @@ RHEL_GUI.RHEL_MainMenu.RHEL_WarningCheck = CreateFrame("CheckButton", "CheckButt
 RHEL_GUI.RHEL_MainMenu.RHEL_WarningCheck:SetPoint(warning_check_region, warning_check_start_x, warning_check_start_y);
 RHEL_GUI.RHEL_MainMenu.RHEL_WarningCheck:SetSize(warning_check_size_x, warning_check_size_y);
 local WarningCheckFont = RHEL_GUI.RHEL_MainMenu.RHEL_WarningCheck:CreateFontString(RHEL_GUI.RHEL_MainMenu.RHEL_WarningCheck, "OVERLAY", "GameFontNormal");	
-WarningCheckFont:SetPoint("TOPLEFT", 15, 0);
+WarningCheckFont:SetPoint("TOPLEFT", 25, 0);
 WarningCheckFont:SetSize(200,25);
 CheckButtonWarningText:SetText("Warning on healers death");
 RHEL_GUI.RHEL_MainMenu.RHEL_WarningCheck:SetScript("OnClick", function(self) 
@@ -150,7 +139,8 @@ for  i = 1, total_tanks do
 	local tank_editbox = "TankName" .. i
 	RHEL_GUI.RHEL_MainMenu.tank_editbox = CreateFrame("EditBox", "TankName"..i, RHEL_GUI.RHEL_MainMenu, "InputBoxTemplate");
 	RHEL_GUI.RHEL_MainMenu.tank_editbox:SetSize(editbox_size_x, editbox_size_y);
-	RHEL_GUI.RHEL_MainMenu.RHEL_ChannelNumber:SetMaxLetters(12);
+	RHEL_GUI.RHEL_MainMenu.tank_editbox:SetMaxLetters(12);
+	RHEL_GUI.RHEL_MainMenu.tank_editbox:SetAutoFocus(false);
 	if i <= 4 then
 		RHEL_GUI.RHEL_MainMenu.tank_editbox:SetPoint(tank_editbox_region, tank_editbox_start_x + tank_editbox_step_x * (i-1), tank_editbox_start_y);	
 	else
@@ -212,13 +202,7 @@ function createCheckbutton(parent, x_loc, y_loc, name, text, role, hlr, ckckbx)
 		RHEL_ClickOnCheckBox(role, hlr, ckckbx);
 	end);
 	local checkbuttonfont=checkbutton:CreateFontString(checkbutton, "OVERLAY", "GameFontNormal");
---	local id = tonumber(string.sub(name, 16, 16))
---	print(string.sub(name, 16, 16))
---	if id == 1 then
 	checkbuttonfont:SetPoint("TOPLEFT", -10, 0);
---	else
---		checkbuttonfont:SetPoint("TOPLEFT", 0, -100);
---	end
 	checkbuttonfont:SetSize(check_button_size,check_button_size);
 	return checkbutton;
 end
@@ -233,11 +217,12 @@ for i = 1, total_healers do
 	
 	-- Healer EditBox
 	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBox = CreateFrame("EditBox", "HealerName"..i, RHEL_GUI.RHEL_MainMenu.healerFrame, "InputBoxTemplate");
-	RHEL_GUI.RHEL_MainMenu.RHEL_ChannelNumber:SetMaxLetters(12);
+	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBox:SetMaxLetters(12);
 	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBox:SetSize(editbox_size_x, editbox_size_y);
-	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBox:SetPoint(editbox_region, editbox_start_x, editbox_start_y);																																	
+	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBox:SetPoint(editbox_region, editbox_start_x, editbox_start_y);
+	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBox:SetAutoFocus(false);																																	
 	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBox:SetScript("OnEscapePressed", function(self)
-		self:ClearFocus();    
+		getglobal("HealerName"..(i)):ClearFocus();    
     end);
 	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_healerEditBox:SetScript("OnTabPressed", function(self)
 		if i == total_healers then
@@ -270,7 +255,7 @@ for i = 1, total_healers do
 	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_ins_button:SetPoint(ins_button_region, "RHEL_healerFrame"..i, ins_button_start_x, ins_button_start_y);
 	RHEL_GUI.RHEL_MainMenu.healerFrame.RHEL_ins_button:SetScript("OnClick", function(self, button)
 		if button == "LeftButton" then
-			RHEL_RHEL_HealerInsert(self);
+			RHEL_HealerInsert(self);
 		end
 	end);
 
@@ -443,72 +428,88 @@ BossnoteFontString2:SetJustifyH("LEFT");
 BossnoteFontString2:SetMaxLines(3);
 ]]--
 
-
 -- Mini dropdown pozition
 local mini_dropdown_size_x, mini_dropdown_size_y = 160, 25
-local mini_dropdown_start_x, mini_dropdown_start_y, mini_dropdown_region = 0, 0, "TOP"
--- Mini top frame
-local mini_top_size_x, mini_top_size_y = 160, 25
-local mini_top_start_x, mini_menu_top_y, mini_top_region = 0, 0, "TOP"
+local mini_dropdown_start_x, mini_dropdown_start_y, mini_dropdown_region = 0, -25, "TOP"
 -- Mini buttons
 local mini_anounce_start_x, mini_anounce_start_y, mini_anounce_region = -50, 6, "BOTTOM"
 local mini_anounce_size_x, mini_anounce_size_y = 50, 30
 local mini_anounce_delta = 50
 -- Mini healer frame
-local mini_healer_frame_size_x, mini_healer_frame_size_y = 160, 25
-local mini_healer_frame_start_x, mini_healer_frame_start_y, mini_healer_region = 40, 0, "TOP"
-local mini_healer_frame_delta = 4
+local mini_healer_frame_size_x, mini_healer_frame_size_y = 160, 22
+local mini_healer_frame_start_x, mini_healer_frame_start_y, mini_healer_region = 0, 40, "TOP"
+local mini_healer_frame_delta = 23
 -- Mini wisp_button
-local mini_button_size_x, mini_button_size_y = 20, 20
-local mini_button_region, mini_button_start_x, mini_button_start_y = "TOPRIGHT", -30, 0
-local mini_button_delta = 10
+local mini_button_size_x, mini_button_size_y = 30, 20
+local mini_button_region, mini_button_start_x, mini_button_start_y = "RIGHT", -5, 0
 -- Mini menu pozition
 local mini_menu_start_x, mini_menu_start_y, mini_menu_region = 0, 0, "LEFT"
-local mini_menu_size_x, mini_menu_size_y = 160, mini_healer_frame_size_y * total_healers + 30 + 50
+local mini_menu_size_x, mini_menu_size_y = 160, 20
+-- Mini offspring frame
+local mini_offspring_size_x, mini_offspring_size_y = 160, mini_healer_frame_delta * total_healers + mini_button_size_y + 2 * mini_dropdown_size_y
+local mini_offspring_start_x, mini_offspring_start_y, mini_offspring_region = 0, 0, "BOTTOM"
 
 -- Mini window frame
 RHEL_GUI.RHEL_Mini = CreateFrame("Frame", "RHEL_Mini", UIParent);
+-- RHEL_GUI.RHEL_Mini:SetBackdrop(RHEL_GUI.RHEL_Backdrop2);
 RHEL_GUI.RHEL_Mini.RHEL_MiniCloseButton = CreateFrame( "Button", "RHEL_MiniCloseButton", RHEL_GUI.RHEL_Mini, "UIPanelCloseButton");
 RHEL_GUI.RHEL_Mini.RHEL_MiniCloseButton:SetPoint("TOPRIGHT", RHEL_Mini, 3, 3);
+RHEL_GUI.RHEL_Mini.RHEL_MiniMizeButton = CreateFrame("Button", "RHEL_MiniMizeButton", RHEL_GUI.RHEL_Mini, "UIPanelButtonTemplate");
+RHEL_GUI.RHEL_Mini.RHEL_MiniMizeButton:SetSize(20, 10);
+RHEL_GUI.RHEL_Mini.RHEL_MiniMizeButton:SetPoint("TOPRIGHT", RHEL_Mini, 10, 3);
+RHEL_GUI.RHEL_Mini.RHEL_MiniMizeButton:SetText("_");
+RHEL_GUI.RHEL_Mini.RHEL_MiniMizeButton:SetScript("OnClick", function(self, button)
+	if button == "LeftButton" then
+		if not RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame:IsVisible() then
+			RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame:Show()
+		elseif RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame:IsVisible() then
+			RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame:Hide()
+		else
+			RHEL_print("Show offspring frame problem", true)
+		end
+	end);
 RHEL_GUI.RHEL_Mini:SetSize(mini_menu_size_x, mini_menu_size_y);
 RHEL_GUI.RHEL_Mini:SetMovable(true);
 RHEL_GUI.RHEL_Mini:EnableMouse(true);
 RHEL_GUI.RHEL_Mini:SetToplevel(true);
 RHEL_GUI.RHEL_Mini:SetPoint(mini_menu_region, mini_menu_start_x, mini_menu_start_y);
 RHEL_GUI.RHEL_Mini:SetBackdrop(RHEL_GUI.RHEL_Backdrop2);
--- Mini top frame
-RHEL_GUI.RHEL_Mini.RHEL_TopFrame = CreateFrame("Frame", "RHEL_TopFrame", RHEL_GUI.RHEL_Mini);
-RHEL_GUI.RHEL_Mini.RHEL_TopFrame:SetSize(mini_top_size_x, mini_top_size_x);
-RHEL_GUI.RHEL_Mini.RHEL_TopFrame:SetBackdrop(RHEL_GUI.RHEL_Backdrop3);
-RHEL_GUI.RHEL_Mini.RHEL_TopFrame:SetPoint(mini_top_region, mini_top_start_x, mini_menu_top_y);
-local MiniTopFont = RHEL_GUI.RHEL_Mini.RHEL_TopFrame:CreateFontString(RHEL_GUI.RHEL_Mini.RHEL_TopFrame, "OVERLAY", "GameFontNormalSmall");
-MiniTopFont:SetPoint("TOPRIGHT", 10, 10);	
-MiniTopFont:SetText("Abcd");	
+-- Mini offspring frame
+RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame = CreateFrame("Frame", "RHEL_MiniOffspringFrame", RHEL_GUI.RHEL_Mini);
+RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame:SetSize(mini_offspring_size_x, mini_offspring_size_y);
+-- RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame:SetBackdrop(RHEL_GUI.RHEL_Backdrop3);
+RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame:SetPoint(mini_offspring_region, mini_offspring_start_x, mini_menu_offspring_y);
+local MiniOffspringFont = RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame:CreateFontString(RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame, "OVERLAY", "GameFontNormalSmall");
+MiniOffspringFont:SetPoint("LEFT", 0, 0);	
+MiniOffspringFont:SetText(RHEL_Boss);	
+
 -- Mini dropdown
-RHEL_GUI.RHEL_Mini.RHEL_MiniDropdown = CreateFrame("Frame", "RHEL_MiniDropdown", RHEL_GUI.RHEL_Mini, "UIDropDownMenuTemplate");
-RHEL_GUI.RHEL_Mini.RHEL_MiniDropdown:SetSize(mini_dropdown_size_x, mini_dropdown_size_y);
-local MiniDropdownFont = RHEL_GUI.RHEL_Mini.RHEL_MiniDropdown:CreateFontString(RHEL_GUI.RHEL_Mini.RHEL_MiniDropdown, "OVERLAY", "GameFontNormalSmall");	
-MiniDropdown:SetPoint("TOPRIGHT", 10, 10);	
-MiniDropdown:SetText("Boss Name");	
-UIDropDownMenu_Initialize(MiniDropdown, RHEL_RaidNameDropdown_OnLoad);
+RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_MiniDropdown = CreateFrame("Frame", "RHEL_MiniDropdown", RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame, "UIDropDownMenuTemplate");
+RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_MiniDropdown:SetPoint(raid_name_dropdown_region, mini_dropdown_start_x, mini_dropdown_start_y);
+RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_MiniDropdown:SetSize(mini_dropdown_size_x, mini_dropdown_size_y);
+local MiniDropdownFont = RHEL_GUI.RHEL_Mini.RHEL_MiniDropdown:CreateFontString(RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_MiniDropdown, "OVERLAY", "GameFontNormalSmall");	
+MiniDropdownFont:SetPoint("LEFT", 10, 10);	
+MiniDropdownFont:SetText("Boss:");	
+UIDropDownMenu_Initialize(RHEL_MiniDropdown, RHEL_BossNameDropdown_OnLoad);
+
 -- Mini wisp frame
 for i = 1, total_healers do
 	local mini_healer_frame = "mini_healer_frame"..i
-	RHEL_GUI.RHEL_Mini.mini_healer_frame = CreateFrame("Frame", "mini_healer_frame"..i, RHEL_Mini);
-	RHEL_GUI.RHEL_Mini.mini_healer_frame:SetSize(mini_healer_frame_size_x, mini_healer_frame_size_y);
-	RHEL_GUI.RHEL_Mini.mini_healer_frame:SetBackdrop(RHEL_GUI.RHEL_Backdrop2);
-	RHEL_GUI.RHEL_Mini.mini_healer_frame:SetPoint(mini_healer_region, mini_healer_frame_start_x, (mini_healer_frame_start_y + healer_frame_delta) * (i-1));
-	local MiniHealerFont = RHEL_GUI.RHEL_Mini.mini_healer_frame:CreateFontString(RHEL_GUI.RHEL_Mini.mini_healer_frame, "OVERLAY", "GameFontNormalSmall");
-	MiniHealerFont:SetPoint("TOPRIGHT", 10, 10);	
-	MiniHealerFont:SetText(i);
+	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame = CreateFrame("Frame", "mini_healer_frame"..i, RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame);
+	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame:SetSize(mini_healer_frame_size_x, mini_healer_frame_size_y);
+--	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame:SetBackdrop(RHEL_GUI.RHEL_Backdrop3);
+	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame:SetPoint(mini_healer_region, mini_healer_frame_start_x, -(mini_healer_frame_start_y + (mini_healer_frame_delta) * (i-1)));
+	local MiniHealerFont = RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame:CreateFontString(RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame, "OVERLAY", "GameFontWhite");
+	MiniHealerFont:SetPoint("LEFT", 10, 0);	
+	MiniHealerFont:SetText(_G["HealerClass"..i]:GetText());
 	
 -- Wisp Button
-	local wisp_button = "mini_wisp_button"..i
-	RHEL_GUI.RHEL_Mini.RHEL_mini_wisp_button = CreateFrame("Button", mini_wisp_button, RHEL_GUI.RHEL_Mini, "UIPanelButtonTemplate");
-	RHEL_GUI.RHEL_Mini.RHEL_mini_wisp_button:SetText(i);
-	RHEL_GUI.RHEL_Mini.RHEL_mini_wisp_button:SetSize(mini_button_size_x, mini_button_size_y);
-	RHEL_GUI.RHEL_Mini.RHEL_mini_wisp_button:SetPoint(mini_button_region, "RHEL_healerFrame"..i, mini_button_start_x, (mini_button_start_y + mini_button_delta) * (i));
-	RHEL_GUI.RHEL_Mini.RHEL_mini_wisp_button:SetScript("OnClick", function(self, button)
+	local mini_wisp_button = "mini_wisp_button"..i
+	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame.mini_wisp_button = CreateFrame("Button", mini_wisp_button, RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame, "UIPanelButtonTemplate");
+	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame.mini_wisp_button:SetText(i);
+	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame.mini_wisp_button:SetSize(mini_button_size_x, mini_button_size_y);
+	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame.mini_wisp_button:SetPoint(mini_button_region, "mini_healer_frame"..i, mini_button_start_x, mini_button_start_y);
+	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame.mini_wisp_button:SetScript("OnClick", function(self, button)
 		if button == "LeftButton" then
 			RHEL_HealerWisper(i);
 		end
@@ -520,7 +521,7 @@ end
 function createAnouncebutton(parent, x_loc, y_loc, name, text)
 	local anouncebutton = CreateFrame("Button", name, parent, "UIPanelButtonTemplate");
 	anouncebutton:SetPoint(mini_anounce_region, x_loc, y_loc);
-	anouncebutton:SetSize(anounce_size_x, anounce_size_y)
+	anouncebutton:SetSize(mini_anounce_size_x, mini_anounce_size_y)
 	getglobal(anouncebutton:GetName() .. 'Text'):SetText(text);
 	anouncebutton:SetScript("OnClick", function(self, button)
 		if button == "LeftButton" then
@@ -538,9 +539,9 @@ function createAnouncebutton(parent, x_loc, y_loc, name, text)
 	return anouncebutton;
 end
 
-RHEL_GUI.RHEL_Mini.RHEL_HealButton = createAnouncebutton(RHEL_GUI.RHEL_Mini, mini_anounce_start_x, mini_anounce_start_y, "MiniHeals", "Heal")
-RHEL_GUI.RHEL_Mini.RHEL_BuffButton = createAnouncebutton(RHEL_GUI.RHEL_Mini, mini_anounce_start_x + mini_anounce_delta, anounce_start_y, "MiniBuffs", "Buff")
-RHEL_GUI.RHEL_Mini.RHEL_DispellButton = createAnouncebutton(RHEL_GUI.RHEL_Mini, mini_anounce_start_x + 2 * mini_anounce_delta, anounce_start_y, "MiniDispells", "Disp")
+RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_HealButton = createAnouncebutton(RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame, mini_anounce_start_x, mini_anounce_start_y, "MiniHeals", "Heal")
+RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_BuffButton = createAnouncebutton(RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame, mini_anounce_start_x + mini_anounce_delta, mini_anounce_start_y, "MiniBuffs", "Buff")
+RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_DispellButton = createAnouncebutton(RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame, mini_anounce_start_x + 2 * mini_anounce_delta, mini_anounce_start_y, "MiniDispells", "Disp")
 		
 RHEL_GUI.RHEL_Mini:SetScript("OnMouseDown", function(self)
 	RHEL_OnMouseDown(self);

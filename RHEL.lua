@@ -1,6 +1,6 @@
 -- Author      : Virgo
 -- Create Date : 12/19/2019 7:43:57 PM
--- Update	   : 01/27/2020
+-- Update	   : 01/28/2020
 
 local version = "0.9.0"
 local total_healers = 8
@@ -293,7 +293,7 @@ function RHEL_SendMessage(msg)
 			SendChatMessage(tostring(msg), "RAID");
 		elseif to_Channel:GetChecked() and  not RaidWarning:GetChecked() then
 			SendChatMessage(tostring(msg), "CHANNEL", nil, RHEL_Channel);
-		elseif RaidWarning:GetChecked() and not to_Raid:GetChecked()
+		elseif RaidWarning:GetChecked() and not to_Raid:GetChecked() then
 			SendChatMessage(tostring(msg), "RAID_WARNING");
 		else
 			RHEL_print('Wrong channel.', true)
@@ -493,6 +493,7 @@ function RHEL_HealerInsert(healer)
 		RHEL_UpdateClass(id, 'Healer');
 		RHEL_Healers[id] = name;
 		_G['HealerName'..id]:SetText(name);
+		_G["mini_healer_frame"..id]:SetText(name);
 	else
 		RHEL_print("Wrong target or not friendly player", true)
 	end
@@ -507,6 +508,7 @@ function RHEL_HealerNameChange(healer)
 	local id = tonumber(string.sub(healer:GetName(),11));
 	RHEL_UpdateClass(id, 'Healer');
 	RHEL_Healers[id] = _G['HealerName'..id]:GetText()
+	_G["mini_healer_frame"..id]:SetText(RHEL_Healers[id]);
 end
 
 --Select icon for target. DONE
@@ -553,7 +555,7 @@ function RHEL_SwapAnounceTo(to)
 		to_Raid:SetChecked(false)
 		to_Channel:SetChecked(true)
 		RaidWarning:SetChecked(false)
-	elseif to = to_Raid then
+	elseif to == to_Raid then
 		to_Raid:SetChecked(true)
 		to_Channel:SetChecked(false)
 		RaidWarning:SetChecked(false)
@@ -612,6 +614,7 @@ function RHEL_RaidName_OnSelect(value)
 	if RHEL_Boss == nil or revBossNameList[RHEL_Boss] == nil then
 --		RHEL_print("499")
 		RHEL_Boss = BossNameList[dungeons[RHEL_Raid]][1]
+		MiniOffspringFont:SetText(RHEL_Boss)
 		-- next 2 rows needed for saved varisables and after raid menu chose load
 		RHEL_HealsDefault();
 		RHEL_HealsLoad();
@@ -655,6 +658,9 @@ function RHEL_BossName_OnSelect(value)
 --	RHEL_RaidBossReverse();
 	UIDropDownMenu_SetSelectedValue(_G["BossNameDropdown"], value);
 	UIDropDownMenu_SetText(_G["BossNameDropdown"],BossNameList[dungeons[RHEL_Raid]][value])
+	UIDropDownMenu_SetSelectedValue(RHEL_MiniDropdown, value);
+	UIDropDownMenu_SetText(RHEL_MiniDropdown,BossNameList[dungeons[RHEL_Raid]][value])
+	
 --	print(UIDropDownMenu_GetText(_G["RaidNameDropdown"]).." - "..UIDropDownMenu_GetText(_G["BossNameDropdown"]));
 	RHEL_Boss = UIDropDownMenu_GetText(_G["BossNameDropdown"])
 --	print(RHEL_Boss,BossNameList[dungeons[RHEL_Raid]][value], value, "BossNameDropdown2")
