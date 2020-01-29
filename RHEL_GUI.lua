@@ -454,9 +454,24 @@ RHEL_GUI.RHEL_Mini = CreateFrame("Frame", "RHEL_Mini", UIParent);
 -- RHEL_GUI.RHEL_Mini:SetBackdrop(RHEL_GUI.RHEL_Backdrop2);
 RHEL_GUI.RHEL_Mini.RHEL_MiniCloseButton = CreateFrame( "Button", "RHEL_MiniCloseButton", RHEL_GUI.RHEL_Mini, "UIPanelCloseButton");
 RHEL_GUI.RHEL_Mini.RHEL_MiniCloseButton:SetPoint("TOPRIGHT", RHEL_Mini, 3, 3);
+RHEL_GUI.RHEL_Mini.RHEL_MainButton = CreateFrame("Button", "RHEL_MainButton", RHEL_GUI.RHEL_Mini, "UIPanelButtonTemplate");
+RHEL_GUI.RHEL_Mini.RHEL_MainButton:SetSize(20, 10);
+RHEL_GUI.RHEL_Mini.RHEL_MainButton:SetPoint("TOPRIGHT", RHEL_Mini, 9, 3);
+RHEL_GUI.RHEL_Mini.RHEL_MainButton:SetText("□");
+RHEL_GUI.RHEL_Mini.RHEL_MainButton:SetScript("OnClick", function(self, button)
+	if button == "LeftButton" then
+		if not RHEL_MainMenu:IsVisible() then
+			RHEL_MainMenu:Show()
+		elseif RHEL_MainMenu:IsVisible() then
+			RHEL_MainMenu:Hide()
+		else
+			RHEL_print("Show main from mini frame problem", true)
+		end
+	end
+end);
 RHEL_GUI.RHEL_Mini.RHEL_MiniMizeButton = CreateFrame("Button", "RHEL_MiniMizeButton", RHEL_GUI.RHEL_Mini, "UIPanelButtonTemplate");
 RHEL_GUI.RHEL_Mini.RHEL_MiniMizeButton:SetSize(20, 10);
-RHEL_GUI.RHEL_Mini.RHEL_MiniMizeButton:SetPoint("TOPRIGHT", RHEL_Mini, 10, 3);
+RHEL_GUI.RHEL_Mini.RHEL_MiniMizeButton:SetPoint("TOPRIGHT", RHEL_Mini, 15, 3);
 RHEL_GUI.RHEL_Mini.RHEL_MiniMizeButton:SetText("_");
 RHEL_GUI.RHEL_Mini.RHEL_MiniMizeButton:SetScript("OnClick", function(self, button)
 	if button == "LeftButton" then
@@ -467,7 +482,8 @@ RHEL_GUI.RHEL_Mini.RHEL_MiniMizeButton:SetScript("OnClick", function(self, butto
 		else
 			RHEL_print("Show offspring frame problem", true)
 		end
-	end);
+	end
+end);
 RHEL_GUI.RHEL_Mini:SetSize(mini_menu_size_x, mini_menu_size_y);
 RHEL_GUI.RHEL_Mini:SetMovable(true);
 RHEL_GUI.RHEL_Mini:EnableMouse(true);
@@ -532,7 +548,7 @@ function createAnouncebutton(parent, x_loc, y_loc, name, text)
 			elseif self:GetName() == "MiniDispells" then
 				RHEL_DispellAnounce()
 			else
-				RHEL_print("Mini anounce error", true)
+				RHEL_print("Anounce from mini window error", true)
 			end
 		end
 	end);
@@ -549,3 +565,5 @@ end);
 RHEL_GUI.RHEL_Mini:SetScript("OnMouseUp", function(self)
 	RHEL_OnMouseUp(self);
 end);
+
+RHEL_Loaded()
