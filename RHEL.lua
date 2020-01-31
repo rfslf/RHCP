@@ -508,7 +508,9 @@ function RHEL_HealerNameChange(healer)
 	local id = tonumber(string.sub(healer:GetName(),11));
 	RHEL_UpdateClass(id, 'Healer');
 	RHEL_Healers[id] = _G['HealerName'..id]:GetText()
-	_G["mini_healer_frame"..id]:SetText(RHEL_Healers[id]);
+	if RHEL_Healers[id] then
+		RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.getglobal('mini_healer_frame'..id).MiniHealerFont:SetText(RHEL_Healers[id]);
+	end
 end
 
 --Select icon for target. DONE
