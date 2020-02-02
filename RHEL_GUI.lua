@@ -1,11 +1,11 @@
-local total_healers = 8
+local total_healers = 10
 RHEL_Add_Tanks = true
 local tanks = {"MT", "OT", "T3", "T4", "A", "B", "C", "D"}
 -- Healer frame pozitions
 local tank_frame = 40
 local healer_frame_start_x, healer_frame_start_y, healer_frame_finish_y, healer_frame_region = 10, -70 - tank_frame, 10, "TOPLEFT"
 local healer_frame_x, healer_frame_y = 780, 50
-local healer_frame_delta = -3
+local healer_frame_delta = -2
 -- CheckButton pozitions
 local check_button_start_x, check_button_start_y, check_button_start_region = 180, 0, "LEFT"
 local check_button_step_x, check_button_step_y = 32, 8
@@ -41,14 +41,14 @@ local tank_editbox_step_x, tank_editbox_step_y = 196, 20
 local tank_icon_start_x, tank_icon_start_y, tank_icon_region = 16, -68, "TOPLEFT"
 local tank_ins_button_start_x, tank_ins_button_start_y, tank_ins_button_region = 155, -68, "TOPLEFT"
 -- DropDown menu pozition
-local raid_name_dropdown_start_x, raid_name_dropdown_start_y, raid_name_dropdown_region = 15, -20, "TOPLEFT"
-local raid_name_dropdown_delta = 130
+local raid_name_dropdown_start_x, raid_name_dropdown_start_y, raid_name_dropdown_region = 3, -20, "TOPLEFT"
+local raid_name_dropdown_delta = 144
 -- Warning checkbox
 local warning_check_size_x, warning_check_size_y = 25, 25
-local warning_check_start_x, warning_check_start_y, warning_check_region = 30, -44, "TOPLEFT"
+local warning_check_start_x, warning_check_start_y, warning_check_region = 18, -44, "TOPLEFT"
 -- BossNote Window
-local boss_note_size_x, boss_note_size_y = 140, 60
-local boss_note_start_x, boss_note_start_y, boss_note_region = -200, -20, "RIGHT"
+local boss_note_size_x, boss_note_size_y = 430, 62
+local boss_note_start_x, boss_note_start_y, boss_note_region = -70, -4, "TOPRIGHT"
 -- Main menu pozition
 local main_menu_start_x, main_menu_start_y, main_menu_region = 0, 0, "CENTER"
 local main_menu_x, main_menu_y = healer_frame_start_x * 2 + healer_frame_x, abs(healer_frame_start_y) + total_healers * (healer_frame_y + abs(healer_frame_delta)) + tank_frame + healer_frame_finish_y
@@ -101,16 +101,18 @@ end);
 -- Raid dropdown
 RHEL_GUI.RHEL_MainMenu.RHEL_RaidNameDropdown = CreateFrame("Frame", "RaidNameDropdown", RHEL_GUI.RHEL_MainMenu, "UIDropDownMenuTemplate");
 RHEL_GUI.RHEL_MainMenu.RHEL_RaidNameDropdown:SetPoint(raid_name_dropdown_region, raid_name_dropdown_start_x, raid_name_dropdown_start_y);
+UIDropDownMenu_SetWidth(RHEL_GUI.RHEL_MainMenu.RHEL_RaidNameDropdown, 115) 
 local RaidNameDropdownFont = RHEL_GUI.RHEL_MainMenu.RHEL_RaidNameDropdown:CreateFontString(RHEL_GUI.RHEL_MainMenu.RHEL_RaidNameDropdown, "OVERLAY", "GameFontNormalSmall");		
-RaidNameDropdownFont:SetPoint("TOPRIGHT", 65, 10);	
+RaidNameDropdownFont:SetPoint("TOPRIGHT", -30, 10);	
 RaidNameDropdownFont:SetText("Raid Name");	
 UIDropDownMenu_Initialize(RaidNameDropdown, RHEL_RaidNameDropdown_OnLoad);
 
 -- Boss dropdown
 RHEL_GUI.RHEL_MainMenu.RHEL_BossNameDropdown = CreateFrame("Frame", "BossNameDropdown", RHEL_GUI.RHEL_MainMenu, "UIDropDownMenuTemplate");
 RHEL_GUI.RHEL_MainMenu.RHEL_BossNameDropdown:SetPoint(raid_name_dropdown_region, raid_name_dropdown_start_x + raid_name_dropdown_delta, raid_name_dropdown_start_y);
+UIDropDownMenu_SetWidth(RHEL_GUI.RHEL_MainMenu.RHEL_RaidNameDropdown, 128) 
 local BossNameDropdownFont = RHEL_GUI.RHEL_MainMenu.RHEL_BossNameDropdown:CreateFontString(RHEL_GUI.RHEL_MainMenu.RHEL_BossNameDropdown, "OVERLAY", "GameFontNormalSmall");		
-BossNameDropdownFont:SetPoint("TOPRIGHT", 65, 10);	
+BossNameDropdownFont:SetPoint("TOPRIGHT", 30, 10);	
 BossNameDropdownFont:SetText("Boss Name");	
 UIDropDownMenu_Initialize(BossNameDropdown, RHEL_BossNameDropdown_OnLoad);
 
@@ -386,35 +388,62 @@ RHEL_GUI.RHEL_MainMenu.RHEL_ChannelNumber:SetScript("OnTabPressed", function(sel
 
 RHEL_GUI.RHEL_MainMenu:Show()
 
---[[
+
 -- Boss note frame
 RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow = CreateFrame("Frame", "BossNoteWindow", RHEL_GUI.RHEL_MainMenu);
-RHEL_GUI.RHEL_MainMenu.BossNoteWindow:SetBackdrop(RHEL_GUI.RHEL_Backdrop);
-RHEL_GUI.RHEL_MainMenu.BossNoteWindow:SetSize(boss_note_size_x, boss_note_size_y);
-RHEL_GUI.RHEL_MainMenu.BossNoteWindow:SetPoint(boss_note_region, boss_note_start_x, boss_note_start_y);
-]]--
---[[
+RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow:SetBackdrop(RHEL_GUI.RHEL_Backdrop);
+RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow:SetSize(boss_note_size_x, boss_note_size_y);
+RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow:SetPoint(boss_note_region, boss_note_start_x, boss_note_start_y);
+
+
 -- Boss note editbox
-RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow.BossNoteEditBox = CreateFrame("EditBox", "BossNoteEditBox", RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow);
-RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow.BossNoteEditBox:SetPoint("TOP", RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow, "TOP", 0, 0);
-RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow.BossNoteEditBox:SetPoint("BOTTOM", RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow, "BOTTOM", 0, 0);
-RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow.BossNoteEditBox:SetSize(boss_note_size_x, boss_note_size_y);
-RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow.BossNoteEditBox:SetTextInsets(8, 9, 9, 8);
-RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow.BossNoteEditBox:SetMaxLetters(255);
-RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow.BossNoteEditBox:SetMultiLine(true);
-RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow.BossNoteEditBox:SetSpacing(1);
-RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow.BossNoteEditBox:EnableMouse(true);
-RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow.BossNoteEditBox:SetFrameStrata("HIGH");
-RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow.BossNoteEditBox:SetText("hello!")
-]]--
+RHEL_GUI.RHEL_MainMenu.BossNoteEditBox = CreateFrame("EditBox", "BossNoteEditBox", RHEL_GUI.RHEL_MainMenu);
+RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetPoint("TOP", RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow, "TOP", 0, 0);
+RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetPoint("BOTTOM", RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow, "BOTTOM", 0, 0);
+RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetSize(boss_note_size_x, boss_note_size_y);
+RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetTextInsets(8, 9, 9, 8);
+RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetMaxLetters(230);
+RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetMultiLine(true);
+RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetSpacing(1);
+RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:EnableMouse(true);
+RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetFrameStrata("HIGH");
+RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetAutoFocus(false);
+RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetFont("Fonts\\FRIZQT__.TTF", 11, "OUTLINE, MONOCHROME")
+--RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetText(RHEL_Boss)
+RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetScript("OnEscapePressed", function(self)
+	self:ClearFocus();    
+end);
+RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetScript("OnEnterPressed", function(self)
+	self:ClearFocus();    
+end);
+RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetScript("OnTabPressed", function(self)
+	self:ClearFocus();
+end);
+RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetScript("OnTextChanged", function(self)
+		RHEL_BossNote[RHEL_Raid][RHEL_Boss] = RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:GetText(); -- TO DO	    
+end);
+-- Note button
+RHEL_GUI.RHEL_MainMenu.BossNoteButton = CreateFrame("Button", "RHEL_BossNoteButton", RHEL_GUI.RHEL_MainMenu, "UIPanelButtonTemplate");
+RHEL_GUI.RHEL_MainMenu.BossNoteButton:SetSize(40, 30);
+RHEL_GUI.RHEL_MainMenu.BossNoteButton:SetPoint("TOPRIGHT", RHEL_GUI.RHEL_MainMenu, -20, -20);
+RHEL_GUI.RHEL_MainMenu.BossNoteButton:SetText("Note");
+RHEL_GUI.RHEL_MainMenu.BossNoteButton:SetScript("OnClick", function(self, button)
+	if button == "LeftButton" then
+		RHEL_SendMessage(RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:GetText())
+	end
+end);
+
 --[[
 -- Title for BossNote
-local BossNoteTitle = RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow.BossNoteEditBox:CreateFontString(RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow.BossNoteEditBox, "OVERLAY", "GameFontNormalSmall");
-BossNoteTitle:SetPoint("BOTTOMLEFT", BossNoteWindow, "TOPLEFT", 5, 0);
-BossNoteTitle:SetText("Boss Note:");
-BossNoteTitle:SetJustifyH("LEFT");
-BossNoteTitle:SetWidth(120);
-BossNoteTitle:SetWordWrap(false);
+RHEL_GUI.RHEL_MainMenu.BossnoteFont = RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow:CreateFontString ("BossnoteFont" , "OVERLAY" , "GameFontWhiteTiny");
+RHEL_GUI.RHEL_MainMenu.BossnoteFont:SetPoint("TOPLEFT", RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow, 8, -7);
+RHEL_GUI.RHEL_MainMenu.BossnoteFont:SetWordWrap ( true );
+RHEL_GUI.RHEL_MainMenu.BossnoteFont:SetSpacing ( 1 );
+RHEL_GUI.RHEL_MainMenu.BossnoteFont:SetJustifyH("LEFT");
+RHEL_GUI.RHEL_MainMenu.BossnoteFont:SetWidth(120);
+RHEL_GUI.RHEL_MainMenu.BossnoteFont:SetMaxLines ( 3 );
+RHEL_GUI.RHEL_MainMenu.BossnoteFont:SetFont("Fonts\\FRIZQT__.TTF", 11, "OUTLINE, MONOCHROME")
+RHEL_GUI.RHEL_MainMenu.BossnoteFont:SetText("123!")
 ]]--
 --[[
 -- Edit Note
@@ -429,14 +458,14 @@ BossnoteFontString2:SetMaxLines(3);
 
 -- Mini dropdown pozition
 local mini_dropdown_size_x, mini_dropdown_size_y = 180, 25
-local mini_dropdown_start_x, mini_dropdown_start_y, mini_dropdown_region = 0, -35, "TOP"
+local mini_dropdown_start_x, mini_dropdown_start_y, mini_dropdown_region = -10, -35, "TOP"
 -- Mini buttons
 local mini_anounce_start_x, mini_anounce_start_y, mini_anounce_region = -50, 2, "BOTTOM"
 local mini_anounce_size_x, mini_anounce_size_y = 50, 30
 local mini_anounce_delta = 50
 -- Mini healer frame
 local mini_healer_frame_size_x, mini_healer_frame_size_y = 160, 22
-local mini_healer_frame_start_x, mini_healer_frame_start_y, mini_healer_region = 0, 64, "TOP"
+local mini_healer_frame_start_x, mini_healer_frame_start_y, mini_healer_region = 0, 60, "TOP"
 local mini_healer_frame_delta = 23
 -- Mini wisp_button
 local mini_button_size_x, mini_button_size_y = 30, 20
@@ -446,14 +475,15 @@ local mini_menu_start_x, mini_menu_start_y, mini_menu_region = 0, 90, "LEFT"
 local mini_menu_size_x, mini_menu_size_y = 160, 25
 -- Mini offspring frame
 local mini_offspring_size_x, mini_offspring_size_y = 160, mini_healer_frame_delta * total_healers + mini_button_size_y + 3 * mini_dropdown_size_y
-local mini_offspring_start_x, mini_offspring_start_y, mini_offspring_region = 0, 0, "TOP"
+local mini_offspring_start_x, mini_offspring_start_y, mini_offspring_region = 0, -20, "TOP"
 
 -- Mini window frame
 RHEL_GUI.RHEL_Mini = CreateFrame("Frame", "RHEL_Mini", UIParent);
 RHEL_GUI.RHEL_Mini.MiniFont = RHEL_GUI.RHEL_Mini:CreateFontString(RHEL_GUI.RHEL_Mini, "OVERLAY", "GameFontNormalSmall");
-RHEL_GUI.RHEL_Mini.MiniFont:SetPoint("LEFT", 0, 0);
+RHEL_GUI.RHEL_Mini.MiniFont:SetPoint("LEFT", 8, 0);
 RHEL_GUI.RHEL_Mini.MiniFont:SetTextColor(1, 0.8196079, 0)	
 if RHEL_Raid then
+	RHEL_GUI.RHEL_Mini.MiniFont:SetText(RHEL_Raid)
 	RHEL_GUI.RHEL_Mini.MiniFont:SetText(RHEL_Raid);
 end	
 -- RHEL_GUI.RHEL_Mini:SetBackdrop(RHEL_GUI.RHEL_Backdrop2);
@@ -498,7 +528,8 @@ RHEL_GUI.RHEL_Mini:SetBackdrop(RHEL_GUI.RHEL_Backdrop2);
 -- Mini offspring frame
 RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame = CreateFrame("Frame", "RHEL_MiniOffspringFrame", RHEL_GUI.RHEL_Mini);
 RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame:SetSize(mini_offspring_size_x, mini_offspring_size_y);
--- RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame:SetBackdrop(RHEL_GUI.RHEL_Backdrop3);
+RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame:SetBackdrop(RHEL_GUI.RHEL_Backdrop3);
+RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame:SetAlpha(0.75);
 RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame:SetPoint(mini_offspring_region, mini_offspring_start_x, mini_menu_offspring_y);
 
 
@@ -506,30 +537,37 @@ RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame:SetPoint(mini_offspring_region, mini_offs
 RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_MiniDropdown = CreateFrame("Frame", "RHEL_MiniDropdown", RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame, "UIDropDownMenuTemplate");
 RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_MiniDropdown:SetPoint(raid_name_dropdown_region, mini_dropdown_start_x, mini_dropdown_start_y);
 RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_MiniDropdown:SetSize(mini_dropdown_size_x, mini_dropdown_size_y);
+UIDropDownMenu_SetWidth(RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_MiniDropdown, 125) 
 local MiniDropdownFont = RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_MiniDropdown:CreateFontString(RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_MiniDropdown, "OVERLAY", "GameFontNormalSmall");	
 MiniDropdownFont:SetPoint("LEFT", 20, 20);	
 MiniDropdownFont:SetText("Boss:");	
 UIDropDownMenu_Initialize(RHEL_MiniDropdown, RHEL_BossNameDropdown_OnLoad);
 
 -- Mini wisp frame
+local MiniHealerFont = {}
 for i = 1, total_healers do
-	local mini_healer_frame = "mini_healer_frame"..i
-	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame = CreateFrame("Frame", "mini_healer_frame"..i, RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame);
-	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame:SetSize(mini_healer_frame_size_x, mini_healer_frame_size_y);
+--	local mini_healer_frame = "mini_healer_frame"..i
+--	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame = CreateFrame("Frame", "mini_healer_frame"..i, RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame);
+--	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame:SetSize(mini_healer_frame_size_x, mini_healer_frame_size_y);
 --	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame:SetBackdrop(RHEL_GUI.RHEL_Backdrop3);
-	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame:SetPoint(mini_healer_region, mini_healer_frame_start_x, -(mini_healer_frame_start_y + (mini_healer_frame_delta) * (i-1)));
-	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame.MiniHealerFont = RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame:CreateFontString(RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame, "OVERLAY", "GameFontWhite");
-	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame.MiniHealerFont:SetPoint("LEFT", 10, 0);
-	if RHEL_Healers[i] then
-		RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame.MiniHealerFont:SetText(RHEL_Healers[i]);
-	end
+--	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame:SetPoint(mini_healer_region, mini_healer_frame_start_x, -(mini_healer_frame_start_y + (mini_healer_frame_delta) * (i-1)));
+--	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame.MiniHealerFont = RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame:CreateFontString(RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame, "OVERLAY", "GameFontWhite");
+--	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame.MiniHealerFont:SetPoint("LEFT", 10, 0);
+
+	_G["mini_healer_frame"..i] = CreateFrame("Frame", "mini_healer_frame"..i, RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame);
+	_G["mini_healer_frame"..i]:SetSize(mini_healer_frame_size_x, mini_healer_frame_size_y);
+--	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame:SetBackdrop(RHEL_GUI.RHEL_Backdrop3);
+	_G["mini_healer_frame"..i]:SetPoint(mini_healer_region, mini_healer_frame_start_x, -(mini_healer_frame_start_y + (mini_healer_frame_delta) * (i-1)));
+	_G["mini_healer_frame"..i].MiniHealerFont = _G["mini_healer_frame"..i]:CreateFontString(RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame, "OVERLAY", "GameFontWhite");
+	_G["mini_healer_frame"..i].MiniHealerFont:SetPoint("LEFT", 10, 0);
+
 -- Wisp Button
 	local mini_wisp_button = "mini_wisp_button"..i
-	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame.mini_wisp_button = CreateFrame("Button", mini_wisp_button, RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame, "UIPanelButtonTemplate");
-	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame.mini_wisp_button:SetText(i);
-	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame.mini_wisp_button:SetSize(mini_button_size_x, mini_button_size_y);
-	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame.mini_wisp_button:SetPoint(mini_button_region, "mini_healer_frame"..i, mini_button_start_x, mini_button_start_y);
-	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame.mini_wisp_button:SetScript("OnClick", function(self, button)
+	_G["mini_healer_frame"..i].mini_wisp_button = CreateFrame("Button", mini_wisp_button, RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame, "UIPanelButtonTemplate");
+	_G["mini_healer_frame"..i].mini_wisp_button:SetText(i);
+	_G["mini_healer_frame"..i].mini_wisp_button:SetSize(mini_button_size_x, mini_button_size_y);
+	_G["mini_healer_frame"..i].mini_wisp_button:SetPoint(mini_button_region, "mini_healer_frame"..i, mini_button_start_x, mini_button_start_y);
+	_G["mini_healer_frame"..i].mini_wisp_button:SetScript("OnClick", function(self, button)
 		if button == "LeftButton" then
 			RHEL_HealerWisper(i);
 		end

@@ -3,7 +3,7 @@
 -- Update	   : 01/28/2020
 
 local version = "0.9.0"
-local total_healers = 8
+local total_healers = 10
 local tanks = {"MT","OT", "T3", "T4", "A", "B", "C", "D"}
 RHEL_Add_Tanks = true
 if RHEL_Add_Tanks then
@@ -12,8 +12,8 @@ else
 	total_tanks = 4
 end
 
-local RaidNameList = {"Molten Core","Onyxia & Outdoors","Blackwing Lair","Ahn'Qiraj","Naxxramas", "Custome"};
-local dungeons = {["Molten Core"] = "MC", ["Onyxia & Outdoors"] = "Onyxia",
+local RaidNameList = {"Molten Core","Onyxia&Outdoors","Blackwing Lair","Ahn'Qiraj","Naxxramas", "Custome"};
+local dungeons = {["Molten Core"] = "MC", ["Onyxia&Outdoors"] = "Onyxia",
     ["Blackwing Lair"] = "BWL", ["Ahn'Qiraj"] = "AQ", ["Naxxramas"] = "NAX", ["Custome"] = "Custome"}
 local BossNameList = {};
 BossNameList.MC = {"Trash","Lucifron","Magmadar","Gehennas","Garr","Baron Geddon",
@@ -22,11 +22,11 @@ BossNameList.Onyxia = {"Onyxia","Azuregos","Kazzak"};
 BossNameList.BWL = {"Trash","Razorgore","Vaelastrasz","Broodlord","Firemaw",
 	"Ebonroc","Flamegor","Chromaggus","Nefarian"};
 BossNameList.AQ = {"Trash","The Prophet Skeram", "The Bug Trio", "Battleguard Sartura",
-    "Fankriss the Unyielding", "Princess Huhuran", "The Twin Emperors", "Viscidus",
+    "Fankriss", "Princess Huhuran", "The Twin Emperors", "Viscidus",
 	"Ouro", "C'Thun"};
-BossNameList.NAX = {"Trash","Anub'Rekhan","Grand Widow Faerlina","Maexxna",
-	"Noth the Plaguebringer","Heigan the Unclean","Loatheb",
-	"Instructor Razuvious","Gothic the Harvester","The Four Horsemen",
+BossNameList.NAX = {"Trash","Anub'Rekhan","Faerlina","Maexxna",
+	"Noth","Heigan the Unclean","Loatheb",
+	"Instructor Razuvious","Gothic","The Four Horsemen",
 	"Patchwerk","Grobbulus","Gluth","Thaddius","Sapphiron","Kel'Thuzad"};
 BossNameList.Custome = {"Frame_1","Frame_2","Frame_3","Frame_4"};
 
@@ -119,7 +119,9 @@ function RHEL_HealsDefault()
 			{true,false,true,false,true,false,true,false,false,false,false,false,false,false,false,false},
 			{true,false,true,false,true,false,true,false,false,false,false,false,false,false,false,false},
 			{false,true,false,true,false,true,false,true,false,false,false,false,false,false,false,false},
-			{false,true,false,true,false,true,false,true,false,false,false,false,false,false,false,false}};
+			{false,true,false,true,false,true,false,true,false,false,false,false,false,false,false,false},
+			{false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false},
+			{false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false}};
 --	      	 1	   2    3     4    5     6    7     8    MT    OT	T3	  T4    A    B    C     D					  
 	end
 end
@@ -139,7 +141,9 @@ function RHEL_BuffsDefault()
 			{false,false,false,false,false,false,false,false},
 			{false,true,false,true,false,false,false,false},
 			{false,false,false,false,false,false,false,false},
-			{false,false,false,false,false,true,false,true}};
+			{false,false,false,false,false,true,false,true},
+			{false,false,false,false,false,false,false,false},
+			{false,false,false,false,false,false,false,false}};
 --	      		1	  2    3     4     5     6    7     8					  
 	end
 end
@@ -159,7 +163,9 @@ function RHEL_DispellsDefault()
 			{false,false,false,false,false,false,false,false},
 			{false,true,false,true,false,true,false,true},
 			{false,false,false,false,false,false,false,false},
-			{false,true,false,true,false,true,false,true}};
+			{false,true,false,true,false,true,false,true},
+			{false,false,false,false,false,false,false,false},
+			{false,false,false,false,false,false,false,false}};
 --	      		1	  2    3     4     5     6    7   8					  
 	end
 end
@@ -175,6 +181,11 @@ function RHEL_VariablesDefaultSet()
 		if revBossNameList[RHEL_Boss] == nil then
 			RHEL_Boss = BossNameList[dungeons[RHEL_Raid]][1];
 		end
+	end
+
+-- For first time RHEL_BossNote is loaded. CHECK
+	if RHEL_BossNote == nil then
+		RHEL_BossNote = {};
 	end
 
 -- For the first time RHEL_Channel is loaded; initialize channel to 5. DONE
@@ -221,6 +232,7 @@ end
 function RHEL_HealersLoad()
 	for i = 1, total_healers do
 		_G['HealerName'..i]:SetText(RHEL_Healers[i]);
+		_G["mini_healer_frame"..i].MiniHealerFont:SetText(RHEL_Healers[i]);
 	end
 end
 
@@ -276,6 +288,26 @@ function RHEL_DispellsLoad()
 			checker = RHEL_Dispells[RHEL_Raid][i][j]
 			_G['RHELCheckButton3' .."_".. i .. "_"..j]:SetChecked(checker);
 		end
+	end
+end
+
+-- BossNote load. Check
+function RHEL_BossNoteLoad()
+	if RHEL_BossNote ~= nil then
+		if RHEL_BossNote[RHEL_Raid] ~= nil then
+			if RHEL_BossNote[RHEL_Raid][RHEL_Boss] ~= nil then
+				RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetText(RHEL_BossNote[RHEL_Raid][RHEL_Boss])
+			else
+				RHEL_BossNote[RHEL_Raid][RHEL_Boss] = RHEL_Boss
+				RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetText(RHEL_Boss)
+			end
+		else
+			RHEL_BossNote[RHEL_Raid] = {}
+			RHEL_BossNote[RHEL_Raid][RHEL_Boss] = RHEL_Boss
+			RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetText(RHEL_Boss)
+		end
+	else
+		RHEL_print("No boss note",true)
 	end
 end
 
@@ -416,7 +448,7 @@ function RHEL_BuffAnounce()
 			end
 		end
 	end
-	RHEL_SendMessage(anounce)
+--	RHEL_SendMessage(anounce)
 	RHEL_SendMessage(message1)
 end
 
@@ -433,7 +465,7 @@ function RHEL_DispellAnounce()
 			end
 		end
 	end
-	RHEL_SendMessage(anounce)
+--	RHEL_SendMessage(anounce)
 	RHEL_SendMessage(message1)
 end
 
@@ -493,7 +525,7 @@ function RHEL_HealerInsert(healer)
 		RHEL_UpdateClass(id, 'Healer');
 		RHEL_Healers[id] = name;
 		_G['HealerName'..id]:SetText(name);
-		_G["mini_healer_frame"..id]:SetText(name);
+		_G["mini_healer_frame"..id].MiniHealerFont:SetText(name);
 	else
 		RHEL_print("Wrong target or not friendly player", true)
 	end
@@ -509,7 +541,7 @@ function RHEL_HealerNameChange(healer)
 	RHEL_UpdateClass(id, 'Healer');
 	RHEL_Healers[id] = _G['HealerName'..id]:GetText()
 	if RHEL_Healers[id] then
-		RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.getglobal('mini_healer_frame'..id).MiniHealerFont:SetText(RHEL_Healers[id]);
+		_G["mini_healer_frame"..id].MiniHealerFont:SetText(RHEL_Healers[id]);
 	end
 end
 
@@ -528,7 +560,7 @@ end
 
 -- Tank insert reaction. CHECK
 function RHEL_TankInsert(tank)
-	local id = tonumber(string.sub(tank:GetName(),9))
+	local id = tonumber(string.sub(tank:GetName(),15))
 	local name, realm = UnitName("target")
 	if (UnitInRaid(name) or UnitInParty(name) or UnitInBattleground(name)) then
 		RHEL_UpdateClass(id, 'Tank');
@@ -596,7 +628,6 @@ function RHEL_RaidName_OnSelect(value)
 	RHEL_Raid = RaidNameList[value]
 	
 	if (RHEL_Raid == nil) then
-		print("483")
 		RHEL_Raid = RaidNameList[6]
 		RHEL_Boss = BossNameList[dungeons[RHEL_Raid]][1]
 	end
@@ -604,7 +635,7 @@ function RHEL_RaidName_OnSelect(value)
 	if (UIDropDownMenu_GetSelectedValue(_G["RaidNameDropdown"]) ~= value) then
 		UIDropDownMenu_SetSelectedValue(_G["RaidNameDropdown"], value);
 		UIDropDownMenu_ClearAll(_G["BossNameDropdown"]);
---		print("489")
+		UIDropDownMenu_ClearAll(_G["RHEL_MiniDropdown"]);
 		RHEL_BossNameDropdown_OnLoad();
 	end
 	
@@ -616,11 +647,12 @@ function RHEL_RaidName_OnSelect(value)
 	if RHEL_Boss == nil or revBossNameList[RHEL_Boss] == nil then
 --		RHEL_print("499")
 		RHEL_Boss = BossNameList[dungeons[RHEL_Raid]][1]
-		MiniOffspringFont:SetText(RHEL_Boss)
 		-- next 2 rows needed for saved varisables and after raid menu chose load
+		RHEL_BossNoteLoad();
 		RHEL_HealsDefault();
 		RHEL_HealsLoad();
 	end
+	RHEL_GUI.RHEL_Mini.MiniFont:SetText(RHEL_Raid)
 end
 
 --BossName menu. CHECK
@@ -646,9 +678,15 @@ function RHEL_BossNameDropdown_OnLoad()
 		UIDropDownMenu_AddButton(info);
 	end
 	
-	if(UIDropDownMenu_GetSelectedValue(_G["BossNameDropdown"]) == nil) then
+	if UIDropDownMenu_GetSelectedValue(_G["BossNameDropdown"]) == nil then
 		UIDropDownMenu_SetSelectedValue(_G["BossNameDropdown"],1)
 		UIDropDownMenu_SetText(_G["BossNameDropdown"],List[1])
+	end
+	if RHEL_GUI.RHEL_Mini then
+		if UIDropDownMenu_GetSelectedValue(RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_MiniDropdown) == nil then
+		UIDropDownMenu_SetSelectedValue(_G["RHEL_MiniDropdown"],1)
+		UIDropDownMenu_SetText(_G["RHEL_MiniDropdown"],List[1])
+		end
 	end
 end
 
@@ -659,15 +697,16 @@ function RHEL_BossName_OnSelect(value)
 	end;
 --	RHEL_RaidBossReverse();
 	UIDropDownMenu_SetSelectedValue(_G["BossNameDropdown"], value);
-	UIDropDownMenu_SetText(_G["BossNameDropdown"],BossNameList[dungeons[RHEL_Raid]][value])
-	UIDropDownMenu_SetSelectedValue(RHEL_MiniDropdown, value);
-	UIDropDownMenu_SetText(RHEL_MiniDropdown,BossNameList[dungeons[RHEL_Raid]][value])
+	UIDropDownMenu_SetText(_G["BossNameDropdown"], BossNameList[dungeons[RHEL_Raid]][value])
+	UIDropDownMenu_SetSelectedValue(_G["RHEL_MiniDropdown"], value);
+	UIDropDownMenu_SetText(_G["RHEL_MiniDropdown"], BossNameList[dungeons[RHEL_Raid]][value])
 	
 --	print(UIDropDownMenu_GetText(_G["RaidNameDropdown"]).." - "..UIDropDownMenu_GetText(_G["BossNameDropdown"]));
 	RHEL_Boss = UIDropDownMenu_GetText(_G["BossNameDropdown"])
 --	print(RHEL_Boss,BossNameList[dungeons[RHEL_Raid]][value], value, "BossNameDropdown2")
 --	print("548")
 --	print(RHEL_Raid, RHEL_Boss)
+	RHEL_BossNoteLoad();	
 	RHEL_HealsDefault();
 	RHEL_HealsLoad();
 --	RHEL_VariablesDefaultSet()
@@ -716,6 +755,7 @@ function RHEL_Frame:ADDON_LOADED(addon)
 		return
 	else
 		VariablesLoaded = true;
+		RHEL_GUI.RHEL_Mini.MiniFont:SetText(RHEL_Raid)
 		RHEL_VariablesDefaultSet();
 		RHEL_RaidBossSaved();
 		RHEL_TanksLoad();
