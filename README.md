@@ -20,7 +20,8 @@
 </ol>
  
 <h5>Слэш команды</h5>
-<div>/rhel or /RHEL - показать/скрыть GUI</div> 
+<div>/rhel or /RHEL - показать/скрыть GUI</div>
+<div>/rhel mini - показать/скрыть mini GUI</div>
   
 ===============================================================================
 
@@ -46,6 +47,6 @@
 
 <h5>Slash Commands</h5>
 <div>/rhel or /RHEL - shows/hides the GUI</div>
-
+<div>/rhel mini - shows/hides mini GUI</div>
 
 
