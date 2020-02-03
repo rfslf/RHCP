@@ -1,8 +1,9 @@
 <h1>RHEL</h1>
 <h3>Русский</h3>
-<h5>Привет, путник!</h3>
-<p><div>Я попробую вам помочь и сделать Raid Healer Easier Life!<div>
-<div>Версия аддона 0.9 beta и он может проделать следующую работу:<div></p>
+<h5>Привет, путник!</h5>
+<p><div>Данный аддон для World of Warcraft: Classic. RHEL позволит вам назначить хилеров (лечение, бафы, рассеивание заклинаний) в рейде для танков и групп и оповестить рейд или определенный канал или сказать в пм хилеру. <div></p>
+<h5>Возможности</h5>
+<p><div>Версия текущего аддона 0.9 beta и он может проделать следующую работу:<div></p>
 <ol>
 <li style="text-align: justify;">Выбрать окно с сокращенным функционалом или полноразмерное меню со всеми опциями, которые позволит следующее</li>
 <li style="text-align: justify;">Выбрать подземелье и боса для которых требуется сформировать конфигурацию "хил-баф-диспел"</li>
@@ -27,7 +28,7 @@
 
 <h3>English</h3>
 <h5>Greetings , travaler!</h3>
-<p><div>This Addon is for World of Warcraft: Classic. RHEL let you assign Healers(heal, buff, dispell) in a raid to Tanks and groups and post the assignments to the Raid or in the custom  channel.<div>
+<p><div>This Addon is for World of Warcraft: Classic. RHEL let you assign Healers(heal, buff, dispell) in a raid to Tanks and groups and post the assignments to the Raid or in the custom  channel or wisp to healer.<div>
 <h5>Features:</h3>
 <div>Version of actual addon is 0.9 beta and he can do next features:<div></p>
 <ol>
