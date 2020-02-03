@@ -42,7 +42,7 @@
 <li style="text-align: justify;">Anounce in channel all targets of healers.</li>
 <li style="text-align: justify;">Wisp to healer all his personal tasks.</li> 
 <li style="text-align: justify;">Write up and anounce about nextfight.</li>
-<li style="text-align: justify;">Warning on healers death and кузщке his configuration of healing in default chat to raid or with raid warning.</li>
+<li style="text-align: justify;">Warning on healers death and anounce his configuration of healing in default chat to raid or with raid warning.</li>
 <li style="text-align: justify;">Close/drug/minimaze/show windows.</li>
 </ol>
 
