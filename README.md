@@ -27,8 +27,9 @@
 
 <h3>English</h3>
 <h5>Greetings , travaler!</h3>
-<p><div>I will try to help you and make your Raid Healer Easier Life!<div>
-<div>Version of addon is 0.9 beta and he can do next features:<div></p>
+<p><div>This Addon is for World of Warcraft Classic. It will try to make your Raid Healer Easier Life!<div>
+<h5>Features:</h3>
+<div>Version of actual addon is 0.9 beta and he can do next features:<div></p>
 <ol>
 <li style="text-align: justify;">Choose windows with reduced functionality or full windows with all options, witch allow next</li>
 <li style="text-align: justify;">Select dungeon and boss for witch your need to configurate "heal-buff-dispell"</li>
