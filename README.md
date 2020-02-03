@@ -27,7 +27,7 @@
 
 <h3>English</h3>
 <h5>Greetings , travaler!</h3>
-<p><div>This Addon is for World of Warcraft Classic. It will try to make your Raid Healer Easier Life!<div>
+<p><div>This Addon is for World of Warcraft: Classic. RHEL let you assign Healers(heal, buff, dispell) in a raid to Tanks and groups and post the assignments to the Raid or in the custom  channel.<div>
 <h5>Features:</h3>
 <div>Version of actual addon is 0.9 beta and he can do next features:<div></p>
 <ol>
