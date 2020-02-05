@@ -1,8 +1,8 @@
 -- Author      : Virgo
 -- Create Date : 12/19/2019 7:43:57 PM
--- Update	   : 01/28/2020
+-- Update	   : 02/5/2020
 
-local version = "0.9.0"
+local version = "0.9.1"
 local total_healers = 10
 local tanks = {"MT","OT", "T3", "T4", "A", "B", "C", "D"}
 RHEL_Add_Tanks = true
@@ -344,7 +344,7 @@ function RHEL_Healings(position)
 		for j = 1, 8 do
 			if RHEL_Heals[RHEL_Raid][RHEL_Boss][position][j] then
 				heal_count = heal_count + 1
-				msg = msg .. j .. ", "
+				msg = msg .. j .. ","
 			end
 		end
 		if heal_count == 0 then
@@ -352,7 +352,7 @@ function RHEL_Healings(position)
 		elseif heal_count == 8 then
 			msg = "All groups."
 		else
-			msg = string.sub(msg, 1, -3)  .. "."
+			msg = string.sub(msg, 1, -2)  .. "."
 		end
 		heal_count = 0
 		for j = 9, (8 + total_tanks) do
@@ -366,7 +366,7 @@ function RHEL_Healings(position)
 			end
 		end
 		if heal_count ~= 0 then
-			msg = string.sub(msg, 1, -2) .. "."
+			msg = string.sub(msg, 1, -2)
 		end
 	end
 	return msg
@@ -381,16 +381,16 @@ function RHEL_Buffings(position)
 		for j = 1, 8 do
 			if RHEL_Buffs[RHEL_Raid][position][j] then
 				buff_count = buff_count + 1
-				msg = msg .. j .. ", "
+				msg = msg .. j .. ","
 			end
 		end
 	end
 	if buff_count == 0 then
 		msg = ""
 	elseif buff_count == 8 then
-		msg = "All groups or fallen."
+		msg = "All groups or fallen"
 	else
-		msg = string.sub(msg, 1, -3)
+		msg = string.sub(msg, 1, -2)
 	end
 	return msg
 end
@@ -404,16 +404,16 @@ function RHEL_Dispellings(position)
 		for j = 1, 8 do
 			if RHEL_Dispells[RHEL_Raid][position][j] then
 				dispel_count = dispel_count + 1
-				msg = msg .. j .. ", "
+				msg = msg .. j .. ","
 			end
 		end
 	end
 	if dispel_count == 0 then
 		msg = ""
 	elseif dispel_count == 8 then
-		msg = "All groups."
+		msg = "All groups"
 	else
-		msg = string.sub(msg, 1, -3)
+		msg = string.sub(msg, 1, -2)
 	end
 	return msg
 end
@@ -448,7 +448,7 @@ function RHEL_BuffAnounce()
 			end
 		end
 	end
---	RHEL_SendMessage(anounce)
+	RHEL_SendMessage(anounce)
 	RHEL_SendMessage(message1)
 end
 
@@ -465,7 +465,7 @@ function RHEL_DispellAnounce()
 			end
 		end
 	end
---	RHEL_SendMessage(anounce)
+	RHEL_SendMessage(anounce)
 	RHEL_SendMessage(message1)
 end
 

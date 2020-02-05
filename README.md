@@ -3,7 +3,7 @@
 <h5>Привет, путник!</h5>
 <p><div>Данный аддон для World of Warcraft: Classic. RHEL позволит вам назначить хилеров (лечение, бафы, рассеивание заклинаний) в рейде для танков и групп и оповестить рейд или определенный канал или сказать в пм хилеру. <div></p>
 <h5>Возможности</h5>
-<p><div>Версия текущего аддона 0.9 beta и он может проделать следующую работу:<div></p>
+<p><div>Версия текущего аддона 0.9.1 и он может проделать следующую работу:<div></p>
 <ol>
 <li style="text-align: justify;">Выбрать окно с сокращенным функционалом или полноразмерное меню со всеми опциями, которые позволит следующее</li>
 <li style="text-align: justify;">Выбрать подземелье и боса для которых требуется сформировать конфигурацию "хил-баф-диспел"</li>
@@ -28,9 +28,9 @@
 
 <h3>English</h3>
 <h5>Greetings , travaler!</h3>
-<p><div>This Addon is for World of Warcraft: Classic. RHEL let you assign Healers(heal, buff, dispell) in a raid to Tanks and groups and post the assignments to the Raid or in the custom  channel or wisp to healer.<div>
-<h5>Features:</h3>
-<div>Version of actual addon is 0.9 beta and he can do next features:<div></p>
+<p><div>This Addon is for World of Warcraft: Classic. RHEL let you assign Healers(heal, buff, dispell) in a raid to Tanks and groups and post the assignments to the Raid or in the custom channel or wisp to healer.<div>
+<h5>Features</h3>
+<div>Version of actual addon is 0.9.1 and he can do next features:<div></p>
 <ol>
 <li style="text-align: justify;">Choose windows with reduced functionality or full windows with all options, witch allow next</li>
 <li style="text-align: justify;">Select dungeon and boss for witch your need to configurate "heal-buff-dispell"</li>
@@ -43,7 +43,7 @@
 <li style="text-align: justify;">Anounce in channel all targets of healers.</li>
 <li style="text-align: justify;">Wisp to healer all his personal tasks.</li> 
 <li style="text-align: justify;">Write up and anounce about nextfight.</li>
-<li style="text-align: justify;">Warning on healers death and anounce his configuration of healing in default chat to raid or with raid warning.</li>
+<li style="text-align: justify;">Warning on healers death and anounce his configuration of healing in default chat or to raid or raid warning.</li>
 <li style="text-align: justify;">Close/drug/minimaze/show windows.</li>
 </ol>
 

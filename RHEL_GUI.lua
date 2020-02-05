@@ -402,13 +402,14 @@ RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetPoint("TOP", RHEL_GUI.RHEL_MainMenu.RH
 RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetPoint("BOTTOM", RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow, "BOTTOM", 0, 0);
 RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetSize(boss_note_size_x, boss_note_size_y);
 RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetTextInsets(8, 9, 9, 8);
-RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetMaxLetters(230);
+RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetMaxLetters(255);
 RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetMultiLine(true);
 RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetSpacing(1);
 RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:EnableMouse(true);
 RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetFrameStrata("HIGH");
 RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetAutoFocus(false);
-RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetFont("Fonts\\FRIZQT__.TTF", 11, "OUTLINE, MONOCHROME")
+RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE, MONOCHROME")
+
 --RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetText(RHEL_Boss)
 RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetScript("OnEscapePressed", function(self)
 	self:ClearFocus();    
@@ -458,7 +459,7 @@ BossnoteFontString2:SetMaxLines(3);
 
 -- Mini dropdown pozition
 local mini_dropdown_size_x, mini_dropdown_size_y = 180, 25
-local mini_dropdown_start_x, mini_dropdown_start_y, mini_dropdown_region = -10, -35, "TOP"
+local mini_dropdown_start_x, mini_dropdown_start_y, mini_dropdown_region = -10, -34, "TOP"
 -- Mini buttons
 local mini_anounce_start_x, mini_anounce_start_y, mini_anounce_region = -50, 2, "BOTTOM"
 local mini_anounce_size_x, mini_anounce_size_y = 50, 30
@@ -559,6 +560,7 @@ for i = 1, total_healers do
 --	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.mini_healer_frame:SetBackdrop(RHEL_GUI.RHEL_Backdrop3);
 	_G["mini_healer_frame"..i]:SetPoint(mini_healer_region, mini_healer_frame_start_x, -(mini_healer_frame_start_y + (mini_healer_frame_delta) * (i-1)));
 	_G["mini_healer_frame"..i].MiniHealerFont = _G["mini_healer_frame"..i]:CreateFontString(RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame, "OVERLAY", "GameFontWhite");
+	_G["mini_healer_frame"..i].MiniHealerFont:SetTextColor(0,0.9,0.9,1)
 	_G["mini_healer_frame"..i].MiniHealerFont:SetPoint("LEFT", 10, 0);
 
 -- Wisp Button
