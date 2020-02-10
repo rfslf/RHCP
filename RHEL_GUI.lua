@@ -402,7 +402,7 @@ RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetPoint("TOP", RHEL_GUI.RHEL_MainMenu.RH
 RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetPoint("BOTTOM", RHEL_GUI.RHEL_MainMenu.RHEL_BossNoteWindow, "BOTTOM", 0, 0);
 RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetSize(boss_note_size_x, boss_note_size_y);
 RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetTextInsets(8, 9, 9, 8);
-RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetMaxLetters(255);
+RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetMaxLetters(230);
 RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetMultiLine(true);
 RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetSpacing(1);
 RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:EnableMouse(true);
@@ -446,37 +446,27 @@ RHEL_GUI.RHEL_MainMenu.BossnoteFont:SetMaxLines ( 3 );
 RHEL_GUI.RHEL_MainMenu.BossnoteFont:SetFont("Fonts\\FRIZQT__.TTF", 11, "OUTLINE, MONOCHROME")
 RHEL_GUI.RHEL_MainMenu.BossnoteFont:SetText("123!")
 ]]--
---[[
--- Edit Note
-BossnoteFontString2 = BossNoteWindow:CreateFontString("BossnoteFontString2", "OVERLAY", "GameFontWhiteTiny");
-BossnoteFontString2:SetPoint("TOPLEFT", BossPlayerOfficerNoteWindow, 8, -7);
-BossnoteFontString2:SetWordWrap(true);
-BossnoteFontString2:SetSpacing(1);
-BossnoteFontString2:SetWidth(108);
-BossnoteFontString2:SetJustifyH("LEFT");
-BossnoteFontString2:SetMaxLines(3);
-]]--
 
 -- Mini dropdown pozition
-local mini_dropdown_size_x, mini_dropdown_size_y = 180, 25
-local mini_dropdown_start_x, mini_dropdown_start_y, mini_dropdown_region = -10, -34, "TOP"
+local mini_dropdown_size_x, mini_dropdown_size_y = 188, 25
+local mini_dropdown_start_x, mini_dropdown_start_y, mini_dropdown_region = -14, -24, "TOP"
 -- Mini buttons
-local mini_anounce_start_x, mini_anounce_start_y, mini_anounce_region = -50, 2, "BOTTOM"
-local mini_anounce_size_x, mini_anounce_size_y = 50, 30
-local mini_anounce_delta = 50
+local mini_anounce_start_x, mini_anounce_start_y, mini_anounce_region = -54, 2, "BOTTOM"
+local mini_anounce_size_x, mini_anounce_size_y = 50, 20
+local mini_anounce_delta = 58
 -- Mini healer frame
-local mini_healer_frame_size_x, mini_healer_frame_size_y = 160, 22
-local mini_healer_frame_start_x, mini_healer_frame_start_y, mini_healer_region = 0, 60, "TOP"
-local mini_healer_frame_delta = 23
+local mini_healer_frame_size_x, mini_healer_frame_size_y = 180, 21
+local mini_healer_frame_start_x, mini_healer_frame_start_y, mini_healer_region = 0, 50, "TOP"
+local mini_healer_frame_delta = 21
 -- Mini wisp_button
 local mini_button_size_x, mini_button_size_y = 30, 20
 local mini_button_region, mini_button_start_x, mini_button_start_y = "RIGHT", -5, 0
 -- Mini menu pozition
 local mini_menu_start_x, mini_menu_start_y, mini_menu_region = 0, 90, "LEFT"
-local mini_menu_size_x, mini_menu_size_y = 160, 25
+local mini_menu_size_x, mini_menu_size_y = 180, 25
 -- Mini offspring frame
-local mini_offspring_size_x, mini_offspring_size_y = 160, mini_healer_frame_delta * total_healers + mini_button_size_y + 3 * mini_dropdown_size_y
-local mini_offspring_start_x, mini_offspring_start_y, mini_offspring_region = 0, -20, "TOP"
+local mini_offspring_size_x, mini_offspring_size_y = 180, mini_healer_frame_delta * total_healers + mini_button_size_y + 2 * mini_dropdown_size_y
+local mini_offspring_start_x, mini_offspring_start_y, mini_offspring_region = 0, -15, "TOP"
 
 -- Mini window frame
 RHEL_GUI.RHEL_Mini = CreateFrame("Frame", "RHEL_Mini", UIParent);
@@ -484,7 +474,6 @@ RHEL_GUI.RHEL_Mini.MiniFont = RHEL_GUI.RHEL_Mini:CreateFontString(RHEL_GUI.RHEL_
 RHEL_GUI.RHEL_Mini.MiniFont:SetPoint("LEFT", 8, 0);
 RHEL_GUI.RHEL_Mini.MiniFont:SetTextColor(1, 0.8196079, 0)	
 if RHEL_Raid then
-	RHEL_GUI.RHEL_Mini.MiniFont:SetText(RHEL_Raid)
 	RHEL_GUI.RHEL_Mini.MiniFont:SetText(RHEL_Raid);
 end	
 -- RHEL_GUI.RHEL_Mini:SetBackdrop(RHEL_GUI.RHEL_Backdrop2);
@@ -520,6 +509,24 @@ RHEL_GUI.RHEL_Mini.RHEL_MiniMizeButton:SetScript("OnClick", function(self, butto
 		end
 	end
 end);
+RHEL_GUI.RHEL_Mini.RHEL_HelpButton = CreateFrame("Button", "RHEL_HelpButton", RHEL_GUI.RHEL_Mini, "UIPanelButtonTemplate");
+RHEL_GUI.RHEL_Mini.RHEL_HelpButton:SetSize(20, 19);
+RHEL_GUI.RHEL_Mini.RHEL_HelpButton:SetPoint("RIGHT", RHEL_Mini, -64, 0);
+RHEL_GUI.RHEL_Mini.RHEL_HelpButton:SetText("?");
+RHEL_GUI.RHEL_Mini.RHEL_HelpButton:SetScript("OnClick", function(self, button)
+	if button == "LeftButton" then
+		if RHEL_MainMenu:IsVisible() then
+			RHEL_MainMenu:Hide()
+		end
+		if not RHEL_GUI.RHEL_Help:IsVisible() then
+			RHEL_GUI.RHEL_Help:Show()
+			RHEL_GUI.RHEL_Help.RHEL_Info.Option:Hide();
+			RHEL_GUI.RHEL_Help.RHEL_Info.Info:Show();
+		else
+			RHEL_GUI.RHEL_Help:Hide()
+		end
+	end
+end);
 RHEL_GUI.RHEL_Mini:SetSize(mini_menu_size_x, mini_menu_size_y);
 RHEL_GUI.RHEL_Mini:SetMovable(true);
 RHEL_GUI.RHEL_Mini:EnableMouse(true);
@@ -533,16 +540,26 @@ RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame:SetBackdrop(RHEL_GUI.RHEL_Backdrop3);
 RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame:SetAlpha(0.75);
 RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame:SetPoint(mini_offspring_region, mini_offspring_start_x, mini_menu_offspring_y);
 
-
 -- Mini dropdown
 RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_MiniDropdown = CreateFrame("Frame", "RHEL_MiniDropdown", RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame, "UIDropDownMenuTemplate");
 RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_MiniDropdown:SetPoint(raid_name_dropdown_region, mini_dropdown_start_x, mini_dropdown_start_y);
 RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_MiniDropdown:SetSize(mini_dropdown_size_x, mini_dropdown_size_y);
 UIDropDownMenu_SetWidth(RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_MiniDropdown, 125) 
-local MiniDropdownFont = RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_MiniDropdown:CreateFontString(RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_MiniDropdown, "OVERLAY", "GameFontNormalSmall");	
-MiniDropdownFont:SetPoint("LEFT", 20, 20);	
-MiniDropdownFont:SetText("Boss:");	
+--local MiniDropdownFont = RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_MiniDropdown:CreateFontString(RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_MiniDropdown, "OVERLAY", "GameFontNormalSmall");	
+--MiniDropdownFont:SetPoint("LEFT", 20, 20);	
+--MiniDropdownFont:SetText("Boss:");	
 UIDropDownMenu_Initialize(RHEL_MiniDropdown, RHEL_BossNameDropdown_OnLoad);
+
+--Mini info button
+RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_InfoButton = CreateFrame("Button", "RHEL_InfoButton", RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame, "UIPanelButtonTemplate");
+RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_InfoButton:SetSize(mini_button_size_x, mini_button_size_y);
+RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_InfoButton:SetPoint("TOPRIGHT", RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame, -6, -28);
+RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_InfoButton:SetText("N");
+RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_InfoButton:SetScript("OnClick", function(self, button)
+	if button == "LeftButton" then
+		RHEL_SendMessage(RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:GetText())
+	end
+end);
 
 -- Mini wisp frame
 local MiniHealerFont = {}
@@ -609,5 +626,127 @@ end);
 RHEL_GUI.RHEL_Mini:SetScript("OnMouseUp", function(self)
 	RHEL_OnMouseUp(self);
 end);
+
+-- Help window frame
+RHEL_GUI.RHEL_Help = CreateFrame("Frame", "RHEL_Help", UIParent);
+RHEL_GUI.RHEL_Help.HelpFont = RHEL_GUI.RHEL_Help:CreateFontString(RHEL_GUI.RHEL_Help, "OVERLAY", "GameFontNormalSmall");
+RHEL_GUI.RHEL_Help.HelpFont:SetPoint("TOP", 0, -10);
+RHEL_GUI.RHEL_Help.HelpFont:SetTextColor(1, 0.8196079, 0)
+RHEL_GUI.RHEL_Help.HelpFont:SetFont("Fonts\\FRIZQT__.TTF", 14, "OUTLINE, MONOCHROME")	
+RHEL_GUI.RHEL_Help.HelpFont:SetText("Riad healer easy life")
+
+RHEL_GUI.RHEL_Help.RHEL_HelpCloseButton = CreateFrame( "Button", "RHEL_HelpCloseButton", RHEL_GUI.RHEL_Help, "UIPanelCloseButton");
+RHEL_GUI.RHEL_Help.RHEL_HelpCloseButton:SetPoint("TOPRIGHT", RHEL_Help, 3, 3);
+RHEL_GUI.RHEL_Help:SetSize(400, 300);
+RHEL_GUI.RHEL_Help:SetMovable(true);
+RHEL_GUI.RHEL_Help:EnableMouse(true);
+RHEL_GUI.RHEL_Help:SetToplevel(true);
+RHEL_GUI.RHEL_Help:SetPoint("CENTER", 0, 0);
+RHEL_GUI.RHEL_Help:SetBackdrop(RHEL_GUI.RHEL_Backdrop);
+RHEL_GUI.RHEL_Help.RHEL_Info = CreateFrame("Frame", "RHEL_Info", RHEL_GUI.RHEL_Help);
+RHEL_GUI.RHEL_Help.RHEL_Info:SetSize(380, 230);
+RHEL_GUI.RHEL_Help.RHEL_Info:SetMovable(true);
+RHEL_GUI.RHEL_Help.RHEL_Info:EnableMouse(true);
+RHEL_GUI.RHEL_Help.RHEL_Info:SetToplevel(true);
+RHEL_GUI.RHEL_Help.RHEL_Info:SetPoint("BOTTOM", 0, 10);
+RHEL_GUI.RHEL_Help.RHEL_Info:SetBackdrop(RHEL_GUI.RHEL_Backdrop2);
+
+RHEL_GUI.RHEL_Help.RHEL_Info.Info = CreateFrame("Frame", "RHEL_Info", RHEL_GUI.RHEL_Help.RHEL_Info);
+RHEL_GUI.RHEL_Help.RHEL_Info.Info:SetID("1")
+RHEL_GUI.RHEL_Help.RHEL_Info.Info:SetPoint("TOPLEFT")
+RHEL_GUI.RHEL_Help.RHEL_Info.Info:SetPoint("BOTTOMRIGHT")
+RHEL_GUI.RHEL_Help.RHEL_Info.Info.Font1 = RHEL_GUI.RHEL_Help.RHEL_Info.Info:CreateFontString(RHEL_GUI.RHEL_Help.RHEL_Info.Info, "OVERLAY", "GameFontNormal");
+RHEL_GUI.RHEL_Help.RHEL_Info.Info.Font1:SetTextColor(0,0.9,0.9,1)
+RHEL_GUI.RHEL_Help.RHEL_Info.Info.Font1:SetPoint("TOPLEFT", 20, -30);
+RHEL_GUI.RHEL_Help.RHEL_Info.Info.Font1:SetText("/rhel - main addon window")
+RHEL_GUI.RHEL_Help.RHEL_Info.Info.Font2 = RHEL_GUI.RHEL_Help.RHEL_Info.Info:CreateFontString(RHEL_GUI.RHEL_Help.RHEL_Info.Info, "OVERLAY", "GameFontNormal");
+RHEL_GUI.RHEL_Help.RHEL_Info.Info.Font2:SetTextColor(0,0.9,0.9,1)
+RHEL_GUI.RHEL_Help.RHEL_Info.Info.Font2:SetPoint("TOPLEFT", 20, -50);
+RHEL_GUI.RHEL_Help.RHEL_Info.Info.Font2:SetText("/rhel mini - compact addon window")
+RHEL_GUI.RHEL_Help.RHEL_Info.Info.Font3 = RHEL_GUI.RHEL_Help.RHEL_Info.Info:CreateFontString(RHEL_GUI.RHEL_Help.RHEL_Info.Info, "OVERLAY", "GameFontNormal");
+RHEL_GUI.RHEL_Help.RHEL_Info.Info.Font3:SetTextColor(0,0.9,0.9,1)
+RHEL_GUI.RHEL_Help.RHEL_Info.Info.Font3:SetPoint("TOPLEFT", 20, -70);
+RHEL_GUI.RHEL_Help.RHEL_Info.Info.Font3:SetText("/rhel help - open this window")
+RHEL_GUI.RHEL_Help.RHEL_Info.Info.Font4 = RHEL_GUI.RHEL_Help.RHEL_Info.Info:CreateFontString(RHEL_GUI.RHEL_Help.RHEL_Info.Info, "OVERLAY", "GameFontNormal");
+RHEL_GUI.RHEL_Help.RHEL_Info.Info.Font4:SetTextColor(0,0.9,0.9,1)
+RHEL_GUI.RHEL_Help.RHEL_Info.Info.Font4:SetPoint("TOPLEFT", 20, -90);
+RHEL_GUI.RHEL_Help.RHEL_Info.Info.Font4:SetText("/rhel option - options window")
+
+RHEL_GUI.RHEL_Help.RHEL_Info.Tab1 = CreateFrame("Button", "Tab1", RHEL_GUI.RHEL_Help.RHEL_Info, "TabButtonTemplate");
+RHEL_GUI.RHEL_Help.RHEL_Info.Tab1:SetText("Help");
+RHEL_GUI.RHEL_Help.RHEL_Info.Tab1:SetPoint("LEFT", 20, 132, "TOPLEFT");
+PanelTemplates_TabResize(RHEL_GUI.RHEL_Help.RHEL_Info.Tab1, 0);
+RHEL_GUI.RHEL_Help.RHEL_Info.Tab1:SetScript("OnClick", function(self, button)
+		if button == "LeftButton" then
+--			PanelTemplates_SetTab(RHEL_GUI.RHEL_Help.RHEL_Info, 1);
+			RHEL_GUI.RHEL_Help.RHEL_Info.Option:Hide();
+			RHEL_GUI.RHEL_Help.RHEL_Info.Info:Show();
+		end
+	end);
+
+RHEL_GUI.RHEL_Help.RHEL_Info.Option = CreateFrame("Frame", "RHEL_Option", RHEL_GUI.RHEL_Help.RHEL_Info);
+RHEL_GUI.RHEL_Help.RHEL_Info.Option:SetID("2")
+RHEL_GUI.RHEL_Help.RHEL_Info.Option:SetPoint("TOPLEFT")
+RHEL_GUI.RHEL_Help.RHEL_Info.Option:SetPoint("BOTTOMRIGHT")
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.Font1 = RHEL_GUI.RHEL_Help.RHEL_Info.Option:CreateFontString(RHEL_GUI.RHEL_Help.RHEL_Info.Info, "OVERLAY", "GameFontNormal");
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.Font1:SetTextColor(0,0.9,0.9,1)
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.Font1:SetPoint("TOPLEFT", 20, -30);
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.Font1:SetText("Total healers:")
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.HealerSlider = CreateFrame ("Slider", "HealerSlider" , RHEL_GUI.RHEL_Help.RHEL_Info.Option, "OptionsSliderTemplate" );
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.HealerSlider.HealerSliderText = RHEL_GUI.RHEL_Help.RHEL_Info.Option.HealerSlider:CreateFontString("HealerSliderText", "OVERLAY" , "GameFontNormalSmall");
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.HealerSlider.HealerSliderText:SetPoint("TOP", -60, 10);
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.HealerSlider.HealerSliderText:SetText ("6");
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.HealerSlider.HealerSliderText:SetWidth (30);
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.HealerSlider.HealerSliderText2 = RHEL_GUI.RHEL_Help.RHEL_Info.Option.HealerSlider:CreateFontString("HealerSliderText", "OVERLAY" , "GameFontNormalSmall");
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.HealerSlider.HealerSliderText2:SetPoint("TOP", 0, 10);
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.HealerSlider.HealerSliderText2:SetText ("9");
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.HealerSlider.HealerSliderText2:SetWidth (30);
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.HealerSlider.HealerSliderText3 = RHEL_GUI.RHEL_Help.RHEL_Info.Option.HealerSlider:CreateFontString("HealerSliderText", "OVERLAY" , "GameFontNormalSmall");
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.HealerSlider.HealerSliderText3:SetPoint("TOP", 60, 10);
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.HealerSlider.HealerSliderText3:SetText ("12");
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.HealerSlider.HealerSliderText3:SetWidth (30);
+
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.HealerSlider:SetPoint ( "LEFT" , RHEL_GUI.RHEL_Help.RHEL_Info.Option, "CENTER" , -70, 60);
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.HealerSlider:SetMinMaxValues (6, 12);
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.HealerSlider:SetObeyStepOnDrag (true);
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.HealerSlider:SetValueStep(1);
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.HealerSlider:SetValue(total_healers);
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.HealerSlider:SetScript( "OnValueChanged" , function(self)
+   RHEL_print(self:GetValue())
+end);
+
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.Font2 = RHEL_GUI.RHEL_Help.RHEL_Info.Option:CreateFontString(RHEL_GUI.RHEL_Help.RHEL_Info.Info, "OVERLAY", "GameFontNormal");
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.Font2:SetTextColor(0,0.9,0.9,1)
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.Font2:SetPoint("TOPLEFT", 20, -80);
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.Font2:SetText("Additional tanks:")
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.AddTank = CreateFrame("CheckButton", "AddTank", RHEL_GUI.RHEL_Help.RHEL_Info.Option, "UICheckButtonTemplate");
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.AddTank:SetPoint("TOPLEFT", 120, -74);
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.AddTank:SetSize(28,28);
+RHEL_GUI.RHEL_Help.RHEL_Info.Option.AddTank:SetChecked(RHEL_Add_Tanks)
+RHEL_GUI.RHEL_MainMenu.RHEL_WarningCheck:SetScript("OnClick", function(self) 
+	RHEL_print(self:GetChecked());
+end);
+
+RHEL_GUI.RHEL_Help.RHEL_Info.Tab2 = CreateFrame("Button", "Tab2", RHEL_GUI.RHEL_Help.RHEL_Info, "TabButtonTemplate");
+RHEL_GUI.RHEL_Help.RHEL_Info.Tab2:SetText("Options");
+RHEL_GUI.RHEL_Help.RHEL_Info.Tab2:SetPoint("LEFT", 90, 132, "TOPLEFT");
+PanelTemplates_TabResize(RHEL_GUI.RHEL_Help.RHEL_Info.Tab2, 0);
+RHEL_GUI.RHEL_Help.RHEL_Info.Tab2:SetScript("OnClick", function(self, button)
+		if button == "LeftButton" then
+--			PanelTemplates_SetTab(RHEL_GUI.RHEL_Help.RHEL_Info, 2);
+			RHEL_GUI.RHEL_Help.RHEL_Info.Option:Show();
+			RHEL_GUI.RHEL_Help.RHEL_Info.Info:Hide();
+		end
+	end);
+
+RHEL_GUI.RHEL_Help:SetScript("OnMouseDown", function(self)
+	RHEL_OnMouseDown(self);
+end);
+RHEL_GUI.RHEL_Help:SetScript("OnMouseUp", function(self)
+	RHEL_OnMouseUp(self);
+end);
+
+PanelTemplates_SetNumTabs(RHEL_GUI.RHEL_Help.RHEL_Info, 2);
+RHEL_GUI.RHEL_Help:Hide()
 
 RHEL_Loaded()

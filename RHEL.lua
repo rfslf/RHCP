@@ -1,8 +1,8 @@
 -- Author      : Virgo
 -- Create Date : 12/19/2019 7:43:57 PM
--- Update	   : 02/5/2020
+-- Update	   : 01/28/2020
 
-local version = "0.9.1"
+local version = "0.10.0"
 local total_healers = 10
 local tanks = {"MT","OT", "T3", "T4", "A", "B", "C", "D"}
 RHEL_Add_Tanks = true
@@ -80,8 +80,16 @@ SlashCmdList["RHEL_SLASHCMD"] = function(input)
 		else
 			RHEL_print("Mini menu is not ready. Try one more time.", true)
 		end
-	elseif command == "option" or command == 'help' then
-		RHEL_print("Wo-wo-wo, take it easy! Not ready yet.")
+	elseif command == "option" then
+		RHEL_MainMenu:Hide();
+		RHEL_GUI.RHEL_Help:Show();
+		RHEL_GUI.RHEL_Help.RHEL_Info.Info:Hide()
+		RHEL_GUI.RHEL_Help.RHEL_Info.Option:Show()
+	elseif command == 'help' then
+		RHEL_MainMenu:Hide();
+		RHEL_GUI.RHEL_Help:Show();
+		RHEL_GUI.RHEL_Help.RHEL_Info.Info:Show()
+		RHEL_GUI.RHEL_Help.RHEL_Info.Option:Hide()
 	else
 		RHEL_print("Invalid Command. Type '/rhel help'!", true)
 	end
@@ -318,8 +326,19 @@ end
 --Send message to raid or channel. DONE
 function RHEL_SendMessage(msg)
 	if string.len(tostring(msg)) > 255 then
-		RHEL_print("Too long message."..string.len(msg), true)
-		RHEL_SendMessage(msg)
+		local msg_cut_rev = string.reverse(string.sub(msg, 1, 255))
+		print(msg_cut_rev)
+		local delim, delim_end = string.find(msg_cut_rev, "%]")
+		print(delim, delim_end) 
+		if delim then
+			local msg_cut = string.reverse(string.sub(msg_cut_rev, delim))
+			RHEL_SendMessage(msg_cut)
+			RHEL_SendMessage(string.sub(msg, string.len(tostring(msg_cut)) + 1))
+--			RHEL_SendMessage(string.sub(msg, string.len(tostring(msg)) - delim))
+		else
+			RHEL_print("Too long message."..string.len(msg), true)
+		end
+--		RHEL_SendMessage(string.sub(msg, 255))
 	else
 		if to_Raid:GetChecked() and not to_Channel:GetChecked() then
 			SendChatMessage(tostring(msg), "RAID");
@@ -359,9 +378,9 @@ function RHEL_Healings(position)
 			if RHEL_Heals[RHEL_Raid][RHEL_Boss][position][j] then
 				heal_count = heal_count + 1
 				if _G['TankName'..(j-8)]:GetText() == "" then
-					msg = msg .. ' ' .. tanks[j-8] .. ","
+					msg = msg  .. tanks[j-8] .. ","
 				else
-					msg = msg .. ' ' .. _G['TankName'..(j-8)]:GetText() .. ","
+					msg = msg  .. _G['TankName'..(j-8)]:GetText() .. ","
 				end
 			end
 		end
@@ -424,7 +443,7 @@ function RHEL_HealAnounce()
 	local message1 = ""
 	for i = 1, total_healers do
 		if _G['HealerName'..i]:GetText() ~= "" then
-			local message2 = "[" .. _G['HealerName'..i]:GetText() .. " - "
+			local message2 = "[" .. _G['HealerName'..i]:GetText() .. "-"
 			local message3 = RHEL_Healings(i)
 			if message3 ~= "" then
 				message1 = message1 .. message2 .. message3 .. "] "	
@@ -441,7 +460,7 @@ function RHEL_BuffAnounce()
 	local message1 = ""
 	for i = 1, total_healers do
 		if _G['HealerName'..i]:GetText() ~= "" then
-			local message2 = "[" .. _G['HealerName'..i]:GetText() .. " - "
+			local message2 = "[" .. _G['HealerName'..i]:GetText() .. "-"
 			local message3 = RHEL_Buffings(i)
 			if message3 ~= "" then
 				message1 = message1 .. message2 .. message3 .. "] "	
@@ -458,7 +477,7 @@ function RHEL_DispellAnounce()
 	local message1 = ""
 	for i = 1, total_healers do
 		if _G['HealerName'..i]:GetText() ~= "" then
-			local message2 = "[" .. _G['HealerName'..i]:GetText() .. " - "		
+			local message2 = "[" .. _G['HealerName'..i]:GetText() .. "-"		
 			local message3 = RHEL_Dispellings(i)
 			if message3 ~= "" then
 				message1 = message1 .. message2 .. message3 .. "] "
@@ -477,17 +496,17 @@ function RHEL_HealerWisper(number)
 		if (UnitInRaid(healer) or UnitInParty(healer)) then
 			local HealsPart = RHEL_Healings(number)
 			if HealsPart ~= '' then
-				HealsPart = "[Heals - " .. HealsPart .. "] "
+				HealsPart = "[Heals-" .. HealsPart .. "] "
 			end
 			
 			local BuffsPart = RHEL_Buffings(number)
 			if BuffsPart ~= '' then		
-				BuffsPart = "[Buffs - " .. BuffsPart .. "] "
+				BuffsPart = "[Buffs-" .. BuffsPart .. "] "
 			end
 
 			local DispellsPart = RHEL_Dispellings(number)
 			if DispellsPart ~= '' then		
-				DispellsPart = "[Dispells - " .. DispellsPart .. "] "
+				DispellsPart = "[Dispells-" .. DispellsPart .. "]"
 			end
 
 			SendChatMessage(wisper..HealsPart..BuffsPart..DispellsPart, "WHISPER", nil, healer)		
