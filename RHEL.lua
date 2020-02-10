@@ -2,7 +2,7 @@
 -- Create Date : 12/19/2019 7:43:57 PM
 -- Update	   : 01/28/2020
 
-local version = "0.9.0"
+local version = "0.9.1"
 local total_healers = 10
 local tanks = {"MT","OT", "T3", "T4", "A", "B", "C", "D"}
 RHEL_Add_Tanks = true
