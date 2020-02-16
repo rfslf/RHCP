@@ -17,7 +17,8 @@
 <li style="text-align: justify;">Сообщить лекарю его персональные цели.</li>
 <li style="text-align: justify;">Записать и проинформировать об особенностях предстоящего сражения.</li>
 <li style="text-align: justify;">Сообщить о смерти лекаря и его конфигурацию "хила" отметкой в чате или в рейд или рейд оповещением.</li>
-<li style="text-align: justify;">Вызвать окно Help и Option</li>
+<li style="text-align: justify;">Вызвать окно Help и ознакомиться со всеми поддерживаемыми командами.</li>
+<li style="text-align: justify;">Вызвать окно Option и настроить количество хилеров, количество танков, порядок диспела</li>
 <li style="text-align: justify;">Закрыть/перетащить/свернуть/вызвать окна.</li>
 </ol>
  
@@ -28,7 +29,7 @@
 ===============================================================================
 
 <h3>English</h3>
-<h5>Greetings , travaler!</h3>
+<h5>Greetings , traveler!</h3>
 <p><div>This Addon is for World of Warcraft: Classic. RHEL let you assign Healers(heal, buff, dispell) in a raid to Tanks and groups and post the assignments to the Raid or in the custom channel or wisp to healer.<div>
 <h5>Features</h3>
 <div>Version of actual addon is 0.10.0 beta and he can do next features:<div></p>
@@ -45,7 +46,8 @@
 <li style="text-align: justify;">Wisp to healer all his personal tasks.</li> 
 <li style="text-align: justify;">Write up and anounce about nextfight.</li>
 <li style="text-align: justify;">Warning on healers death and anounce his configuration of healing in default chat or to raid or raid warning.</li>
-<li style="text-align: justify;">Open window with Help and Option</li>
+<li style="text-align: justify;">Open window with Help and sea all supported commands.</li>
+<li style="text-align: justify;">Open window with Options and tune number of healers and tanks. Customise dispells in raid.</li>
 <li style="text-align: justify;">Close/drug/minimaze/show windows.</li>
 </ol>
 
