@@ -1,10 +1,12 @@
 ## Title: RaidHealerEasyLife
-## Version: 0.9.0
+## Version: 0.10.0
 ## Author: Virgo
 ## Interface: 11303
-## SavedVariables: RHEL_Raid, RHEL_Boss, RHEL_Heals, RHEL_Buffs, RHEL_Dispells, RHEL_Healers, RHEL_Tanks, RHEL_Channel, RHEL_Add_Tanks, RHEL_BossNote
+## SavedVariables: RHEL_Raid, RHEL_Boss, RHEL_Heals, RHEL_Buffs, RHEL_Dispells, RHEL_Healers, RHEL_Tanks, RHEL_Channel, RHEL_Add_Tanks, RHEL_Total, RHEL_OwnDispells, RHEL_BossNote, RHEL_ownTips
+RHEL_note.lua
 RHEL.lua
 RHEL_GUI.lua
+
 
 
 
