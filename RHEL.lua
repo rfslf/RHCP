@@ -1,11 +1,13 @@
 RHEL_Author = "Virgo-Zenedar"
-RHEL_Version = "0.10.2"
-RHEL_Date = "02/21/2020"
+RHEL_Version = "0.11.0"
+RHEL_Date = "02/25/2020"
 
-local tanks = {"MT","OT", "T3", "T4", "A", "B", "C", "D"}
+RHEL = {};
+
+local tanks = {"MT","OT", "T3", "T4", "A", "B", "C", "D"};
 local RaidNameList = {"Molten Core","Onyxia&Outdoors","Blackwing Lair","Ahn'Qiraj","Naxxramas", "Custome"};
 local dungeons = {["Molten Core"] = "MC", ["Onyxia&Outdoors"] = "Onyxia",
-    ["Blackwing Lair"] = "BWL", ["Ahn'Qiraj"] = "AQ", ["Naxxramas"] = "NAX", ["Custome"] = "Custome"}
+    ["Blackwing Lair"] = "BWL", ["Ahn'Qiraj"] = "AQ", ["Naxxramas"] = "NAX", ["Custome"] = "Custome"};
 local BossNameList = {};
 BossNameList.MC = {"Trash","Lucifron","Magmadar","Gehennas","Garr","Baron Geddon",
 	"Shazzrah","Golemagg","Sulfuron","Majordomo","Ragnaros"};
@@ -21,7 +23,15 @@ BossNameList.NAX = {"Trash","Anub'Rekhan","Faerlina","Maexxna",
 	"Patchwerk","Grobbulus","Gluth","Thaddius","Sapphiron","Kel'Thuzad"};
 BossNameList.Custome = {"Frame_1","Frame_2","Frame_3","Frame_4"};
 
-function RHEL_print(str, err)
+
+-------------------------------
+---- REPORT SENDING ----------
+-------------------------------
+
+-- Method:          RHEL.Report ( string , boolean )
+-- What it Does:    Sends message to default channel
+-- Purpose:         Necessary function for report to user
+RHEL.Report = function (str, err)
 	if not str then return; end;
 	if err == nil then
 		DEFAULT_CHAT_FRAME:AddMessage("|c006969FFRHEL: " .. tostring(str) .. "|r");
@@ -61,7 +71,7 @@ SlashCmdList["RHEL_SLASHCMD"] = function(input)
 		elseif RHEL_MainMenu ~= nil and RHEL_MainMenu:IsVisible() then
             RHEL_MainMenu:Hide();
 		else
-			RHEL_print("Main menu is not ready. Try one more time.", true)
+			RHEL.Report(RHEL_loc["Main menu frame not ready"], true);
 		end
 	elseif command == "mini" then
         if RHEL_Mini ~= nil and not RHEL_Mini:IsVisible() then
@@ -69,14 +79,14 @@ SlashCmdList["RHEL_SLASHCMD"] = function(input)
 		elseif RRHEL_MiniFrame ~= nil and RHEL_Mini:IsVisible() then
             RHEL_Mini:Hide();
 		else
-			RHEL_print("Mini menu is not ready. Try one more time.", true);
+			RHEL.Report(RHEL_loc["Mini menu frame not ready"], true);
 		end
 	elseif command == "option" then
 		RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame:Hide();
 		RHEL_GUI.RHEL_Mini.RHEL_Info:Show();
 		RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Help:Hide();
 		RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.About:Hide();
-		RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option:Show()
+		RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option:Show();
 	elseif command == 'help' then
 		RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame:Hide();
 		RHEL_GUI.RHEL_Mini.RHEL_Info:Show();
@@ -84,13 +94,15 @@ SlashCmdList["RHEL_SLASHCMD"] = function(input)
 		RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.About:Hide();
 		RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option:Hide();
 	else
-		RHEL_print("Invalid Command. Type '/rhel help'!", true);
+		RHEL.Report(RHEL_loc["Invalid Command. Type '/rhel help'!"], true);
 	end
 end
 
---Greetings. DONE
-function RHEL_Loaded()
-	RHEL_print('RaidHealersEasyLife loaded. Type /rhel to open. Version '..RHEL_Version);
+-- Method:          RHEL.Loaded ()
+-- What it Does:    Send message when addon loaded
+-- Purpose:         Greeting user
+RHEL.Loaded = function ()
+	RHEL.Report(RHEL_loc["LEGEND"]' .. RHEL_Version);
 
 end
 
@@ -272,11 +284,6 @@ function RHEL_HealersLoad()
 	for i = 1, RHEL_Total do
 		_G['HealerName'..i]:SetText(RHEL_Healers[i]);
 		_G["mini_healer_frame"..i].MiniHealerFont:SetText(RHEL_Healers[i]);
-		-- TO DO if text color does not changed
-		-- local localizedClass, englishClass, classIndex =  UnitClass(_G[class.."Name"..icon]:GetText());		
-		-- if englishClass then
-		--	_G["mini_healer_frame"..id].MiniHealerFont:SetTextColor(RHEL_color[englishClass][1],RHEL_color[englishClass][2], RHEL_color[englishClass][3]);
-		-- end
 	end
 end
 
@@ -364,27 +371,28 @@ function RHEL_BossNoteLoad()
 	else
 		RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetText(RHEL_Boss);
 	end
---	RHEL_print("No custome note. Load defualts.");
+--	RHEL.Report("No custome note. Load defualts.");
 end
 
 function RHEL_ChannelLoad()
 	ChannelNumber:SetText(RHEL_Channel);
 end
 
---Send message to raid or channel. DONE
-function RHEL_SendMessage(msg)
-	if string.len(tostring(msg)) > 255 then
+-- Method:          RHEL.SendMessage(string)
+-- What it Does:    Send message to raid or channel
+-- Purpose:         This is for announces in raid or via wisper.
+RHEL.SendMessage = function (msg)
+--	if string.len(tostring(msg)) > 255 then
+	if #msg > 255 then
 		local msg_cut_rev = string.reverse(string.sub(msg, 1, 255));
---		print(msg_cut_rev)
 		local delim, delim_end = string.find(msg_cut_rev, "%]");
---		print(delim, delim_end) 
+
 		if delim then
 			local msg_cut = string.reverse(string.sub(msg_cut_rev, delim));
-			RHEL_SendMessage(msg_cut);
-			RHEL_SendMessage(string.sub(msg, string.len(tostring(msg_cut)) + 1));
---			RHEL_SendMessage(string.sub(msg, string.len(tostring(msg)) - delim))
+			RHEL.SendMessage(msg_cut);
+			RHEL.SendMessage(string.sub(msg, string.len(tostring(msg_cut)) + 1));
 		else
-			RHEL_print("Too long message. "..string.len(msg) .. " symbols.", true);
+			RHEL.Report(RHEL_loc["Long message, total "] .. #msg .. RHEL_loc[" symbols."], true);
 		end
 --		RHEL_SendMessage(string.sub(msg, 255))
 	else
@@ -395,7 +403,7 @@ function RHEL_SendMessage(msg)
 		elseif RaidWarning:GetChecked() and not to_Raid:GetChecked() then
 			SendChatMessage(tostring(msg), "RAID_WARNING");
 		else
-			RHEL_print('Wrong channel.', true);
+			RHEL.Report(RHEL_loc['Wrong channel.'], true);
 		end
 	end
 end
@@ -406,7 +414,7 @@ end
 function RHEL_Healings(position)
 	local msg = "";
 	if RHEL_Heals[RHEL_Raid][RHEL_Boss][position] then
-		msg = "Groups: ";
+		msg = RHEL_loc["Groups: "];
 		local heal_count = 0;
 		for j = 1, 8 do
 			if RHEL_Heals[RHEL_Raid][RHEL_Boss][position][j] then
@@ -417,7 +425,7 @@ function RHEL_Healings(position)
 		if heal_count == 0 then
 			msg = "";
 		elseif heal_count == 8 then
-			msg = "All groups.";
+			msg = RHEL_loc["All groups."];
 		else
 			msg = string.sub(msg, 1, -2)  .. ".";
 		end
@@ -442,7 +450,7 @@ end
 -- Anounce part about buffings. CHECK
 -- All groups or fallen.
 function RHEL_Buffings(position)
-	local msg = "Groups: ";
+	local msg = RHEL_loc["Groups: "];
 	local buff_count = 0;
 	if RHEL_Buffs[RHEL_Raid][position] then		
 		for j = 1, 8 do
@@ -455,7 +463,7 @@ function RHEL_Buffings(position)
 	if buff_count == 0 then
 		msg = "";
 	elseif buff_count == 8 then
-		msg = "All groups or fallen";
+		msg = RHEL_loc["All groups or fallen"];
 	else
 		msg = string.sub(msg, 1, -2);
 	end
@@ -465,7 +473,7 @@ end
 -- Anounce part about dispellings. CHECK
 -- All groups.
 function RHEL_Dispellings(position)
-	local msg = "Groups: "
+	local msg = RHEL_loc["Groups: "];
 	local dispel_count = 0
 	if RHEL_OwnDispells then
 		if RHEL_Dispells[RHEL_Raid][RHEL_Boss][position] then		
@@ -487,7 +495,7 @@ function RHEL_Dispellings(position)
 	if dispel_count == 0 then
 		msg = "";
 	elseif dispel_count == 8 then
-		msg = "All groups";
+		msg = RHEL_loc["All groups."];
 	else
 		msg = string.sub(msg, 1, -2);
 	end
@@ -496,7 +504,7 @@ end
 
 --Click on heals anounce. DONE
 function RHEL_HealAnounce()
-	local anounce = RHEL_Raid.." - "..RHEL_Boss..": HEALINGS!";
+	local anounce = RHEL_Raid .. " - " .. RHEL_Boss .. RHEL_loc[": HEALINGS!"];
 	local message1 = "";
 	for i = 1, RHEL_Total do
 		if _G['HealerName'..i]:GetText() ~= "" then
@@ -507,13 +515,13 @@ function RHEL_HealAnounce()
 			end
 		end
 	end
-	RHEL_SendMessage(anounce);
-	RHEL_SendMessage(message1);
+	RHEL.SendMessage(anounce);
+	RHEL.SendMessage(message1);
 end
 
 --Click on buffs anounce. DONE
 function RHEL_BuffAnounce()
-	local anounce = RHEL_Raid..": BUFFS!";
+	local anounce = RHEL_Raid..RHEL_loc[": BUFFS!"];
 	local message1 = "";
 	for i = 1, RHEL_Total do
 		if _G['HealerName'..i]:GetText() ~= "" then
@@ -524,8 +532,8 @@ function RHEL_BuffAnounce()
 			end
 		end
 	end
-	RHEL_SendMessage(anounce);
-	RHEL_SendMessage(message1);
+	RHEL.SendMessage(anounce);
+	RHEL.SendMessage(message1);
 end
 
 --Click on buffs anounce. DONE
@@ -541,34 +549,34 @@ function RHEL_DispellAnounce()
 			end
 		end
 	end
-	RHEL_SendMessage(anounce);
-	RHEL_SendMessage(message1);
+	RHEL.SendMessage(anounce);
+	RHEL.SendMessage(message1);
 end
 
 --Click on healers personal anounce. DONE
 function RHEL_HealerWisper(number)
 	local healer = _G['HealerName'..number]:GetText();
-	local wisper = healer .. " in " .. RHEL_Raid .." on " .. RHEL_Boss .. ": ";
+	local wisper = healer .. RHEL_loc[" in "] .. RHEL_Raid .. RHEL_loc[" on "] .. RHEL_Boss .. ": ";
 	if healer ~= "" then
 		if (UnitInRaid(healer) or UnitInParty(healer)) then
 			local HealsPart = RHEL_Healings(number);
 			if HealsPart ~= '' then
-				HealsPart = "[Heals-" .. HealsPart .. "] ";
+				HealsPart = RHEL_loc["[Heals-"] .. HealsPart .. "] ";
 			end
 			
 			local BuffsPart = RHEL_Buffings(number);
 			if BuffsPart ~= '' then		
-				BuffsPart = "[Buffs-" .. BuffsPart .. "] ";
+				BuffsPart = RHEL_loc["[Buffs-"] .. BuffsPart .. "] ";
 			end
 
 			local DispellsPart = RHEL_Dispellings(number);
 			if DispellsPart ~= '' then		
-				DispellsPart = "[Dispells-" .. DispellsPart .. "]";
+				DispellsPart = RHEL_loc["[Dispells-"] .. DispellsPart .. "]";
 			end
 
 			SendChatMessage(wisper..HealsPart..BuffsPart..DispellsPart, "WHISPER", nil, healer);	
 		else
-			RHEL_print(healer .." is not in your raid or party", true);
+			RHEL.Report(healer .. RHEL_loc[" is not in your raid or party"], true);
 		end
 	end
 end
@@ -589,7 +597,7 @@ function RHEL_ClickOnCheckBox(role,healer,target)
 			RHEL_Dispells[RHEL_Raid][BossNameList[dungeons[RHEL_Raid]][1]][healer][target] = isChecked;
 		end
 	else
-		RHEL_print("Click on checkbox with unknown role", true);
+		RHEL.Report(RHEL_loc["Click on checkbox with unknown role"], true);
 	end
 end
 
@@ -615,7 +623,7 @@ function RHEL_ClickOnAll(role,healer)
 				RHEL_Dispells[RHEL_Raid][BossNameList[dungeons[RHEL_Raid]][1]][healer][target] = isChecked;
 			end
 		else
-			RHEL_print("Click on checkbox with unknown role", true);
+			RHEL.Report(RHEL_loc["Click on checkbox with unknown role"], true);
 		end
 	end
 end
@@ -637,7 +645,7 @@ function RHEL_HealerInsert(healer)
 			_G["mini_healer_frame"..id].MiniHealerFont:SetTextColor(RHEL_color[englishClass][1],RHEL_color[englishClass][2], RHEL_color[englishClass][3]);
 		end
 	else
-		RHEL_print("Wrong target or not friendly player", true);
+		RHEL.Report(RHEL_loc["Wrong target or not friendly player"], true);
 	end
 end
 
@@ -680,7 +688,7 @@ function RHEL_TankInsert(tank)
 		RHEL_Tanks[id] = name;
 		_G['TankName'..id]:SetText(name);
 	else
-		RHEL_print("Wrong target or not friendly player", true);
+		RHEL.Report(RHEL_loc["Wrong target or not friendly player"], true);
 	end
 end
 
@@ -823,21 +831,48 @@ function RHEL_BossName_OnSelect(value)
 	RHEL_DispellsLoad();
 end
 
+-- Method:          RHEL.LangDropdown_OnLoad()
+-- What it Does:    Load possible language for dropdown menu
+-- Purpose:         This is for language of announces in raid or via wisper.
+RHEL.LangDropdown_OnLoad = function()
+	local x;
+	local List = RHEL_loc.Languages;
+	for x = 1, getn(List) do
+		info.text = List[x];
+		info.value = x;
+		info.owner = _G["RHEL_Lang_Dropdown"]:GetParent();
+		info.func = function() RHEL_LangDropdown_OnSelect(x) end;
+		info.checked = nil;
+		UIDropDownMenu_AddButton(info);
+	end
+end
+
+-- Method:          RHEL.LangDropdown_OnSelect(string)
+-- What it Does:    On select language for dropdown menu
+-- Purpose:         This is for language of announces in raid or via wisper. 
+RHEL.LangDropdown_OnSelect = function (value)
+	if (UIDropDownMenu_GetSelectedValue(_G["RHEL_Lang_Dropdown"]) ~= value) then
+		UIDropDownMenu_SetSelectedValue(_G["RHEL_Lang_Dropdown"], value);
+		RHEL_lang = value
+		_G["RHEL_loc." .. value .. "()"];
+	end
+end
+
 --Healer death warning. CHECK
 function RHEL_ReportDeath(guid, name, flags)
 	for i = 1, RHEL_Total do
 		if RHEL_Healers[i] == name then
 			local HealsPart = RHEL_Healings(i);	
-			local dthmsg = name.." is dead.";
+			local dthmsg = name .. RHEL_loc[" is dead."];
 			if HealsPart ~= "" then
-				dthmsg = dthmsg .. " Heal " .. HealsPart;
+				dthmsg = dthmsg .. RHEL_loc[" Heal "] .. HealsPart;
 			end
 			if to_Raid:GetChecked() then
 				SendChatMessage(tostring(dthmsg), "RAID");
 			elseif RaidWarning:GetChecked() then
 				SendChatMessage(tostring(dthmsg), "RAID_WARNING");
 			else
-				RHEL_print(dthmsg);
+				RHEL.Report(dthmsg);
 			end
 		end
 	end
@@ -876,6 +911,14 @@ function RHEL_Frame:ADDON_LOADED(addon)
 		RHEL_HealersLoad();
 		RHEL_ChannelLoad();
 		RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.HealerSlider:SetValue(RHEL_Total);
+		if RHEL_lang then
+			if RHEL_lang == 'Russian' then
+				RHEL_loc.Russian();
+			end
+		else
+			RHEL_lang == 'English';
+			RHEL_loc.English();
+		end			
 	end
 end
 RHEL_Frame:RegisterEvent("ADDON_LOADED");
@@ -884,7 +927,7 @@ RHEL_Frame:RegisterEvent("ADDON_LOADED");
 --local warningChecked = false
 function RHEL_ClickOnWarningCheckBox()
 --   warningChecked = CheckButtonWarning:GetChecked();
---	RHEL_print('warning click', true)
+--	RHEL.Report('warning click', true)
 	if CheckButtonWarning:GetChecked() then
 		RHEL_Frame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED");
 	else
