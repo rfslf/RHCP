@@ -366,7 +366,7 @@ function main_menu()
 				elseif self:GetName() == "RHEL_DispellAnounce" then
 					RHEL_DispellAnounce()
 				else
-					RHEL_print("Anounce error", true)
+					RHEL.Report("Anounce error", true)
 				end
 			end
 		end);
@@ -464,7 +464,7 @@ function main_menu()
 	RHEL_GUI.RHEL_MainMenu.BossNoteButton:SetText("Note");
 	RHEL_GUI.RHEL_MainMenu.BossNoteButton:SetScript("OnClick", function(self, button)
 		if button == "LeftButton" then
-			RHEL_SendMessage(RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:GetText())
+			RHEL.SendMessage(RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:GetText())
 		end
 	end);
 	RHEL_MainMenu:Hide();
@@ -497,7 +497,7 @@ function mini_menu()
 			elseif RHEL_MainMenu:IsVisible() then
 				RHEL_MainMenu:Hide()
 			else
-				RHEL_print("Show main from mini frame problem", true)
+				RHEL.Report("Show main from mini frame problem", true)
 			end
 		end
 	end);
@@ -513,7 +513,7 @@ function mini_menu()
 			elseif RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame:IsVisible() then
 				RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame:Hide();
 			else
-				RHEL_print("Show offspring frame problem", true)
+				RHEL.Report("Show offspring frame problem", true)
 			end
 		end
 	end);
@@ -560,6 +560,9 @@ function mini_menu()
 	-- Mini offspring frame
 	local mini_offspring_size_x, mini_offspring_size_y = 180, mini_healer_frame_delta * RHEL_Total + mini_button_size_y + 2 * mini_dropdown_size_y
 	local mini_offspring_start_x, mini_offspring_start_y, mini_offspring_region = 0, 0, "TOP"
+	-- Language dropdown pozition
+	local lang_dropdown_size_x, lang_dropdown_size_y = 120, 25
+	local lang_dropdown_start_x, lang_dropdown_start_y, lang_dropdown_region = 0, 0, "BOTTOM"
 
 	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame = CreateFrame("Frame", "RHEL_MiniOffspringFrame", RHEL_GUI.RHEL_Mini);
 	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame:SetSize(mini_offspring_size_x, mini_offspring_size_y);
@@ -584,7 +587,7 @@ function mini_menu()
 	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_InfoButton:SetText("N");
 	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_InfoButton:SetScript("OnClick", function(self, button)
 		if button == "LeftButton" then
-			RHEL_SendMessage(RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:GetText())
+			RHEL.SendMessage(RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:GetText())
 		end
 	end);
 
@@ -628,7 +631,7 @@ function mini_menu()
 				elseif self:GetName() == "MiniDispells" then
 					RHEL_DispellAnounce()
 				else
-					RHEL_print("Anounce from mini window error", true)
+					RHEL.Report("Anounce from mini window error", true)
 				end
 			end
 		end);
@@ -755,9 +758,7 @@ function mini_menu()
 	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.HealerSlider:SetMinMaxValues(6, 14);
 	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.HealerSlider:SetObeyStepOnDrag(true);
 	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.HealerSlider:SetValueStep(1);
-	-- RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.HealerSlider:SetScript( "OnValueChanged" , function(self)
-	--   RHEL_print(self:GetValue())
-	-- end);
+
 	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.Font2 = RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option:CreateFontString(RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option, "OVERLAY", "GameFontNormal");
 	--RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.Font2:SetTextColor(0,0.9,0.9,1)
 	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.Font2:SetPoint("TOPLEFT", 10, -80);
@@ -766,9 +767,7 @@ function mini_menu()
 	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.AddTank:SetPoint("TOPRIGHT", -10, -74);
 	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.AddTank:SetSize(28,28);
 	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.AddTank:SetChecked(RHEL_Add_Tanks)
-	--RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.AddTank:SetScript("OnClick", function(self) 
-	--	RHEL_print(self:GetChecked());
-	--end);
+
 	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.Font3 = RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option:CreateFontString(RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option, "OVERLAY", "GameFontNormal");
 	--RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.Font3:SetTextColor(0,0.9,0.9,1)
 	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.Font3:SetPoint("TOPLEFT", 10, -100);
@@ -777,14 +776,22 @@ function mini_menu()
 	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.OwnDispells:SetPoint("TOPRIGHT", -10, -94);
 	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.OwnDispells:SetSize(28,28);
 	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.OwnDispells:SetChecked(RHEL_OwnDispells)
-	--RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.OwnDispells:SetScript("OnClick", function(self) 
-	--	RHEL_print(self:GetChecked());
-	--end);
+
+	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.Font4 = RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option:CreateFontString(RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option, "OVERLAY", "GameFontNormal");
+	--RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.Font3:SetTextColor(0,0.9,0.9,1)
+	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.Font4:SetPoint("TOPLEFT", 10, -120);
+	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.Font4:SetText("Language for announces:")
+	-- Language dropdown
+	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.RHEL_Lang_Dropdown = CreateFrame("Frame", "RHEL_Lang_Dropdown", RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option, "UIDropDownMenuTemplate");
+	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.RHEL_MiniDropdown:SetPoint(lang_dropdown_region, lang_dropdown_start_x, lang_dropdown_start_y);
+	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_MiniDropdown:SetSize(lang_dropdown_size_x, lang_dropdown_size_y);
+	UIDropDownMenu_SetWidth(RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.RHEL_Lang_Dropdown, 125) 
+	UIDropDownMenu_Initialize(RHEL_Lang_Dropdown, RHEL.LangDropdown_OnLoad);
 
 	-- Option tab apply button
 	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.Apply = CreateFrame("Button", "RHEL_MiniMizeButton", RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option, "UIPanelButtonTemplate");
 	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.Apply:SetSize(80, 30);
-	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.Apply:SetPoint("BOTTOM", RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option, 0, 10);
+	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.Apply:SetPoint("BOTTOM", RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option, 0, 40);
 	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.Apply:SetText("Reload UI");
 	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.Apply:SetScript("OnClick", function(self, button)
 		if button == "LeftButton" then
@@ -866,4 +873,4 @@ function mini_menu()
 	RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Help:Hide();
 	RHEL_GUI.RHEL_Mini.RHEL_Info:Hide()
 end
-RHEL_Loaded()
+RHEL.Loaded()
