@@ -24,9 +24,6 @@ BossNameList.NAX = {"Trash","Anub'Rekhan","Faerlina","Maexxna",
 BossNameList.Custome = {"Frame_1","Frame_2","Frame_3","Frame_4"};
 
 
--------------------------------
----- REPORT SENDING ----------
--------------------------------
 
 -- Method:          RHEL.Report ( string , boolean )
 -- What it Does:    Sends message to default channel
@@ -97,13 +94,11 @@ SlashCmdList["RHEL_SLASHCMD"] = function(input)
 		RHEL.Report(RHEL_loc["Invalid Command. Type '/rhel help'!"], true);
 	end
 end
-
 -- Method:          RHEL.Loaded ()
 -- What it Does:    Send message when addon loaded
 -- Purpose:         Greeting user
 RHEL.Loaded = function ()
-	RHEL.Report(RHEL_loc["LEGEND"]' .. RHEL_Version);
-
+	RHEL.Report(RHEL_loc["LEGEND"] .. RHEL_Version);
 end
 
 --Reverse Raid-Boss table. DONE
@@ -178,7 +173,6 @@ function RHEL_DispellsDefault(raid, boss)
 		RHEL_Dispells[raid]={};
 	end
 	if (RHEL_Dispells[raid][boss] == nil) or (table.getn(RHEL_Dispells[raid][boss]) < RHEL_Total) then
-
 --		      1	     2     3     4     5     6     7     8
 		RHEL_Dispells[raid][boss] = {
 		    {true,false,true,false,true,false,true,false},
@@ -277,6 +271,14 @@ function RHEL_RaidBossSaved()
 		RHEL_Boss = BossNameList[dungeons[RHEL_Raid]][1];
 	end
 	RHEL_BossName_OnSelect(revBossNameList[RHEL_Boss]);
+end
+
+-- Method:          RHEL.LangSaved()
+-- What it Does:    Load saved language
+-- Purpose:         This is for language of announces in raid or via wisper.
+RHEL.LangSaved = function()
+	RHEL.LangDropdown_OnSelect(RHEL_loc.Languages[RHEL_lang])
+	UIDropDownMenu_SetText(RHEL_Lang_Dropdown, RHEL_lang);
 end
 
 --Healers on load. DONE
@@ -841,7 +843,7 @@ RHEL.LangDropdown_OnLoad = function()
 		info.text = List[x];
 		info.value = x;
 		info.owner = _G["RHEL_Lang_Dropdown"]:GetParent();
-		info.func = function() RHEL_LangDropdown_OnSelect(x) end;
+		info.func = function() RHEL.LangDropdown_OnSelect(x) end;
 		info.checked = nil;
 		UIDropDownMenu_AddButton(info);
 	end
@@ -853,9 +855,22 @@ end
 RHEL.LangDropdown_OnSelect = function (value)
 	if (UIDropDownMenu_GetSelectedValue(_G["RHEL_Lang_Dropdown"]) ~= value) then
 		UIDropDownMenu_SetSelectedValue(_G["RHEL_Lang_Dropdown"], value);
-		RHEL_lang = value
-		_G["RHEL_loc." .. value .. "()"];
+		RHEL_lang = value;
+		RHEL.LangSelect(value);
 	end
+end
+
+-- Method:          RHEL.LangSelect(string)
+-- What it Does:    Select chosen language for announce
+-- Purpose:         This is for language of announces in raid or via wisper. 
+RHEL.LangSelect = function (value)
+	print(value)
+	if value == 'Russian' then
+		RHEL_loc.Russian();
+	else
+		RHEL_lang = 'English';
+		RHEL_loc.English();
+	end	
 end
 
 --Healer death warning. CHECK
@@ -911,14 +926,9 @@ function RHEL_Frame:ADDON_LOADED(addon)
 		RHEL_HealersLoad();
 		RHEL_ChannelLoad();
 		RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.HealerSlider:SetValue(RHEL_Total);
-		if RHEL_lang then
-			if RHEL_lang == 'Russian' then
-				RHEL_loc.Russian();
-			end
-		else
-			RHEL_lang == 'English';
-			RHEL_loc.English();
-		end			
+--		RHEL.LangSelect(RHEL_lang);
+		RHEL.LangSaved();
+		RHEL.Loaded()		
 	end
 end
 RHEL_Frame:RegisterEvent("ADDON_LOADED");
