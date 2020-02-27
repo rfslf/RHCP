@@ -277,8 +277,16 @@ end
 -- What it Does:    Load saved language
 -- Purpose:         This is for language of announces in raid or via wisper.
 RHEL.LangSaved = function()
-	RHEL.LangDropdown_OnSelect(RHEL_loc.Languages[RHEL_lang])
-	UIDropDownMenu_SetText(RHEL_Lang_Dropdown, RHEL_lang);
+	print(RHEL_lang)
+	if not RHEL_lang or not revLang[RHEL_lang] then
+		RHEL_lang = 'English'
+--		if RHEL_lang == '1' then
+--			UIDropDownMenu_SetText(RHEL_Lang_Dropdown, "English");
+--		else
+--			UIDropDownMenu_SetText(RHEL_Lang_Dropdown, "Russian");
+--		end
+	end
+	RHEL.LangDropdown_OnSelect(revLang[RHEL_lang])
 end
 
 --Healers on load. DONE
@@ -855,20 +863,19 @@ end
 RHEL.LangDropdown_OnSelect = function (value)
 	if (UIDropDownMenu_GetSelectedValue(_G["RHEL_Lang_Dropdown"]) ~= value) then
 		UIDropDownMenu_SetSelectedValue(_G["RHEL_Lang_Dropdown"], value);
-		RHEL_lang = value;
-		RHEL.LangSelect(value);
+		RHEL_lang = UIDropDownMenu_GetText(_G["RHEL_Lang_Dropdown"]);
 	end
+	RHEL.LangSelect(value);
 end
 
 -- Method:          RHEL.LangSelect(string)
 -- What it Does:    Select chosen language for announce
 -- Purpose:         This is for language of announces in raid or via wisper. 
 RHEL.LangSelect = function (value)
-	print(value)
-	if value == 'Russian' then
+	if value == '2' then
 		RHEL_loc.Russian();
 	else
-		RHEL_lang = 'English';
+		RHEL_lang = '1';
 		RHEL_loc.English();
 	end	
 end
@@ -900,11 +907,12 @@ end)
 
 --Prep for death anonce. Check
 function RHEL_Frame:COMBAT_LOG_EVENT_UNFILTERED(event, ...)
-	local _, subevent, _, _, _, _, _, guid, name, flags = CombatLogGetCurrentEventInfo();
+	local _, subevent, _, srcGUID, srcName, _, _, guid, name, flags = CombatLogGetCurrentEventInfo();
 	local instance = select(2, IsInInstance());
 	if not UnitInRaid(name) then return end
 	if (subevent == "UNIT_DIED" and (instance == "raid")) then
 --	if (subevent == "UNIT_DIED") then
+		print(srcGUID, srcName)
 		RHEL_ReportDeath(guid, name, flags);
 	end
 end

@@ -7,6 +7,10 @@ RHEL_loc.Languages = {
     "English",
     "Russian"
 }
+revLang = {};
+for i,v in ipairs(RHEL_loc.Languages) do
+	revLang[v] = i;
+end
 
 RHEL_loc.English = function()
 	RHEL_loc["Main menu frame not ready"] = "Main menu frame not ready"
@@ -76,7 +80,6 @@ RHEL_loc.Russian = function()
 	RHEL_loc["Com Message too large for server"] = "Слишком длинное COM сообщение для сервера"
 	RHEL_loc["Prefix:"] = "Префикс:"
 	RHEL_loc["Msg:"] = "Сообщение:"
-	
 	
 	-- Default tips for "Note"
 	RHEL_loc.Razorgore = "Не рвите агро прислужников. Используйте щиты и низкоуровневые исцеления. Прячьтесь от Града огненных шаров за колоннами."
