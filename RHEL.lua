@@ -23,8 +23,6 @@ BossNameList.NAX = {"Trash","Anub'Rekhan","Faerlina","Maexxna",
 	"Patchwerk","Grobbulus","Gluth","Thaddius","Sapphiron","Kel'Thuzad"};
 BossNameList.Custome = {"Frame_1","Frame_2","Frame_3","Frame_4"};
 
-
-
 -- Method:          RHEL.Report ( string , boolean )
 -- What it Does:    Sends message to default channel
 -- Purpose:         Necessary function for report to user
@@ -247,7 +245,7 @@ function RHEL_VariablesDefaultSet()
 			RHEL_Healers[i] = "Name"..i;
 		end 
 	end
--- For first time RHEL_Tanks is loaded; initialize tanks/ DONE
+-- For first time RHEL_Tanks is loaded; initialize tanks. DONE
 	if RHEL_Tanks == nil then
 		RHEL_Tanks = {};
 	end
@@ -279,7 +277,7 @@ end
 RHEL.LangSaved = function()
 	print(RHEL_lang)
 	if not RHEL_lang or not revLang[RHEL_lang] then
-		RHEL_lang = 'English'
+		RHEL_lang = 'English';
 --		if RHEL_lang == '1' then
 --			UIDropDownMenu_SetText(RHEL_Lang_Dropdown, "English");
 --		else
@@ -912,7 +910,7 @@ function RHEL_Frame:COMBAT_LOG_EVENT_UNFILTERED(event, ...)
 	if not UnitInRaid(name) then return end
 	if (subevent == "UNIT_DIED" and (instance == "raid")) then
 --	if (subevent == "UNIT_DIED") then
-		print(srcGUID, srcName)
+--		print(srcGUID, srcName)
 		RHEL_ReportDeath(guid, name, flags);
 	end
 end
