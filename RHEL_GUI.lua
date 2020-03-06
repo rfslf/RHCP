@@ -66,10 +66,10 @@ function main_menu()
 	-- Wisper button pozition
 	local button_start_x, button_start_y, button_region = -10, 0, "RIGHT"
 	local button_size_x, button_size_y = 40, 30
-	-- Anounce button pozition
-	local anounce_size_x, anounce_size_y = 120, 40
-	local anounce_start_x, anounce_start_y, anounce_region = 254, 10, "BOTTOMLEFT"
-	local anounce_delta = 210
+	-- Announce button pozition
+	local Announce_size_x, Announce_size_y = 120, 40
+	local Announce_start_x, Announce_start_y, Announce_region = 254, 10, "BOTTOMLEFT"
+	local Announce_delta = 210
 	-- ToChannel button pozition
 	local to_channel_size = 18
 	local to_channel_start_x, to_channel_start_y, to_channel_region = 30, 34, "BOTTOMLEFT"
@@ -351,31 +351,31 @@ function main_menu()
 		end);
 	end
 
-	-- Anounce generator
-	function createAnouncebutton(parent, x_loc, y_loc, name, text)
-		local anouncebutton = CreateFrame("Button", name, parent, "UIPanelButtonTemplate");
-		anouncebutton:SetPoint(anounce_region, x_loc, y_loc);
-		anouncebutton:SetSize(anounce_size_x, anounce_size_y)
-		getglobal(anouncebutton:GetName() .. 'Text'):SetText(text);
-		anouncebutton:SetScript("OnClick", function(self, button)
+	-- Announce generator
+	function createAnnouncebutton(parent, x_loc, y_loc, name, text)
+		local Announcebutton = CreateFrame("Button", name, parent, "UIPanelButtonTemplate");
+		Announcebutton:SetPoint(Announce_region, x_loc, y_loc);
+		Announcebutton:SetSize(Announce_size_x, Announce_size_y)
+		getglobal(Announcebutton:GetName() .. 'Text'):SetText(text);
+		Announcebutton:SetScript("OnClick", function(self, button)
 			if button == "LeftButton" then
-				if self:GetName() == "RHEL_HealAnounce" then
-					RHEL_HealAnounce();
-				elseif self:GetName() == "RHEL_BuffAnounce" then
-					RHEL_BuffAnounce()
-				elseif self:GetName() == "RHEL_DispellAnounce" then
-					RHEL_DispellAnounce()
+				if self:GetName() == "RHEL_HealAnnounce" then
+					RHEL_HealAnnounce();
+				elseif self:GetName() == "RHEL_BuffAnnounce" then
+					RHEL_BuffAnnounce()
+				elseif self:GetName() == "RHEL_DispellAnnounce" then
+					RHEL_DispellAnnounce()
 				else
-					RHEL.Report("Anounce error", true)
+					RHEL.Report("Announce error", true)
 				end
 			end
 		end);
-		return anouncebutton;
+		return Announcebutton;
 	end
 
-	RHEL_GUI.RHEL_MainMenu.RHEL_HealButton = createAnouncebutton(RHEL_GUI.RHEL_MainMenu, anounce_start_x, anounce_start_y, "RHEL_HealAnounce", "Heals anounce")
-	RHEL_GUI.RHEL_MainMenu.RHEL_BuffButton = createAnouncebutton(RHEL_GUI.RHEL_MainMenu, anounce_start_x + anounce_delta, anounce_start_y, "RHEL_BuffAnounce", "Buffs anounce")
-	RHEL_GUI.RHEL_MainMenu.RHEL_DispellButton = createAnouncebutton(RHEL_GUI.RHEL_MainMenu, anounce_start_x + anounce_delta + 4 * check_button_step_x + check_button_step_delta, anounce_start_y, "RHEL_DispellAnounce", "Dispells anounce")
+	RHEL_GUI.RHEL_MainMenu.RHEL_HealButton = createAnnouncebutton(RHEL_GUI.RHEL_MainMenu, Announce_start_x, Announce_start_y, "RHEL_HealAnnounce", "Heals Announce")
+	RHEL_GUI.RHEL_MainMenu.RHEL_BuffButton = createAnnouncebutton(RHEL_GUI.RHEL_MainMenu, Announce_start_x + Announce_delta, Announce_start_y, "RHEL_BuffAnnounce", "Buffs Announce")
+	RHEL_GUI.RHEL_MainMenu.RHEL_DispellButton = createAnnouncebutton(RHEL_GUI.RHEL_MainMenu, Announce_start_x + Announce_delta + 4 * check_button_step_x + check_button_step_delta, Announce_start_y, "RHEL_DispellAnnounce", "Dispells Announce")
 
 	-- ToChannel generator
 	function createTochannelbutton(parent, x_loc, y_loc, name, text, selection)
@@ -388,7 +388,7 @@ function main_menu()
 		end
 		tochannelbutton:SetScript("OnClick", function(self, button)
 			if button == "LeftButton" then
-				RHEL_SwapAnounceTo(self);
+				RHEL_SwapAnnounceTo(self);
 			end
 		end);
 		local tochannelbuttonfont=tochannelbutton:CreateFontString(tochannelbutton, "OVERLAY", "GameFontNormal")
@@ -547,9 +547,9 @@ function mini_menu()
 	local mini_dropdown_size_x, mini_dropdown_size_y = 188, 25
 	local mini_dropdown_start_x, mini_dropdown_start_y, mini_dropdown_region = -14, -24, "TOP"
 	-- Mini buttons
-	local mini_anounce_start_x, mini_anounce_start_y, mini_anounce_region = -54, 2, "BOTTOM"
-	local mini_anounce_size_x, mini_anounce_size_y = 50, 20
-	local mini_anounce_delta = 58
+	local mini_Announce_start_x, mini_Announce_start_y, mini_Announce_region = -54, 2, "BOTTOM"
+	local mini_Announce_size_x, mini_Announce_size_y = 50, 20
+	local mini_Announce_delta = 58
 	-- Mini healer frame
 	local mini_healer_frame_size_x, mini_healer_frame_size_y = 180, 21
 	local mini_healer_frame_start_x, mini_healer_frame_start_y, mini_healer_region = 0, 50, "TOP"
@@ -617,31 +617,31 @@ function mini_menu()
 	end
 	
 	-- Mini buttons
-	-- Anounce generator
-	function createMiniAnouncebutton(parent, x_loc, y_loc, name, text)
-		local anouncebutton = CreateFrame("Button", name, parent, "UIPanelButtonTemplate");
-		anouncebutton:SetPoint(mini_anounce_region, x_loc, y_loc);
-		anouncebutton:SetSize(mini_anounce_size_x, mini_anounce_size_y)
-		getglobal(anouncebutton:GetName() .. 'Text'):SetText(text);
-		anouncebutton:SetScript("OnClick", function(self, button)
+	-- Announce generator
+	function createMiniAnnouncebutton(parent, x_loc, y_loc, name, text)
+		local Announcebutton = CreateFrame("Button", name, parent, "UIPanelButtonTemplate");
+		Announcebutton:SetPoint(mini_Announce_region, x_loc, y_loc);
+		Announcebutton:SetSize(mini_Announce_size_x, mini_Announce_size_y)
+		getglobal(Announcebutton:GetName() .. 'Text'):SetText(text);
+		Announcebutton:SetScript("OnClick", function(self, button)
 			if button == "LeftButton" then
 				if self:GetName() == "MiniHeals" then
-					RHEL_HealAnounce();
+					RHEL_HealAnnounce();
 				elseif self:GetName() == "MiniBuffs" then
-					RHEL_BuffAnounce()
+					RHEL_BuffAnnounce()
 				elseif self:GetName() == "MiniDispells" then
-					RHEL_DispellAnounce()
+					RHEL_DispellAnnounce()
 				else
-					RHEL.Report("Anounce from mini window error", true)
+					RHEL.Report("Announce from mini window error", true)
 				end
 			end
 		end);
-		return anouncebutton;
+		return Announcebutton;
 	end
 
-	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_HealButton = createMiniAnouncebutton(RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame, mini_anounce_start_x, mini_anounce_start_y, "MiniHeals", "Heal")
-	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_BuffButton = createMiniAnouncebutton(RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame, mini_anounce_start_x + mini_anounce_delta, mini_anounce_start_y, "MiniBuffs", "Buff")
-	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_DispellButton = createMiniAnouncebutton(RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame, mini_anounce_start_x + 2 * mini_anounce_delta, mini_anounce_start_y, "MiniDispells", "Disp")
+	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_HealButton = createMiniAnnouncebutton(RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame, mini_Announce_start_x, mini_Announce_start_y, "MiniHeals", "Heal")
+	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_BuffButton = createMiniAnnouncebutton(RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame, mini_Announce_start_x + mini_Announce_delta, mini_Announce_start_y, "MiniBuffs", "Buff")
+	RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame.RHEL_DispellButton = createMiniAnnouncebutton(RHEL_GUI.RHEL_Mini.RHEL_OffspringFrame, mini_Announce_start_x + 2 * mini_Announce_delta, mini_Announce_start_y, "MiniDispells", "Disp")
 		
 	RHEL_GUI.RHEL_Mini:SetScript("OnMouseDown", function(self)
 		RHEL_OnMouseDown(self);

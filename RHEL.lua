@@ -421,7 +421,7 @@ RHEL.SendMessage = function (msg)
 end
 
 
--- Anounce part about healings. CHECK
+-- Announce part about healings. CHECK
 -- Groups: 1, 2, 3... Name, OT.
 function RHEL_Healings(position)
 	local msg = "";
@@ -459,7 +459,7 @@ function RHEL_Healings(position)
 	return msg
 end
 
--- Anounce part about buffings. CHECK
+-- Announce part about buffings. CHECK
 -- All groups or fallen.
 function RHEL_Buffings(position)
 	local msg = RHEL_loc["Groups: "];
@@ -482,7 +482,7 @@ function RHEL_Buffings(position)
 	return msg
 end
 
--- Anounce part about dispellings. CHECK
+-- Announce part about dispellings. CHECK
 -- All groups.
 function RHEL_Dispellings(position)
 	local msg = RHEL_loc["Groups: "];
@@ -514,9 +514,9 @@ function RHEL_Dispellings(position)
 	return msg
 end
 
---Click on heals anounce. DONE
-function RHEL_HealAnounce()
-	local anounce = RHEL_Raid .. " - " .. RHEL_Boss .. RHEL_loc[": HEALINGS!"];
+--Click on heals Announce. DONE
+function RHEL_HealAnnounce()
+	local Announce = RHEL_Raid .. " - " .. RHEL_Boss .. RHEL_loc[": HEALINGS!"];
 	local message1 = "";
 	for i = 1, RHEL_Total do
 		if _G['HealerName'..i]:GetText() ~= "" then
@@ -527,13 +527,13 @@ function RHEL_HealAnounce()
 			end
 		end
 	end
-	RHEL.SendMessage(anounce);
+	RHEL.SendMessage(Announce);
 	RHEL.SendMessage(message1);
 end
 
---Click on buffs anounce. DONE
-function RHEL_BuffAnounce()
-	local anounce = RHEL_Raid..RHEL_loc[": BUFFS!"];
+--Click on buffs Announce. DONE
+function RHEL_BuffAnnounce()
+	local Announce = RHEL_Raid..RHEL_loc[": BUFFS!"];
 	local message1 = "";
 	for i = 1, RHEL_Total do
 		if _G['HealerName'..i]:GetText() ~= "" then
@@ -544,13 +544,13 @@ function RHEL_BuffAnounce()
 			end
 		end
 	end
-	RHEL.SendMessage(anounce);
+	RHEL.SendMessage(Announce);
 	RHEL.SendMessage(message1);
 end
 
---Click on buffs anounce. DONE
-function RHEL_DispellAnounce()
-	local anounce = RHEL_Raid..": DISPELLS!";
+--Click on buffs Announce. DONE
+function RHEL_DispellAnnounce()
+	local Announce = RHEL_Raid..": DISPELLS!";
 	local message1 = "";
 	for i = 1, RHEL_Total do
 		if _G['HealerName'..i]:GetText() ~= "" then
@@ -561,11 +561,11 @@ function RHEL_DispellAnounce()
 			end
 		end
 	end
-	RHEL.SendMessage(anounce);
+	RHEL.SendMessage(Announce);
 	RHEL.SendMessage(message1);
 end
 
---Click on healers personal anounce. DONE
+--Click on healers personal Announce. DONE
 function RHEL_HealerWisper(number)
 	local healer = _G['HealerName'..number]:GetText();
 	local wisper = healer .. RHEL_loc[" in "] .. RHEL_Raid .. RHEL_loc[" on "] .. RHEL_Boss .. ": ";
@@ -585,8 +585,8 @@ function RHEL_HealerWisper(number)
 			if DispellsPart ~= '' then		
 				DispellsPart = RHEL_loc["[Dispells-"] .. DispellsPart .. "]";
 			end
-
-			SendChatMessage(wisper..HealsPart..BuffsPart..DispellsPart, "WHISPER", nil, healer);	
+			SendChatMessage(wisper..HealsPart..BuffsPart..DispellsPart, "WHISPER", nil, healer);
+			RHEL_sync.SyncSend(healer)			
 		else
 			RHEL.Report(healer .. RHEL_loc[" is not in your raid or party"], true);
 		end
@@ -716,8 +716,8 @@ function RHEL_ChannelChange()
 	RHEL_Channel = ChannelNumber:GetText();
 end
 
---Swap chat to anounce. DONE
-function RHEL_SwapAnounceTo(to)
+--Swap chat to Announce. DONE
+function RHEL_SwapAnnounceTo(to)
 	if to == to_Channel then
 		to_Raid:SetChecked(false);
 		to_Channel:SetChecked(true);
@@ -914,7 +914,7 @@ function RHEL_Frame:COMBAT_LOG_EVENT_UNFILTERED(event, ...)
 	if not UnitInRaid(name) then return end
 	if (subevent == "UNIT_DIED" and (instance == "raid")) then
 --	if (subevent == "UNIT_DIED") then
---		print(srcGUID, srcName)
+		print(srcGUID, srcName)
 		RHEL_ReportDeath(guid, name, flags);
 	end
 end
