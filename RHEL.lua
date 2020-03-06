@@ -275,7 +275,6 @@ end
 -- What it Does:    Load saved language
 -- Purpose:         This is for language of announces in raid or via wisper.
 RHEL.LangSaved = function()
-	print(RHEL_lang)
 	if not RHEL_lang or not revLang[RHEL_lang] then
 		RHEL_lang = 'English';
 --		if RHEL_lang == '1' then
@@ -292,6 +291,11 @@ function RHEL_HealersLoad()
 	for i = 1, RHEL_Total do
 		_G['HealerName'..i]:SetText(RHEL_Healers[i]);
 		_G["mini_healer_frame"..i].MiniHealerFont:SetText(RHEL_Healers[i]);
+		-- TO DO if text color does not changed
+		local localizedClass, englishClass, classIndex =  UnitClass(RHEL_Healers[i]);		
+		if englishClass then
+			_G["mini_healer_frame"..i].MiniHealerFont:SetTextColor(RHEL_color[englishClass][1],RHEL_color[englishClass][2], RHEL_color[englishClass][3]);
+		end
 	end
 end
 
@@ -372,10 +376,10 @@ function RHEL_BossNoteLoad()
 	else
 		RHEL_BossNote[RHEL_Raid] = {};
 	end
---	print(tips[RHEL_Boss])
-	if RHEL_tips[RHEL_Boss] then
-		RHEL_BossNote[RHEL_Raid][RHEL_Boss] = RHEL_tips[RHEL_Boss];
-		RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetText(RHEL_tips[RHEL_Boss]);
+--	print(RHEL_loc[RHEL_Boss])
+	if RHEL_loc[RHEL_Boss] then
+		RHEL_BossNote[RHEL_Raid][RHEL_Boss] = RHEL_loc[RHEL_Boss];
+		RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetText(RHEL_loc[RHEL_Boss]);
 	else
 		RHEL_GUI.RHEL_MainMenu.BossNoteEditBox:SetText(RHEL_Boss);
 	end
@@ -870,10 +874,10 @@ end
 -- What it Does:    Select chosen language for announce
 -- Purpose:         This is for language of announces in raid or via wisper. 
 RHEL.LangSelect = function (value)
-	if value == '2' then
+	if value == 2 then
 		RHEL_loc.Russian();
 	else
-		RHEL_lang = '1';
+		RHEL_lang = 1;
 		RHEL_loc.English();
 	end	
 end
@@ -932,7 +936,6 @@ function RHEL_Frame:ADDON_LOADED(addon)
 		RHEL_HealersLoad();
 		RHEL_ChannelLoad();
 		RHEL_GUI.RHEL_Mini.RHEL_Info.TabFrame.Option.HealerSlider:SetValue(RHEL_Total);
---		RHEL.LangSelect(RHEL_lang);
 		RHEL.LangSaved();
 		RHEL.Loaded()		
 	end
