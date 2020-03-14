@@ -1,7 +1,8 @@
 ## Title: RaidHealerEasyLife
 ## Author: Virgo - Zenedar
-## Interface: 11303
+## Interface: 11304
 ## SavedVariables: RHEL_Raid, RHEL_Boss, RHEL_Heals, RHEL_Buffs, RHEL_Dispells, RHEL_Healers, RHEL_Tanks, RHEL_Channel, RHEL_Add_Tanks, RHEL_Total, RHEL_OwnDispells, RHEL_BossNote, RHEL_ownTips, RHEL_lang
 RHEL_Loc.lua
 RHEL.lua
 RHEL_GUI.lua
+RHEL_Sync.lua
