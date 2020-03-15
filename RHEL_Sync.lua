@@ -294,6 +294,7 @@ end
 -- Purpose:         Announce banner
 RHEL_sync.AnnounceFrame = function(sender, raidboss, heals, buffs, disps)
 	if RHEL_Announce then
+		RHEL_Announce:Show();
 		RHEL_Announce.Font0:SetText(raidboss .. " @" .. sender);
 		RHEL_Announce.Font1:SetText(RHEL_loc["Heals:"] .. " " .. heals );
 		RHEL_Announce.Font2:SetText(RHEL_loc["Buffs:"] .. " " .. buffs);
