@@ -91,11 +91,12 @@ SlashCmdList["RHEL_SLASHCMD"] = function(input)
 		RHEL_GUI.RHEL_Main.RHEL_Info.TabFrame.About:Hide();
 		RHEL_GUI.RHEL_Main.RHEL_Info.TabFrame.Option:Hide();
 	elseif 	command == 'banner' then
-		RHEL_Announce:Show();
-		if RHEL_Announce ~= nil and not RHEL_Announce:IsVisible() then
-			RHEL_Announce:Show();
-		else
-            RHEL_Announce:Hide();
+		if RHEL_Announce ~= nil then
+			if not RHEL_Announce:IsVisible() then
+				RHEL_Announce:Show();
+			else
+				RHEL_Announce:Hide();
+			end
 		end
 	else
 		RHEL.Report(RHEL_loc["Invalid Command. Type '/rhel help'!"], true);
