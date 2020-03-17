@@ -230,8 +230,7 @@ RHEL_sync.SyncSend = function(target)
 	C_Timer.After(3, function ( )
 		if RHEL_sync.waitPckgs[pckg] == target then
 			RHEL_sync.waitPckgs[pckg] = nil;
-			if RHEL_syncGlobals.DebugEnabled then
-				RHEL.Report ( pckg .. ' to ' .. target .. " not delivered"  ); -- failed
+			RHEL.Report ( RHEL_loc["Announce banner not reсived by "] .. target); -- failed
 			end
 		else
 			table.insert(RHEL_syncGlobals.CompatibleAddonUsers, target); -- OK 
@@ -303,7 +302,7 @@ RHEL_sync.AnnounceFrame = function(sender, raidboss, heals, buffs, disps)
 		RHEL_Announce = CreateFrame("Frame", "RHEL_Announce", UIParent);
 		RHEL_Announce.RHEL_AnnounceCloseButton = CreateFrame( "Button", "RHEL_AnnounceCloseButton", RHEL_Announce, "UIPanelCloseButton");
 		RHEL_Announce.RHEL_AnnounceCloseButton:SetPoint("TOPRIGHT", RHEL_Announce, 3, 3);
-		RHEL_Announce:SetSize(300, 55);
+		RHEL_Announce:SetSize(320, 55);
 		RHEL_Announce:SetMovable(true);
 		RHEL_Announce:EnableMouse(true);
 		RHEL_Announce:SetToplevel(true);

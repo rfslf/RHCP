@@ -39,6 +39,7 @@ RHEL_loc.English = function()
 	RHEL_loc["Com Message too large for server"] = "Com Message too large for server"
 	RHEL_loc["Prefix:"] = "Prefix:"
 	RHEL_loc["Msg:"] = "Msg:"
+	RHEL_loc["Announce banner not reсived by "] = "Announce banner not reсived by "
 	
 	-- Default tips for "Note"
 	RHEL_loc.Razorgore = "Don't get aggro on adds. Use shields and downranked heals. Avoid Fireball Volley by hiding behind pillars."
@@ -80,6 +81,7 @@ RHEL_loc.Russian = function()
 	RHEL_loc["Com Message too large for server"] = "Слишком длинное COM сообщение для сервера"
 	RHEL_loc["Prefix:"] = "Префикс:"
 	RHEL_loc["Msg:"] = "Сообщение:"
+	RHEL_loc["Announce banner not reсived by "] = "Баннер с анонсом не получен "
 	
 	-- Default tips for "Note"
 	RHEL_loc.Razorgore = "Не рвите агро прислужников. Используйте щиты и низкоуровневые исцеления. Прячьтесь от Града огненных шаров за колоннами."
