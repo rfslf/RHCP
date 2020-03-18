@@ -231,7 +231,6 @@ RHEL_sync.SyncSend = function(target)
 		if RHEL_sync.waitPckgs[pckg] == target then
 			RHEL_sync.waitPckgs[pckg] = nil;
 			RHEL.Report ( RHEL_loc["Announce banner not reсived by "] .. target); -- failed
-			end
 		else
 			table.insert(RHEL_syncGlobals.CompatibleAddonUsers, target); -- OK 
 		end	
