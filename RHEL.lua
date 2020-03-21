@@ -1,6 +1,6 @@
 RHEL_Author = "Virgo-Zenedar"
-RHEL_Version = "0.11.0"
-RHEL_Date = "02/25/2020"
+RHEL_Version = "0.11.2"
+RHEL_Date = "03/21/2020"
 
 RHEL = {};
 
@@ -891,7 +891,9 @@ end
 -- What it Does:    Select chosen language for announce
 -- Purpose:         This is for language of announces in raid or via wisper. 
 RHEL.LangSelect = function (value)
-	if value == 2 then
+	if value == 3 then
+		RHEL_loc['简体中文']();
+	elseif value == 2 then
 		RHEL_loc.Russian();
 	else
 		RHEL_lang = 1;
