@@ -442,7 +442,7 @@ function main_menu()
 	RHEL_GUI.RHEL_AnceMenu.BossNoteEditBox:EnableMouse(true);
 	RHEL_GUI.RHEL_AnceMenu.BossNoteEditBox:SetFrameStrata("HIGH");
 	RHEL_GUI.RHEL_AnceMenu.BossNoteEditBox:SetAutoFocus(false);
-	RHEL_GUI.RHEL_AnceMenu.BossNoteEditBox:SetFont("Interface\\AddOns\\RHEL\\fonts\\Arial.TTF", 10, "OUTLINE, MONOCHROME")
+	RHEL_GUI.RHEL_AnceMenu.BossNoteEditBox:SetFont("Interface\\AddOns\\RHEL\\fonts\\Arial.ttf", 10, "OUTLINE, MONOCHROME")
 	--RHEL_GUI.RHEL_AnceMenu.BossNoteEditBox:SetFont("Fonts\\FRIZQT__.TTF", 10, "OUTLINE, MONOCHROME")
 	RHEL_GUI.RHEL_AnceMenu.BossNoteEditBox:SetScript("OnEscapePressed", function(self)
 		self:ClearFocus();    
@@ -454,7 +454,9 @@ function main_menu()
 		self:ClearFocus();
 	end);
 	RHEL_GUI.RHEL_AnceMenu.BossNoteEditBox:SetScript("OnTextChanged", function(self)
-			RHEL_ownTips[RHEL_Boss] = true
+			if RHEL_GUI.RHEL_AnceMenu.BossNoteEditBox:GetText() ~= RHEL_BossNote[RHEL_Raid][RHEL_Boss] then
+				RHEL_ownTips[RHEL_Boss] = true
+			end
 			RHEL_BossNote[RHEL_Raid][RHEL_Boss] = RHEL_GUI.RHEL_AnceMenu.BossNoteEditBox:GetText(); -- TO DO	    
 	end);
 	-- Note button

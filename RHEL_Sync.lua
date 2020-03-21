@@ -227,7 +227,7 @@ RHEL_sync.SyncSend = function(target)
 	RHEL_sync.SendMessage ( "RHEL_SYNC" , msg , RHEL_syncGlobals.channelType , target );
 	RHEL_sync.pckg = RHEL_sync.pckg + 1;
 	RHEL_sync.waitPckgs[pckg] = target;
-	C_Timer.After(3, function ( )
+	C_Timer.After(1, function ( )
 		if RHEL_sync.waitPckgs[pckg] == target then
 			RHEL_sync.waitPckgs[pckg] = nil;
 			RHEL.Report ( RHEL_loc["Announce banner not reсived by "] .. target); -- failed
@@ -269,7 +269,7 @@ RHEL_sync.AnnounceSend = function(target, raidboss, heals, buffs, disps)
 	RHEL_sync.SendMessage ( "RHEL_SYNC" , msg , RHEL_syncGlobals.channelType , target );
 	RHEL_sync.pckg = RHEL_sync.pckg + 1;
 	RHEL_sync.waitPckgs[pckg] = target;
-	C_Timer.After(3, function ( )
+	C_Timer.After(1, function ( )
 		if RHEL_sync.waitPckgs[pckg] == target then
 			RHEL_sync.waitPckgs[pckg] = nil -- failed
 			if RHEL_syncGlobals.DebugEnabled then
